@@ -1,0 +1,10 @@
+database_config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, name: "primary").configuration_hash
+ActiveRecord::Base.establish_connection(database_config)
+
+Ridgepole::Client.new(
+  config: database_config,
+  migrate_dir: "db/schemas",
+  options: {
+    enable_migration_comments: true
+  }
+)
