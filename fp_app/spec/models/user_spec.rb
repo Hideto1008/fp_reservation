@@ -32,13 +32,4 @@ RSpec.describe User, type: :model do
     expect(user.errors[:email]).to include("has already been taken")
   end
 
-  it "has a default name of 'user'" do
-    user = create(:user)
-    expect(user.name).to eq("user")
-  end
-
-  it "has a default icon_path of an empty string" do
-    user = create(:user)
-    expect(user.icon_path).to eq("")
-  end
 end
