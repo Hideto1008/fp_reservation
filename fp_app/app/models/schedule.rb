@@ -14,11 +14,12 @@ class Schedule < ApplicationRecord
         if self.started_at.sunday? && self.is_available
             errors.add(:started_at, "can't be on a Sunday")
         elsif self.started_at.saturday?
-            errors.add(:started_at, "can't be before 11:00 on Saturday") if self.started_at < Time.parse("11:00:00") && self.is_available
-            errors.add(:started_at, "can't be after 15:00 on Saturday") if self.started_at >= Time.parse("15:00:00") && self.is_available
+            errors.add(:started_at, "can't be before 11:00 on Saturday") if self.is_available && self.started_at < self.started_at.change(hour: 11, min: 0)
+            errors.add(:started_at, "can't be after 15:00 on Saturday") if self.is_available && self.started_at >= self.started_at.change(hour: 15, min: 0)
+
         else
-            errors.add(:started_at, "can't be before 10:00 on weekdays") if self.started_at < Time.parse("10:00:00") && self.is_available
-            errors.add(:started_at, "can't be after 18:00 on weekdays") if self.started_at >= Time.parse("18:00:00") && self.is_available
+            errors.add(:started_at, "can't be before 10:00 on weekdays") if self.started_at < self.started_at.change(hour: 10, min: 0) && self.is_available
+            errors.add(:started_at, "can't be after 18:00 on weekdays") if self.started_at >= self.started_at.change(hour: 18, min: 0) && self.is_available
         end
     end  
 end
