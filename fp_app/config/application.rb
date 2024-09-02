@@ -19,6 +19,8 @@ module App
       g.test_framework false
     end
 
+    config.time_zone = 'Asia/Tokyo'
+    config.active_record.default_timezone = :local
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
