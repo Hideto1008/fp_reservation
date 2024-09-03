@@ -5,4 +5,5 @@ class Planner < ApplicationRecord
          :recoverable, :rememberable, :validatable
   
   has_many :schedules, dependent: :destroy
+  has_many :appointments, dependent: :destroy
 end

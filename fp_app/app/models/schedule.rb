@@ -1,5 +1,6 @@
 class Schedule < ApplicationRecord
     belongs_to :planner
+    has_one :appointment
     validates :planner_id, presence: true
     validate :check_schedule
     validate :check_started_at
