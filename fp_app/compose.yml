@@ -10,23 +10,23 @@ services:
     env_file:
       - .env
     ports:
-      - ${RAILS_PORT}:3000 # 環境変数から参照
+      - ${RAILS_PORT:-3000}:3000 # デフォルト値 3000 を設定
     tty: true
-    # 標準入出力とエラー出力をコンテナに結びつける設定。
     stdin_open: true
     depends_on:
       - db
-  # MySQLの設定
+
   db:
     container_name: fp_db
     image: mysql:8.0
     volumes:
       - db-data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: ${MYSQL_DB} # 環境変数から参照
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} # 環境変数から参照
+      MYSQL_DATABASE: ${MYSQL_DB:-app_db} # デフォルト値 'app_db' を設定
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root} # デフォルト値 'root' を設定
       TZ: "Asia/Tokyo"
     ports:
-      - "${MYSQL_POOT}:3306" # 環境変数から参照
+      - "${MYSQL_POOT:-3306}:3306" # デフォルト値 3306 を設定
+
 volumes:
   db-data:
