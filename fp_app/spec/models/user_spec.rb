@@ -2,6 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  EMAIL = "duplicate@example.com"
   # ファクトリが有効かどうかのテスト
   it "has a valid factory" do
     expect(build(:user)).to be_valid
@@ -26,8 +27,8 @@ RSpec.describe User, type: :model do
   end
 
   it "is invalid with a duplicate email" do
-    create(:user, email: "duplicate@example.com")
-    user = build(:user, email: "duplicate@example.com")
+    create(:user, email: EMAIL)
+    user = build(:user, email: EMAIL)
     expect(user).not_to be_valid
     expect(user.errors[:email]).to include("has already been taken")
   end
