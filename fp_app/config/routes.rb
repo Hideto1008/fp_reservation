@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  devise_for :planners, controllers: {
+  devise_for :planners, path: "planners", controllers: {
     sessions: 'planners/sessions',
     registrations: 'planners/registrations'
   }
