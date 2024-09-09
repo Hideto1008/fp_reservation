@@ -2,22 +2,22 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: <%= ENV.fetch("MYSQL_DB") { '' } %> #.env 環境変数を参照
-  username: <%= ENV.fetch("MYSQL_USER") { '' } %> #.env 環境変数を参照
-  password: <%= ENV.fetch("MYSQL_ROOT_PASSWORD") { '' } %> #.env 環境変数を参照
-  host: db #docker-compose.ymlのDBのサービス名を指定
+  username: <%= ENV.fetch("MYSQL_USER") { 'root' } %> # デフォルト値 'root' を設定
+  password: <%= ENV.fetch("MYSQL_ROOT_PASSWORD") { 'password' } %> # デフォルト値 'password' を設定
+  host: <%= ENV.fetch("MYSQL_HOST") { 'db' } %> # デフォルト値 'db' を設定
 
 development:
   <<: *default
-  database: <%= ENV.fetch("MYSQL_DB") { '' } %>_development #.env 環境変数を参照
+  database: <%= ENV.fetch("MYSQL_DB") { 'fp_app_development' } %> # デフォルト値 'app_development' を設定
 
 test:
   <<: *default
-  database: <%= ENV.fetch("MYSQL_DB") { '_test' } %>_test #.env 環境変数を参照
+  database: <%= ENV.fetch("MYSQL_DB") { 'fp_app_test' } %> # デフォルト値 'app_test' を設定
 
-# production　プロジェクトに合わせて修正。
+# production 環境はプロジェクトに合わせて修正
 production:
   <<: *default
   database: app_production
   username: app
   password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+
