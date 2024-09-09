@@ -1,0 +1,31 @@
+services:
+  web:
+    container_name: fp_app
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - ${RAILS_PORT:-3000}:3000 # デフォルト値 3000 を設定
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+
+  db:
+    container_name: fp_db
+    image: mysql:8.0
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password # デフォルト値 'root' を設定
+      TZ: "Asia/Tokyo"
+    ports:
+      - "${MYSQL_POOT:-3306}:3306" # デフォルト値 3306 を設定
+
+volumes:
+  db-data:

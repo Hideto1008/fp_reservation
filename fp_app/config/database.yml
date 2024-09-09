@@ -1,0 +1,23 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("MYSQL_USER") { 'root' } %> # デフォルト値 'root' を設定
+  password: <%= ENV.fetch("MYSQL_ROOT_PASSWORD") { 'password' } %> # デフォルト値 'password' を設定
+  host: <%= ENV.fetch("MYSQL_HOST") { 'db' } %> # デフォルト値 'db' を設定
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("MYSQL_DB") { 'fp_app_development' } %> # デフォルト値 'app_development' を設定
+
+test:
+  <<: *default
+  database: <%= ENV.fetch("MYSQL_DB") { 'fp_app_test' } %> # デフォルト値 'app_test' を設定
+
+# production 環境はプロジェクトに合わせて修正
+production:
+  <<: *default
+  database: app_production
+  username: app
+  password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+

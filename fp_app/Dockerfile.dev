@@ -1,0 +1,19 @@
+FROM ruby:3.2.3
+
+# コンテナの作業ディレクトリ
+WORKDIR /app
+
+# コンテナの作業ディレクトリにコピー
+COPY Gemfile Gemfile.lock /app/
+
+# 依存関係をインストール
+RUN bundle install
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
+EXPOSE 3001
+
+
+# CMD ["rails", "server", "-b", "0.0.0.0"]
