@@ -7,6 +7,10 @@ gem 'ridgepole'
 gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem "sassc-rails"
+
+# Add slim
+gem 'slim-rails'
+gem 'html2slim'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use mysql as the database for Active Record
