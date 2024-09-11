@@ -24,7 +24,7 @@ RSpec.describe Schedule, type: :model do
       schedule.check_started_at_future_or_present
       expect(schedule.errors[:started_at]).to include("Past records can't be updated")
     end
-    
+
     it 'is valid with a started_at in the past and is_available has not changed' do
       schedule = build(:schedule, planner: planner, started_at: Time.now - 1.hour, is_available: false)
       schedule.check_started_at_future_or_present
