@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe Planner, type: :model do
-  describe 'test for devise validation' do 
+  describe 'test for devise validation' do
     EMAIL = "duplicate@example.com"
     # ファクトリが有効かどうかのテスト
     it "has a valid factory" do
