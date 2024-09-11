@@ -15,8 +15,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
     t.bigint "user_id", null: false
     t.bigint "planner_id", null: false
     t.bigint "schedule_id", null: false
+    t.datetime "reserved_at"
+    t.column "status", "enum('reserved','canceled','done')"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "status_updated_at", null: false
     t.index ["planner_id"], name: "index_appointments_on_planner_id"
     t.index ["schedule_id"], name: "index_appointments_on_schedule_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
@@ -28,6 +30,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "name", default: "planner"
+    t.text "icon_path"
+    t.text "introduction"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_planners_on_email", unique: true
@@ -35,8 +40,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
   end
 
   create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "planner_id", null: false
+    t.datetime "started_at"
+    t.boolean "is_available", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["planner_id"], name: "index_schedules_on_planner_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -56,4 +65,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
   add_foreign_key "appointments", "planners"
   add_foreign_key "appointments", "schedules"
   add_foreign_key "appointments", "users"
+  add_foreign_key "schedules", "planners"
 end
