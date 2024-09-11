@@ -4,22 +4,24 @@ class Schedule < ApplicationRecord
   validate :check_started_at_future_or_present
   validate :check_schedule_within_working_hours
 
+
   def check_started_at_future_or_present
-    if started_at < Time.now
-      errors.add(:started_at, "can't be in the past")
+    if started_at < Time.now && will_save_change_to_is_available?
+      errors.add(:started_at, "Past records can't be updated")
     end
   end
 
   def check_schedule_within_working_hours
-		check_not_sunday
+		check_not_closed_day
   	check_valid_started_at_in_saturday
 		check_valid_started_at_in_weekdays
 	end		
 
-	def check_not_sunday
+	private
+	def check_not_closed_day
 		return unless started_at.sunday?
 		if is_available
-      errors.add(:started_at, "can't be on a Sunday")
+      errors.add(:started_at, "can't be on a closed day")
 		end
 	end
 

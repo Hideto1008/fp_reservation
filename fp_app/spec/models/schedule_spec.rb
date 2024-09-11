@@ -14,17 +14,27 @@ RSpec.describe Schedule, type: :model do
       expect(schedule).not_to be_valid
       expect(schedule.errors[:planner_id]).to include("can't be blank")
     end
+  end
 
-    it 'is invalid with a started_at in the past' do
-      schedule = build(:schedule, planner: planner, started_at: Time.now - 1.hour)
+  describe 'custom validation methods' do
+    it 'is invalid with a started_at in the past and is_available has changed' do
+      schedule = build(:schedule, planner: planner, started_at: Time.now - 1.hour, is_available: false)
+      # is_availableを更新
+      schedule.is_available = true
       schedule.check_started_at_future_or_present
-      expect(schedule.errors[:started_at]).to include("can't be in the past")
+      expect(schedule.errors[:started_at]).to include("Past records can't be updated")
+    end
+    
+    it 'is valid with a started_at in the past and is_available has not changed' do
+      schedule = build(:schedule, planner: planner, started_at: Time.now - 1.hour, is_available: false)
+      schedule.check_started_at_future_or_present
+      expect(schedule).to be_valid
     end
 
     it 'is invalid with a started_at on Sunday' do
       schedule = build(:schedule, planner: planner, started_at: Time.parse("2024-09-29 10:00:00"), is_available: true) # 2024年9月29日は日曜日
       schedule.check_schedule_within_working_hours
-      expect(schedule.errors[:started_at]).to include("can't be on a Sunday")
+      expect(schedule.errors[:started_at]).to include("can't be on a closed day")
     end
 
     it 'is invalid with a started_at before 11:00 on Saturday' do
