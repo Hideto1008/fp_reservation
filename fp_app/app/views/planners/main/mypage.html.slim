@@ -6,33 +6,12 @@
       h2 My page
 
       // Turbo Frameでname, icon_path, introductionを囲む
-      turbo-frame id="planner_info"
+      turbo_frame_tag id="planner_info"
         .profile-info style="text-align: center;"
           img src=@planner.icon_path alt="Planner Icon" style="width: 100px; height: 100px; border-radius: 50%;"
           h3= @planner.name
           p= @planner.introduction
-
-        // updateボタンでフォームを表示
-        = link_to 'Update', edit_planner_info_path(@planner), class: "btn btn-primary", style: "background-color: #FFCC00; color: white; padding: 10px 20px; border: none; border-radius: 5px;"
-
-      // フォーム部分 (hidden by default)
-      .introduction-form style="display: none;" id="update-form"
-        = form_with model: @planner, url: planner_update_info_path(@planner), method: :patch, local: false do |f|
-          div style="margin-bottom: 10px;"
-            = f.label :name, "Name"
-            = f.text_field :name, style: "width: 100%;"
-          
-          div style="margin-bottom: 10px;"
-            = f.label :icon_path, "Icon Path"
-            = f.text_field :icon_path, style: "width: 100%;"
-
-          div style="margin-bottom: 10px;"
-            = f.label :introduction, "Self Introduction"
-            = f.text_area :introduction, style: "width: 100%; height: 100px;"
-
-          // saveボタンで更新を確定
-          div
-            = f.submit "Save", class: "btn btn-primary", style: "background-color: #4EA1D3; color: white; padding: 10px 20px; border: none; border-radius: 5px;"
+          = link_to 'Update', edit_planner_info_path(@planner), data: { turbo_frame: "planner_info" }, class: "btn btn-primary", style: "background-color: #FFCC00; color: white; padding: 10px 20px; border: none; border-radius: 5px;"
 
     .history style="flex: 2;"
       h2 History

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'planners/:id/mypage', to: 'planners/main#mypage', as: 'planners_mypage'
   get 'planners/:id/schedule', to: 'planners/main#schedule'
   get 'planners/:id/edit_planner_info', to: 'planners/main#edit_planner_info', as: 'edit_planner_info'
-  patch 'planners/:id/update_info', to: 'planners/main#update_info', as: 'planner_update_info'
+  patch 'planners/:id/update_info', to: 'planners/main#update_planner_info', as: 'planner_update_info'
 
 
   devise_for :users, controllers: {
