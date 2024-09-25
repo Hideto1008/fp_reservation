@@ -14,22 +14,19 @@ div.simple-calendar
       tr
         th 時間
         - date_range.slice(0, 7).each do |day|
-          th = t('date.abbr_day_names')[day.wday]
+          th
+            = day.strftime('%-m/%-d') + ' (' + t('date.abbr_day_names')[day.wday] + ')'
 
     tbody
       - date_range.each_slice(7) do |week|
-        tr
-          td
-          - week.each do |day|
-            = content_tag :td, class: calendar.td_classes_for(day) do
-              - if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(passed_block)
-                - capture_haml(day, sorted_events.fetch(day, []), &passed_block)
-              - else
-                - passed_block.call day, sorted_events.fetch(day, [])
-
-        / 追加部分
+        / 各時間帯ごとに表示
         - times.each do |time|
           tr
             td = time
             - week.each do |day|
               td
+                - matching_schedule = @schedules.find { |s| s.started_at.to_date == day && s.started_at.strftime('%H:%M') == time }
+                - if matching_schedule && matching_schedule.is_available
+                  = "◯"
+                - else
+                  = "✖️"
