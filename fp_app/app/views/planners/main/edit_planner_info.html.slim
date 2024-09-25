@@ -1,4 +1,7 @@
 .container style="max-width: 800px; margin: 0 auto;"
+  = render 'planners/shared/header', planner: @planner
+
+.container style="max-width: 800px; margin: 0 auto;"
   h2 Edit Planner Information
 
   = form_with model: @planner, url: update_planner_info_path(@planner), method: :patch, local: true do |f|
@@ -17,4 +20,5 @@
     div
       = f.submit "Save", class: "btn btn-primary", style: "background-color: #4EA1D3; color: white; padding: 10px 20px; border: none; border-radius: 5px;"
 
-  = link_to 'Back to My Page', planners_mypage_path(@planner), class: "btn btn-secondary", style: "margin-top: 20px;"
+    div
+      = link_to 'Back to My Page', planners_mypage_path(@planner), class: "btn btn-secondary", style: "margin-top: 15px; padding: 0px;"
