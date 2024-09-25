@@ -38,4 +38,31 @@ RSpec.describe 'Routing', type: :routing do
       action: 'new'
     )
   end
+
+  # Planners routes
+  it 'routes /planners/:id/mypage to planners/main#mypage' do
+    expect(get: '/planners/1/mypage').to route_to(
+      controller: 'planners/main',
+      action: 'mypage',
+      id: '1'
+    )
+  end
+
+  it 'routes /planners/:id/edit_planner_info to planners/main#edit_planner_info' do
+    expect(get: '/planners/1/edit_planner_info').to route_to(
+      controller: 'planners/main',
+      action: 'edit_planner_info',
+      id: '1'
+    )
+  end
+
+  it 'routes /planners/:id/update_info to planners/main#update_planner_info' do
+    expect(patch: '/planners/1/update_info').to route_to(
+      controller: 'planners/main',
+      action: 'update_planner_info',
+      id: '1'
+    )
+  end
+
+
 end

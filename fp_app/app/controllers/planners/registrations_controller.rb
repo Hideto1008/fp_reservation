@@ -40,7 +40,7 @@ class Planners::RegistrationsController < Devise::RegistrationsController
 
   protected
   def after_sign_up_path_for(resource)
-    "/planners/mypage/#{resource.id}"
+    "/planners/#{resource.id}/mypage"
   end
 
   # If you have extra params to permit, append them to the sanitizer.
