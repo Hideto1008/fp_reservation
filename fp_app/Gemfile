@@ -7,6 +7,7 @@ gem 'ridgepole'
 gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem "sassc-rails"
+gem 'simple_calendar'
 
 # Add slim
 gem 'slim-rails'

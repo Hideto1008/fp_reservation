@@ -1,2 +1,10 @@
-h1 Planners::Main#schedule
-p Find me in app/views/planners/main/schedule.html.slim
+.container style="max-width: 800px; margin: 0 auto;"
+  = render 'planners/shared/header', planner: @planner
+
+div.container
+  div.row
+    div.col-12.text-center
+      h1 予約画面
+    div.col-12.mt-3
+      = week_calendar events: @schedules do |date, reservations|
+        = date.day

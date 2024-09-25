@@ -1,0 +1,35 @@
+/ _week_calendar.html.slim
+
+div.simple-calendar
+  div.calendar-heading
+    = link_to t('simple_calendar.previous', default: '前週'), calendar.url_for_previous_view
+    - if calendar.number_of_weeks == 1
+      span.calendar-title = t('simple_calendar.week', default: '1週間')
+    - else
+      span.calendar-title = t('simple_calendar.week', default: '1週間')
+    = link_to t('simple_calendar.next', default: '翌週'), calendar.url_for_next_view
+
+  table.table.table-striped
+    thead
+      tr
+        th 時間
+        - date_range.slice(0, 7).each do |day|
+          th = t('date.abbr_day_names')[day.wday]
+
+    tbody
+      - date_range.each_slice(7) do |week|
+        tr
+          td
+          - week.each do |day|
+            = content_tag :td, class: calendar.td_classes_for(day) do
+              - if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(passed_block)
+                - capture_haml(day, sorted_events.fetch(day, []), &passed_block)
+              - else
+                - passed_block.call day, sorted_events.fetch(day, [])
+
+        / 追加部分
+        - times.each do |time|
+          tr
+            td = time
+            - week.each do |day|
+              td

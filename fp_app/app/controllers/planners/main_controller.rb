@@ -8,6 +8,8 @@ class Planners::MainController < ApplicationController
   end
 
   def schedule
+    @planner = Planner.find(params[:id])
+    @schedules = Schedule.where(planner_id: @planner.id)
   end
 
   def edit_planner_info
