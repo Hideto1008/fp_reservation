@@ -63,6 +63,4 @@ RSpec.describe 'Routing', type: :routing do
       id: '1'
     )
   end
-
-
 end

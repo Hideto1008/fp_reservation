@@ -9,11 +9,11 @@ FactoryBot.define do
   end
 
   factory :other_planner, class: Planner do
-    email {"other@example.com"}
-    password {"password"}
-    password_confirmation {"password"}
-    name {"Other Planner"}
-    icon_path {"/path/to/other_icon.png"}
-    introduction {"This is another planner."}
+    email { "other@example.com" }
+    password { "password" }
+    password_confirmation { "password" }
+    name { "Other Planner" }
+    icon_path { "/path/to/other_icon.png" }
+    introduction { "This is another planner." }
   end
 end
