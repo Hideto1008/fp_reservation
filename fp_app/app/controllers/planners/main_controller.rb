@@ -12,6 +12,29 @@ class Planners::MainController < ApplicationController
     @schedules = Schedule.where(planner_id: @planner.id)
   end
 
+  def edit_schedule
+    @planner = Planner.find(params[:id])
+    @schedules = Schedule.where(planner_id: @planner.id)
+  end
+
+  def update_schedule
+    @planner = Planner.find(params[:id])
+    @schedules = Schedule.where(planner_id: @planner.id)
+    @schedules.each do |schedule|
+      schedule.update(is_available: params[:schedule]["#{schedule.id}"])
+    end
+    redirect_to planners_schedule_path(@planner)
+  end
+
+  def toggle_availability
+    @schedule = Schedule.find(params[:id])
+    @schedule.update(is_available: !@schedule.is_available)
+
+    respond_to do |format|
+      format.json { render json: { is_available: @schedule.is_available } }
+    end
+  end
+
   def edit_planner_info
     @planner = Planner.find(params[:id])
   end

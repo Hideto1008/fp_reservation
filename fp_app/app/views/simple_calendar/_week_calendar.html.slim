@@ -1,32 +1,32 @@
-/ _week_calendar.html.slim
-
 div.simple-calendar
-  div.calendar-heading
-    = link_to t('simple_calendar.previous', default: '前週'), calendar.url_for_previous_view
-    - if calendar.number_of_weeks == 1
-      span.calendar-title = t('simple_calendar.week', default: '1週間')
-    - else
-      span.calendar-title = t('simple_calendar.week', default: '1週間')
-    = link_to t('simple_calendar.next', default: '翌週'), calendar.url_for_next_view
+  div.calendar-heading[style="display: flex; justify-content: space-between; align-items: center;"]
+    = link_to t('simple_calendar.previous', default: 'Last week'), calendar.url_for_previous_view, style: 'color: #4472C4; padding: 5px 10px; text-decoration: none;'
+    span.calendar-title[style="flex-grow: 1; text-align: center; font-weight: bold; font-size: 20px;"]
+      = date_range.first.strftime('%Y/%m')
+    = link_to t('simple_calendar.next', default: 'Next week'), calendar.url_for_next_view, style: 'color: #4472C4; padding: 5px 10px; text-decoration: none;'
 
-  table.table.table-striped
+  table.table.table-bordered.table-striped
     thead
       tr
         th 時間
         - date_range.slice(0, 7).each do |day|
-          th
-            = day.strftime('%-m/%-d') + ' (' + t('date.abbr_day_names')[day.wday] + ')'
+          - unless day.wday == 0
+            th[style="text-align: center; font-weight: bold;"]
+              = day.strftime('%d(%a)')
 
     tbody
-      - date_range.each_slice(7) do |week|
-        / 各時間帯ごとに表示
-        - times.each do |time|
-          tr
-            td = time
-            - week.each do |day|
-              td
-                - matching_schedule = @schedules.find { |s| s.started_at.to_date == day && s.started_at.strftime('%H:%M') == time }
-                - if matching_schedule && matching_schedule.is_available
-                  = "◯"
+      - times.each do |time|
+        tr
+          td[style="text-align: center; font-weight: bold;"] = time
+          - date_range.slice(0, 7).each do |day|
+            - unless day.wday == 0
+              td[style="text-align: center;"]
+                - if day.wday == 6 && (time < '11:00' || time > '14:30')
+                  span[style="background-color: black; color: white; font-size: 24px; padding: 10px;"] -
                 - else
-                  = "✖️"
+                  - matching_schedule = @schedules.find { |s| s.started_at.to_date == day && s.started_at.strftime('%H:%M') == time }
+                  - if matching_schedule
+                    a.toggle-availability href="#" data-schedule-id=matching_schedule.id style="font-size: 24px; color: #{matching_schedule.is_available ? '#4CAF50' : '#FF0000'};"
+                      = matching_schedule.is_available ? "◯" : "✖️"
+                  - else
+                    span.cross[style="font-size: 24px; color: #FF0000;"] ✖️

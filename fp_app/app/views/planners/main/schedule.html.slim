@@ -4,7 +4,7 @@
 div.container
   div.row
     div.col-12.text-center
-      h1 予約画面
+      h1 スケジュール
     div.col-12.mt-3
-      = week_calendar events: @schedules do |date, reservations|
+      = week_calendar(events: @schedules, attribute: :started_at) do |date, reservations|
         = date.day
