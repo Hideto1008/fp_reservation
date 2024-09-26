@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Schedule, type: :model do
   let(:user) { create(:user) } # Userのファクトリを使用して、関連するUserを作成
   let(:planner) { create(:planner) } # Plannerのファクトリを使用して、関連するPlannerを作成
-  let(:schedule) { create(:schedule, planner:planner) } # Scheduleのファクトリを使用して、関連するScheduleを作成
+  let(:schedule) { create(:schedule, planner: planner) } # Scheduleのファクトリを使用して、関連するScheduleを作成
 
   describe 'validations' do
     it 'is valid with valid attributes' do
