@@ -1,5 +1,6 @@
 class Schedule < ApplicationRecord
   belongs_to :planner
+  has_one :appointment
   validates :planner_id, presence: true
   validate :check_started_at_future_or_present
   validate :check_schedule_within_working_hours
@@ -7,7 +8,7 @@ class Schedule < ApplicationRecord
   WORKING_HOURS_WEEKDAYS = { start: 10, end: 18 }.freeze
 
   private
-  
+
   def check_started_at_future_or_present
     if started_at < Time.now && will_save_change_to_is_available?
       errors.add(:started_at, "Past records can't be updated")
