@@ -15,8 +15,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
     t.bigint "user_id", null: false
     t.bigint "planner_id", null: false
     t.bigint "schedule_id", null: false
+    t.datetime "reserved_at"
+    t.column "status", "enum('reserved','canceled','done')"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "status_updated_at", null: false
     t.index ["planner_id"], name: "index_appointments_on_planner_id"
     t.index ["schedule_id"], name: "index_appointments_on_schedule_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
