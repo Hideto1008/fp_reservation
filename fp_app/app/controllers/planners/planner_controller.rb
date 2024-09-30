@@ -7,44 +7,6 @@ class Planners::PlannerController < ApplicationController
     @appointments = Appointment.where(planner_id: @planner.id)
   end
 
-  def schedule
-    @planner = Planner.find(params[:id])
-    @schedules = Schedule.where(planner_id: @planner.id)
-  end
-
-  def update_schedule
-    @schedule = Schedule.find(params[:schedule_id])
-    @schedule.is_available = !@schedule.is_available
-    if @schedule.save
-      respond_to do |format|
-        format.js { render "planners/planner/update_schedule" }
-      end
-    else
-      respond_to do |format|
-        format.js { render js: "alert('Unable to update availability.');" }
-      end
-    end
-  end
-
-  def create_schedule
-    @schedule = Schedule.new(
-      planner_id: @planner.id,
-      started_at: DateTime.parse("#{params[:date]} #{params[:time]}"),
-      is_available: true
-    )
-
-    if @schedule.save
-      respond_to do |format|
-        format.js { render "planners/planner/create_schedule" }
-      end
-    else
-      respond_to do |format|
-        format.js { render js: "alert('Unable to create schedule.');" }
-      end
-    end
-  end
-
-
   def edit_planner_info
     @planner = Planner.find(params[:id])
   end
