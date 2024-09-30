@@ -5,12 +5,12 @@ class Appointment < ApplicationRecord
   validates :user_id, presence: true
   validates :planner_id, presence: true
   validates :schedule_id, presence: true
-  validate :check_reserved_at_future_or_present
+  validate :check_reserved_at_is_future_or_present
   validate :check_appointment_availability
 
   private
 
-  def check_reserved_at_future_or_present
+  def check_reserved_at_is_future_or_present
     if reserved_at < Time.now && will_save_change_to_reserved_at?
         errors.add(:reserved_at, "can't be in the past")
     end
@@ -19,7 +19,7 @@ class Appointment < ApplicationRecord
   def check_appointment_availability
     return if schedule.nil?
 
-    if schedule.booking?(planner_id, reserved_at)
+    if schedule.booking_available?(planner_id, reserved_at)
       errors.add(:planner_id, "is not available at the selected time")
     end
   end

@@ -7,7 +7,7 @@ class Schedule < ApplicationRecord
   WORKING_HOURS_SATURDAY = { start: 11, end: 15 }.freeze
   WORKING_HOURS_WEEKDAYS = { start: 10, end: 18 }.freeze
 
-  def booking?(planner_id, started_at)
+  def booking_available?(planner_id, started_at)
     schedule = Schedule.find_by(planner_id: planner_id, started_at: started_at)
     schedule.nil? || !schedule.is_available
   end

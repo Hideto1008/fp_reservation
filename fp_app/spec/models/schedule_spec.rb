@@ -5,13 +5,13 @@ RSpec.describe Schedule, type: :model do
 
   # テストで使用する日付と時間の変数
   let(:past_time) { Time.now - 1.hour }
-  let(:weekday_before_10) { Time.parse("2024-09-30 09:00:00") }
-  let(:weekday_between) { Time.parse("2024-09-30 12:00:00") }
-  let(:weekday_after_18) { Time.parse("2024-09-30 18:30:00") }
-  let(:saturday_before_11) { Time.parse("2024-09-28 10:30:00") }
-  let(:saturday_between) { Time.parse("2024-09-28 12:00:00") }
-  let(:saturday_after_15) { Time.parse("2024-09-28 15:30:00") }
-  let(:sunday) { Time.parse("2024-09-29 10:00:00") }
+  let(:weekday_before_10) { Time.parse("2024-10-30 09:00:00") }
+  let(:weekday_between) { Time.parse("2024-10-30 12:00:00") }
+  let(:weekday_after_18) { Time.parse("2024-10-30 18:30:00") }
+  let(:saturday_before_11) { Time.parse("2024-10-26 10:30:00") }
+  let(:saturday_between) { Time.parse("2024-10-26 12:00:00") }
+  let(:saturday_after_15) { Time.parse("2024-10-26 15:30:00") }
+  let(:sunday) { Time.parse("2024-10-27 10:00:00") }
 
   describe 'validations' do
     it 'is valid with valid attributes' do
