@@ -1,4 +1,4 @@
-class Planners::PlannerController < ApplicationController
+class Planners::MypagesController < ApplicationController
   before_action :authenticate_planner!
   before_action :correct_planner
 
