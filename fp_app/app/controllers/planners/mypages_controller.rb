@@ -23,8 +23,8 @@ class Planners::MypagesController < ApplicationController
   private
 
   def correct_planner
-    @planner = Planner.find(params[:id])
-    if @planner != current_planner
+    @planner = Planner.find_by(id: params[:id])
+    if @planner.nil? || @planner != current_planner
       redirect_to root_path
     end
   end

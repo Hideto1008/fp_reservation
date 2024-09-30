@@ -40,12 +40,12 @@ class Planners::SchedulesController < ApplicationController
 
 	private
 
-	def correct_planner
-		@planner = Planner.find(params[:id])
-		if @planner != current_planner
-			redirect_to root_path
-		end
-	end
+  def correct_planner
+    @planner = Planner.find_by(id: params[:id])
+    if @planner.nil? || @planner != current_planner
+      redirect_to root_path
+    end
+  end
 
 	def planner_params
 		params.require(:planner).permit(:name, :icon_path, :introduction)
