@@ -12,28 +12,38 @@ class Planners::MainController < ApplicationController
     @schedules = Schedule.where(planner_id: @planner.id)
   end
 
-  def edit_schedule
-    @planner = Planner.find(params[:id])
-    @schedules = Schedule.where(planner_id: @planner.id)
-  end
-
-  def update_schedule
-    @planner = Planner.find(params[:id])
-    @schedules = Schedule.where(planner_id: @planner.id)
-    @schedules.each do |schedule|
-      schedule.update(is_available: params[:schedule]["#{schedule.id}"])
-    end
-    redirect_to planners_schedule_path(@planner)
-  end
-
   def toggle_availability
-    @schedule = Schedule.find(params[:id])
-    @schedule.update(is_available: !@schedule.is_available)
-
-    respond_to do |format|
-      format.json { render json: { is_available: @schedule.is_available } }
+    @schedule = Schedule.find(params[:schedule_id])
+    @schedule.is_available = !@schedule.is_available
+    if @schedule.save
+      respond_to do |format|
+        format.js { render 'planners/main/toggle_availability' }
+      end
+    else
+      respond_to do |format|
+        format.js { render js: "alert('Unable to update availability.');" }
+      end
     end
   end
+
+  def create_schedule
+    @schedule = Schedule.new(
+      planner_id: @planner.id,
+      started_at: DateTime.parse("#{params[:date]} #{params[:time]}"),
+      is_available: true
+    )
+
+    if @schedule.save
+      respond_to do |format|
+        format.js { render 'planners/main/create_schedule' }
+      end
+    else
+      respond_to do |format|
+        format.js { render js: "alert('Unable to create schedule.');" }
+      end
+    end
+  end
+
 
   def edit_planner_info
     @planner = Planner.find(params[:id])

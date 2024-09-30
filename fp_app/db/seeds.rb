@@ -7,7 +7,6 @@ planner = Planner.create!(
 )
 
 schedule_times = [
-	{ started_at: Time.new(2024, 9, 27, 10, 0, 0), is_available: true },
   { started_at: Time.new(2024, 10, 01, 10, 0, 0), is_available: true },
   { started_at: Time.new(2024, 10, 01, 11, 0, 0), is_available: true },
   { started_at: Time.new(2024, 10, 01, 13, 0, 0), is_available: true },
