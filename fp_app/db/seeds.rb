@@ -11,9 +11,9 @@ schedule_times = [
   { started_at: Time.new(2024, 10, 01, 11, 0, 0), is_available: true },
   { started_at: Time.new(2024, 10, 01, 13, 0, 0), is_available: true },
   { started_at: Time.new(2024, 10, 01, 14, 0, 0), is_available: true },
-	{ started_at: Time.new(2024, 10, 01, 15, 0, 0), is_available: true },
-	{ started_at: Time.new(2024, 10, 02, 16, 0, 0), is_available: true },
-	{ started_at: Time.new(2024, 10, 02, 17, 0, 0), is_available: true }
+  { started_at: Time.new(2024, 10, 01, 15, 0, 0), is_available: true },
+  { started_at: Time.new(2024, 10, 02, 16, 0, 0), is_available: true },
+  { started_at: Time.new(2024, 10, 02, 17, 0, 0), is_available: true }
 ]
 
 schedule_times.each do |time|

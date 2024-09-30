@@ -2,5 +2,5 @@ var button = $("[data-date='<%= @schedule.started_at.strftime('%Y-%m-%d') %>'][d
 button.text("<%= @schedule.is_available ? '◯' : '✖️' %>");
 button.css("color", "<%= @schedule.is_available ? '#4CAF50' : '#FF0000' %>");
 button.attr("data-schedule-id", "<%= @schedule.id %>");
-button.attr("href", "<%= toggle_availability_path(id: @planner.id, schedule_id: @schedule.id) %>");
+button.attr("href", "<%= update_schedule_path(id: @planner.id, schedule_id: @schedule.id) %>");
 button.attr("data-method", "patch");

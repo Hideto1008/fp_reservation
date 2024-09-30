@@ -36,14 +36,14 @@ RSpec.describe Appointment, type: :model do
     # reserved_atが過去で、statusが"reserved"である場合無効であること
     it 'is invalid with a reserved_at in the past' do
       appointment = build(:appointment, user: user, schedule: schedule, reserved_at: Time.now - 1.hour, status: 'done')
-      appointment.update(:status => 'reserved')
+      appointment.update(status: 'reserved')
       expect(appointment.errors[:reserved_at]).to include("can't be in the past")
     end
 
     # plannerが利用可能でない場合無効であること
     it 'is invalid when the planner is not available' do
       appointment = build(:appointment, user: user, schedule: schedule)
-      schedule.update(:is_available => false)
+      schedule.update(is_available: false)
       expect(appointment.errors[:planner_id]).to include("is not available at the selected time")
     end
   end

@@ -1,4 +1,4 @@
-class Planners::MainController < ApplicationController
+class Planners::PlannerController < ApplicationController
   before_action :authenticate_planner!
   before_action :correct_planner
 
@@ -12,12 +12,12 @@ class Planners::MainController < ApplicationController
     @schedules = Schedule.where(planner_id: @planner.id)
   end
 
-  def toggle_availability
+  def update_schedule
     @schedule = Schedule.find(params[:schedule_id])
     @schedule.is_available = !@schedule.is_available
     if @schedule.save
       respond_to do |format|
-        format.js { render 'planners/main/toggle_availability' }
+        format.js { render "planners/planner/update_schedule" }
       end
     else
       respond_to do |format|
@@ -35,7 +35,7 @@ class Planners::MainController < ApplicationController
 
     if @schedule.save
       respond_to do |format|
-        format.js { render 'planners/main/create_schedule' }
+        format.js { render "planners/planner/create_schedule" }
       end
     else
       respond_to do |format|
