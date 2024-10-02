@@ -40,7 +40,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
   def after_sign_up_path_for(resource)
-    "/hello"
+    "/users/#{current_user.id}/mypage"
   end
 
   # If you have extra params to permit, append them to the sanitizer.
