@@ -1,17 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Schedule, type: :model do
-  let(:planner) { create(:planner) } # Plannerのファクトリを使用して、関連するPlannerを作成
+  let(:planner) { create(:planner) }
+  let(:schedule) { create(:schedule, planner: planner) }
+  let(:reserved_schedule) { create(:schedule, :reserved_schedule, planner: planner) }
 
   # テストで使用する日付と時間の変数
   let(:past_time) { Time.now - 1.hour }
-  let(:weekday_before_10) { Time.parse("2024-10-30 09:00:00") }
-  let(:weekday_between) { Time.parse("2024-10-30 12:00:00") }
-  let(:weekday_after_18) { Time.parse("2024-10-30 18:30:00") }
-  let(:saturday_before_11) { Time.parse("2024-10-26 10:30:00") }
-  let(:saturday_between) { Time.parse("2024-10-26 12:00:00") }
-  let(:saturday_after_15) { Time.parse("2024-10-26 15:30:00") }
-  let(:sunday) { Time.parse("2024-10-27 10:00:00") }
+  let(:weekday_before_10) { (Time.now.beginning_of_week + 1.week) + 9.hours }     # 来週平日の09:00
+  let(:weekday_between) { (Time.now.beginning_of_week + 1.week) + 12.hours }      # 来週平日の12:00
+  let(:weekday_after_18) { (Time.now.beginning_of_week + 1.week) + 18.hours + 30.minutes }  # 来週平日の18:30
+  let(:saturday_before_11) { (Time.now.next_occurring(:saturday).beginning_of_day + 1.week) + 10.hours + 30.minutes }  # 来週土曜日の10:30
+  let(:saturday_between) { (Time.now.next_occurring(:saturday).beginning_of_day + 1.week) + 12.hours }      # 来週土曜日の12:00
+  let(:saturday_after_15) { (Time.now.next_occurring(:saturday).beginning_of_day + 1.week) + 15.hours + 30.minutes }  # 来週土曜日の15:30
+  let(:sunday) { (Time.now.next_occurring(:sunday) + 1.week).beginning_of_day + 10.hours }  # 来週日曜日の10:00
 
   describe 'validations' do
     it 'is valid with valid attributes' do
@@ -77,6 +79,27 @@ RSpec.describe Schedule, type: :model do
     it 'is valid with a started_at between 11:00 and 15:00 on Saturday' do
       schedule = build(:schedule, planner: planner, started_at: saturday_between, is_available: true)
       expect(schedule).to be_valid
+    end
+  end
+
+  describe 'booking_available?' do
+    it 'returns false if the schedule exists and is available' do
+      schedule = create(:schedule, :reserved_schedule, planner: planner)
+      result = schedule.booking_available?(planner.id, schedule.started_at)
+      expect(result).to be false
+    end
+
+    it 'returns true if no schedule exists at the given time' do
+      schedule = Schedule.new
+      result = schedule.booking_available?(planner.id, weekday_between)
+      expect(result).to be true
+    end
+
+    it 'returns true if the schedule exists but is unavailable' do
+      create(:schedule, planner: planner, started_at: weekday_between, is_available: false)
+      schedule = Schedule.new
+      result = schedule.booking_available?(planner.id, weekday_between)
+      expect(result).to be true
     end
   end
 end

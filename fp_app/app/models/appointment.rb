@@ -20,7 +20,7 @@ class Appointment < ApplicationRecord
     return if schedule.nil?
 
     if schedule.booking_available?(planner_id, reserved_at)
-      errors.add(:planner_id, "is not available at the selected time")
+      errors.add(:schedule_id, "is not available at the selected time")
     end
   end
 end

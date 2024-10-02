@@ -3,11 +3,10 @@ FactoryBot.define do
     planner
     started_at { Time.current+1.day }
     is_available { false }
-  end
 
-  factory :schedule_with_appointments, parent: :schedule do
-    planner
-    started_at { Time.parse("2024-10-30 17:00:00") }
-    is_available { true }
+    trait :reserved_schedule do
+      started_at { (Time.now.beginning_of_week + 1.week) + 12.hours }
+      is_available { true }
+    end
   end
 end

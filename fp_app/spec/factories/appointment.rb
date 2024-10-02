@@ -1,9 +1,6 @@
 FactoryBot.define do
   factory :appointment do
-    user_id { 1 }
-    planner_id { 1 }
-    schedule_id { 1 }
-    reserved_at { Time.parse("2024-10-30 17:00:00") }
+    reserved_at { (Time.now.beginning_of_week + 1.week) + 12.hours }
     status { "reserved" }
   end
 end
