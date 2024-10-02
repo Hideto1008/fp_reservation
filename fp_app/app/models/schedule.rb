@@ -7,6 +7,11 @@ class Schedule < ApplicationRecord
   WORKING_HOURS_SATURDAY = { start: 11, end: 15 }.freeze
   WORKING_HOURS_WEEKDAYS = { start: 10, end: 18 }.freeze
 
+  def booking_available?(planner_id, started_at)
+    schedule = Schedule.find_by(planner_id: planner_id, started_at: started_at)
+    schedule.nil? || !schedule.is_available
+  end
+
   private
 
   def check_started_at_future_or_present
@@ -23,6 +28,7 @@ class Schedule < ApplicationRecord
 
   def check_not_closed_day
     return unless started_at.sunday?
+
     if is_available
       errors.add(:started_at, "can't be on a closed day")
     end
