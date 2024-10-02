@@ -40,27 +40,53 @@ RSpec.describe 'Routing', type: :routing do
   end
 
   # Planners routes
-  it 'routes /planners/:id/mypage to planners/main#mypage' do
+  it 'routes /planners/:id/mypage to planners/mypages#mypage' do
     expect(get: '/planners/1/mypage').to route_to(
-      controller: 'planners/main',
+      controller: 'planners/mypages',
       action: 'mypage',
       id: '1'
     )
   end
 
-  it 'routes /planners/:id/edit_planner_info to planners/main#edit_planner_info' do
+  it 'routes /planners/:id/edit_planner_info to planners/mypages#edit_planner_info' do
     expect(get: '/planners/1/edit_planner_info').to route_to(
-      controller: 'planners/main',
+      controller: 'planners/mypages',
       action: 'edit_planner_info',
       id: '1'
     )
   end
 
-  it 'routes /planners/:id/update_info to planners/main#update_planner_info' do
+  it 'routes /planners/:id/update_info to planners/mypages#update_planner_info' do
     expect(patch: '/planners/1/update_info').to route_to(
-      controller: 'planners/main',
+      controller: 'planners/mypages',
       action: 'update_planner_info',
       id: '1'
+    )
+  end
+
+  # Planners schedule routes
+  it 'routes GET /planners/:id/schedule to planners/schedules#schedule' do
+    expect(get: '/planners/1/schedule').to route_to(
+      controller: 'planners/schedules',
+      action: 'schedule',
+      id: '1'
+    )
+  end
+
+  it 'routes POST /planners/:id/schedules to planners/schedules#create_schedule' do
+    expect(post: '/planners/1/schedules').to route_to(
+      controller: 'planners/schedules',
+      action: 'create_schedule',
+      id: '1'
+    )
+  end
+
+  it 'routes PATCH /planners/:id/schedules/:schedule_id/update_schedule to planners/schedules#update_schedule' do
+    expect(patch: '/planners/1/schedules/2/update_schedule').to route_to(
+      controller: 'planners/schedules',
+      action: 'update_schedule',
+      id: '1',
+      schedule_id: '2'
     )
   end
 end
