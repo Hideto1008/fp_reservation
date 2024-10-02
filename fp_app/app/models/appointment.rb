@@ -4,7 +4,7 @@ class Appointment < ApplicationRecord
   belongs_to :schedule
   validates :user_id, presence: true
   validates :planner_id, presence: true
-  validates :schedule_id, presence: true
+  validates :schedule, presence: true
   validate :check_reserved_at_is_future_or_present
   validate :check_appointment_availability
 
@@ -17,9 +17,8 @@ class Appointment < ApplicationRecord
   end
 
   def check_appointment_availability
-    return if schedule.nil?
-
-    if schedule.booking_available?(planner_id, reserved_at)
+    schedule = Schedule.find_by(planner_id: planner_id, started_at: reserved_at)
+    if schedule.nil? || !schedule.is_available
       errors.add(:schedule_id, "is not available at the selected time")
     end
   end

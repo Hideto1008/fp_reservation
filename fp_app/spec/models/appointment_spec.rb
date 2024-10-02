@@ -23,7 +23,7 @@ RSpec.describe Appointment, type: :model do
     it 'is invalid without a schedule_id' do
       appointment = build(:appointment, user: user, schedule: nil, planner: planner)
       expect(appointment).not_to be_valid
-      expect(appointment.errors[:schedule_id]).to include("can't be blank")
+      expect(appointment.errors[:schedule_id]).to include("is not available at the selected time")
     end
 
     # planner_idがない場合無効であること
