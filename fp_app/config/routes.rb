@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   root "homepages#index"
-  get "hello", to: "hello_world#index"
 
   get "planners/:id/mypage", to: "planners/mypages#mypage", as: "planners_mypage"
   get "planners/:id/edit_planner_info", to: "planners/mypages#edit_planner_info", as: "edit_planner_info"
@@ -14,8 +13,8 @@ Rails.application.routes.draw do
   get "users/:id/edit_user_info", to: "users/mypages#edit_user_info", as: "edit_user_info"
   patch "users/:id/update_info", to: "users/mypages#update_user_info", as: "update_user_info"
 
-  get "users/:id/reservation", to: "users/appointments#index", as: "reservation"
-  get "users/planner_list", to: "users/planners#index", as: "planners_list"
+  get "users/:id/reservation", to: "users/reservation#index", as: "reservation"
+  get "users/:id/planner_list", to: "users/planners#index", as: "planners_list"
 
   devise_for :users, controllers: {
     sessions: "users/sessions",

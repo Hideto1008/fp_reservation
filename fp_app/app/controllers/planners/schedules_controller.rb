@@ -27,7 +27,7 @@ class Planners::SchedulesController < ApplicationController
       started_at: DateTime.parse("#{params[:date]} #{params[:time]}"),
       is_available: true
     )
-		if @schedule.save
+    if @schedule.save
       respond_to do |format|
         format.js { render "planners/schedules/create_schedule" }
       end
@@ -38,7 +38,7 @@ class Planners::SchedulesController < ApplicationController
     end
   end
 
-	private
+  private
 
   def correct_planner
     @planner = Planner.find_by(id: params[:id])
@@ -47,7 +47,7 @@ class Planners::SchedulesController < ApplicationController
     end
   end
 
-	def planner_params
-		params.require(:planner).permit(:name, :icon_path, :introduction)
-	end
+  def planner_params
+    params.require(:planner).permit(:name, :icon_path, :introduction)
+  end
 end

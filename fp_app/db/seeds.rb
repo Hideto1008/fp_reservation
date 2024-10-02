@@ -19,7 +19,7 @@ schedule_times = [
   { started_at: (Time.now.beginning_of_week + 1.week) + 14.hours, is_available: true },
   { started_at: (Time.now.beginning_of_week + 1.week) + 15.hours, is_available: true },
   { started_at: (Time.now.beginning_of_week + 1.week) + 16.hours, is_available: true },
-  { started_at: (Time.now.beginning_of_week + 1.week) + 17.hours, is_available: true },
+  { started_at: (Time.now.beginning_of_week + 1.week) + 17.hours, is_available: true }
 ]
 
 schedule_times.each do |time|
