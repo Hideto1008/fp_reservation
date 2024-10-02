@@ -1,7 +1,7 @@
 # spec/requests/planners_main_spec.rb
 require 'rails_helper'
 
-RSpec.describe "Planners::MainController", type: :request do
+RSpec.describe "Planners::MypagesController", type: :request do
   let(:planner) { create(:planner) }
   let(:other_planner) { create(:other_planner) }
 
