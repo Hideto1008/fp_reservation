@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :schedule do
     planner
-    started_at { Time.current+1.day }
+    started_at { (Time.now.beginning_of_week + 1.week) + 13.hours }
     is_available { false }
 
     trait :reserved_schedule do

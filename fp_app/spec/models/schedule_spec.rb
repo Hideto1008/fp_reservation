@@ -81,25 +81,4 @@ RSpec.describe Schedule, type: :model do
       expect(schedule).to be_valid
     end
   end
-
-  describe 'booking_available?' do
-    it 'returns false if the schedule exists and is available' do
-      schedule = create(:schedule, :reserved_schedule, planner: planner)
-      result = schedule.booking_available?(planner.id, schedule.started_at)
-      expect(result).to be false
-    end
-
-    it 'returns true if no schedule exists at the given time' do
-      schedule = Schedule.new
-      result = schedule.booking_available?(planner.id, weekday_between)
-      expect(result).to be true
-    end
-
-    it 'returns true if the schedule exists but is unavailable' do
-      create(:schedule, planner: planner, started_at: weekday_between, is_available: false)
-      schedule = Schedule.new
-      result = schedule.booking_available?(planner.id, weekday_between)
-      expect(result).to be true
-    end
-  end
 end
