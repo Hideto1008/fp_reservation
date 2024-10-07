@@ -3,14 +3,11 @@ source "https://rubygems.org"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.0"
 gem "devise"
-gem 'ridgepole'
-gem 'bootstrap-sass'
-gem 'jquery-rails'
+gem "ridgepole"
+gem "bootstrap-sass"
+gem "jquery-rails"
 gem "sassc-rails"
 
-# Add slim
-gem 'slim-rails'
-gem 'html2slim'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use mysql as the database for Active Record
@@ -47,6 +44,10 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
+  # Add slim
+  gem "slim-rails"
+  gem "html2slim"
+
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
@@ -54,19 +55,19 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # Add RSpec for testing [https://rspec.info/]
-  gem 'rspec-rails', '~> 6.1.0'
-  gem 'factory_bot_rails'
-  gem 'faker'
+  gem "rspec-rails", "~> 6.1.0"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'rubocop', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
-  gem 'overcommit'
+  gem "rubocop", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
+  gem "overcommit"
 end
 
 group :test do
