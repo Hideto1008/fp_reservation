@@ -1,0 +1,2 @@
+module Planners::SchedulesHelper
+end

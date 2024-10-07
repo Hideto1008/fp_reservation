@@ -1,0 +1,3 @@
+var button = $("[data-schedule-id='<%= @schedule.id %>']");
+button.text("<%= @schedule.is_available ? '◯' : '✖️' %>");
+button.css("color", "<%= @schedule.is_available ? '#4CAF50' : '#FF0000' %>");
