@@ -20,6 +20,10 @@ module App
       g.test_framework false
     end
 
+    config.generators do |g|
+      g.template_engine :slim
+    end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
