@@ -90,6 +90,7 @@ RSpec.describe 'Routing', type: :routing do
     )
   end
 
+  # Users mypage routes
   it 'routes GET /users/:id/mypage to users/mypages#mypage' do
     expect(get: '/users/1/mypage').to route_to(
       controller: 'users/mypages',
@@ -110,6 +111,15 @@ RSpec.describe 'Routing', type: :routing do
     expect(patch: '/users/1/update_info').to route_to(
       controller: 'users/mypages',
       action: 'update_user_info',
+      id: '1'
+    )
+  end
+
+  # Users planner_info routes
+  it 'routes GET users/:id/planners_list to users/planners_info#list' do
+    expect(get: '/users/1/planners_list').to route_to(
+      controller: 'users/planners_info',
+      action: 'list',
       id: '1'
     )
   end
