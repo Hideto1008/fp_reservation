@@ -8,9 +8,9 @@ create_table "appointments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci"
   t.column "status", "enum('reserved', 'canceled', 'done')"
   t.datetime "created_at", null: false
   t.datetime "status_updated_at", null: false
-  t.index ["planner_id"], name: "index_appointments_on_planner_id"
-  t.index ["schedule_id"], name: "index_appointments_on_schedule_id"
-  t.index ["user_id"], name: "index_appointments_on_user_id"
+  t.index [ "planner_id" ], name: "index_appointments_on_planner_id"
+  t.index [ "schedule_id" ], name: "index_appointments_on_schedule_id"
+  t.index [ "user_id" ], name: "index_appointments_on_user_id"
 end
 
 create_table "planners", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -24,8 +24,8 @@ create_table "planners", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", fo
   t.string "name", default: "planner"
   t.text "icon_path"
   t.text "introduction"
-  t.index ["email"], name: "index_planners_on_email", unique: true
-  t.index ["reset_password_token"], name: "index_planners_on_reset_password_token", unique: true
+  t.index [ "email" ], name: "index_planners_on_email", unique: true
+  t.index [ "reset_password_token" ], name: "index_planners_on_reset_password_token", unique: true
 end
 
 create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -34,7 +34,8 @@ create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", f
   t.boolean "is_available", default: false
   t.datetime "created_at", null: false
   t.datetime "updated_at", null: false
-  t.index ["planner_id"], name: "index_schedules_on_planner_id"
+  t.index [ "planner_id" ], name: "index_schedules_on_planner_id"
+  t.index [ "started_at" ], name: "index_schedules_on_started_at"
 end
 
 create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -47,8 +48,8 @@ create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force
   t.datetime "updated_at", null: false
   t.string "name", default: "user"
   t.text "icon_path"
-  t.index ["email"], name: "index_users_on_email", unique: true
-  t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  t.index [ "email" ], name: "index_users_on_email", unique: true
+  t.index [ "reset_password_token" ], name: "index_users_on_reset_password_token", unique: true
 end
 
 add_foreign_key "appointments", "planners"
