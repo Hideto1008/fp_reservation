@@ -1,6 +1,6 @@
 class Schedule < ApplicationRecord
   belongs_to :planner
-    has_one :appointment
+  has_one :appointment
   validates :planner_id, presence: true
   validate :check_started_at_future_or_present
   validate :check_schedule_within_working_hours
@@ -23,6 +23,7 @@ class Schedule < ApplicationRecord
 
   def check_not_closed_day
     return unless started_at.sunday?
+
     if is_available
       errors.add(:started_at, "can't be on a closed day")
     end

@@ -1,2 +1,4 @@
 # MacOSのシステムファイル
 .DS_Store
+# rubocopの設定ファイル
+.rubocop_todo.yml
