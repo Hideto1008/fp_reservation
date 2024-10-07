@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root "homepages#index"
-  get 'hello', to: 'hello_world#index'
+  get "hello", to: "hello_world#index"
 
   devise_for :users, controllers: {
     sessions: "users/sessions",
@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   }
 
   devise_for :planners, path: "planners", controllers: {
-    sessions: 'planners/sessions',
-    registrations: 'planners/registrations'
+    sessions: "planners/sessions",
+    registrations: "planners/registrations"
   }
 end

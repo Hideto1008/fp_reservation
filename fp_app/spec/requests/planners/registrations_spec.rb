@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Planners::RegistrationsController, type: :controller do
   include Devise::Test::ControllerHelpers
+
   EMAIL = "test_planner@example.com"
+
   before do
     # Deviseのマッピングを設定
     @request.env["devise.mapping"] = Devise.mappings[:planner]
