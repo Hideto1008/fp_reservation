@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   patch "users/:id/update_info", to: "users/mypages#update_user_info", as: "update_user_info"
 
   get "users/:id/reservation", to: "users/reservation#index", as: "reservation"
-  get "users/:id/planner_list", to: "users/planners#index", as: "planners_list"
+  get "users/:id/planners_list", to: "users/planners_info#list", as: "planners_list"
+  get "users/:id/planners/:planner_id", to: "users/planners_info#detail", as: "planner"
 
   devise_for :users, controllers: {
     sessions: "users/sessions",
