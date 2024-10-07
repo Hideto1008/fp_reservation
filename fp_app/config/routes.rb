@@ -10,8 +10,6 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations"
-    sessions: "users/sessions",
-    registrations: "users/registrations"
   }
 
   devise_for :planners, path: "planners", controllers: {
