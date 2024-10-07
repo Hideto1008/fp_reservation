@@ -123,4 +123,13 @@ RSpec.describe 'Routing', type: :routing do
       id: '1'
     )
   end
+
+  it 'routes GET users/:id/planners/:planner_id to users/planners_info#detail' do
+    expect(get: '/users/1/planners/2').to route_to(
+      controller: 'users/planners_info',
+      action: 'detail',
+      id: '1',
+      planner_id: '2'
+    )
+  end
 end
