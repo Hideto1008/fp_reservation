@@ -5,7 +5,6 @@ RSpec.describe "Users::PlannersDetail", type: :request do
     let(:user) { create(:user) }
     let(:other_user) { create(:other_user) }
     let(:planner) { create(:planner) }
-    let(:other_planner) { create(:other_planner) }
 
     before do
       sign_in user
