@@ -23,6 +23,7 @@ class Schedule < ApplicationRecord
 
   def check_not_closed_day
     return unless started_at.sunday?
+
     if is_available
       errors.add(:started_at, "can't be on a closed day")
     end
