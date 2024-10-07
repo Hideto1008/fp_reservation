@@ -1,7 +1,7 @@
 h1[style="text-align: center; margin-bottom: 30px;"]
   |  <img src="
   = asset_path('title_icon.png')
-  | " alt="icon" style="vertical-align: middle; margin-right: 10px; width: 45px; height: 45px;"> Reservation App 
+  | " alt="icon" style="vertical-align: middle; margin-right: 10px; width: 45px; height: 45px;"> Reservation App
 h2[style="text-align: center; margin-bottom: 30px;"]
   | User Login
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
@@ -19,7 +19,6 @@ h2[style="text-align: center; margin-bottom: 30px;"]
   .actions[style="width: 60%; margin-left: auto; margin-right: auto; margin-top: 20px; margin-bottom: 20px; display: flex; justify-content: space-between;"]
     = link_to "Sign up", new_registration_path(resource_name), style: "color: #DDA0DD; padding: 5px 15px; display: inline-block; text-decoration: none; border: 1px solid transparent; margin-top: 10px; margin-bottom: 10px; margin-right: auto;"
     = f.submit "Log in", class: "btn btn-primary", style: "width: auto; padding: 5px 15px; margin-top: 10px; margin-bottom: 10px; font-size: 18px;"
-
 
   .actions[style="width: 60%; margin-left: auto; margin-right: auto; display: flex; justify-content: space-between; margin-top: 20px; margin-bottom: 20px;"]
     = link_to "I'm a planner", new_planner_session_path, style: "color: #DDA0DD; padding: 5px 15px; display: inline-block; text-decoration: none; border: 1px solid transparent; margin-top: 10px; margin-bottom: 10px;"
