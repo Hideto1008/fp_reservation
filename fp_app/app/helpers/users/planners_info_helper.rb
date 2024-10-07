@@ -1,0 +1,2 @@
+module Users::PlannersInfoHelper
+end
