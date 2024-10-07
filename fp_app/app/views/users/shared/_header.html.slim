@@ -1,0 +1,14 @@
+.header[style="display: flex; justify-content: space-between; align-items: flex-end; padding: 20px 0; border-bottom: 2px solid #000;"]
+  h1[style="font-size: 45px; margin: 0;"]
+    img src=asset_path('title_icon.png') alt="icon" style="vertical-align: middle; margin-right: 10px; width: 60px; height: 60px;"
+    | Reservation App
+  nav
+    ul[style="list-style: none; display: flex; gap: 20px; padding: 0; font-size: 18px;"]
+      li
+        = link_to 'Reserve', reservation_path
+      li
+        = link_to 'FP list', planners_list_path
+      li
+        = link_to 'My page', users_mypage_path(@user.id)
+      li
+        = link_to 'Log out', destroy_user_session_path, data: { turbo_method: :delete }

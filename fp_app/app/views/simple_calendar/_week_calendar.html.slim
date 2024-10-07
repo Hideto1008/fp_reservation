@@ -1,0 +1,31 @@
+div.simple-calendar
+  div.calendar-heading[style="display: flex; justify-content: space-between; align-items: center;"]
+    = link_to t('simple_calendar.previous', default: 'Last week'), calendar.url_for_previous_view, style: 'color: #4472C4; padding: 5px 10px; text-decoration: none;'
+    span.calendar-title[style="flex-grow: 1; text-align: center; font-weight: bold; font-size: 20px;"]
+      = date_range.first.strftime('%Y/%m')
+    = link_to t('simple_calendar.next', default: 'Next week'), calendar.url_for_next_view, style: 'color: #4472C4; padding: 5px 10px; text-decoration: none;'
+
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th [style="text-align: center; vertical-align: middle;"]時間
+        - date_range.slice(0, 7).each do |day|
+          - unless day.wday == 0
+            th[style="text-align: center; font-weight: bold;"]
+              = day.strftime('%d(%a)')
+
+    tbody
+      - times.each do |time|
+        tr
+          td[style="text-align: center; font-weight: bold;"] = time
+          - date_range.slice(0, 7).each do |day|
+            - unless day.wday == 0
+              td[style="text-align: center;"]
+                - if day.wday == 6 && (time < '11:00' || time > '14:30')
+                  span[style="background-color: black; color: white; font-size: 24px; padding: 10px;"] -
+                - else
+                  - matching_schedule = @schedules.find { |s| s.started_at.to_date == day && s.started_at.strftime('%H:%M') == time }
+                  - if matching_schedule
+                    = link_to matching_schedule.is_available ? "◯" : "✖️", update_schedule_path(id: @planner.id, schedule_id: matching_schedule.id), method: :patch, remote: true, class: "toggle-availability", data: { schedule_id: matching_schedule.id }, style: "font-size: 24px; color: #{matching_schedule.is_available ? '#4CAF50' : '#FF0000'};"
+                  - else
+                    = link_to "--", create_schedule_path(id: @planner.id, date: day, time: time), method: :post, remote: true, class: "toggle-availability", data: { schedule_id: nil, date: day.strftime('%Y-%m-%d'), time: time }, style: "font-size: 24px; color: #FF0000;"
