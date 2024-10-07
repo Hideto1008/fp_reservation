@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   }
 
   devise_for :planners, path: "planners", controllers: {
-    sessions: 'planners/sessions',
-    registrations: 'planners/registrations'
+    sessions: "planners/sessions",
+    registrations: "planners/registrations"
   }
 end
