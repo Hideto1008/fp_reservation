@@ -4,6 +4,7 @@ RSpec.describe Planners::RegistrationsController, type: :controller do
   include Devise::Test::ControllerHelpers
 
   EMAIL = "test_planner@example.com"
+  PASSWORD = "password"
 
   before do
     # Deviseのマッピングを設定
@@ -15,8 +16,8 @@ RSpec.describe Planners::RegistrationsController, type: :controller do
       planner_params = {
         planner: {
           email: EMAIL,
-          password: 'password',
-          password_confirmation: 'password'
+          password: PASSWORD,
+          password_confirmation: PASSWORD
         }
       }
       post :create, params: planner_params

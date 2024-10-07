@@ -10,17 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_27_091457) do
   create_table "appointments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "planner_id", null: false
     t.bigint "schedule_id", null: false
     t.datetime "reserved_at"
     t.column "status", "enum('reserved','canceled','done')"
-    t.datetime "reserved_at"
-    t.column "status", "enum('reserved','canceled','done')"
     t.datetime "created_at", null: false
-    t.datetime "status_updated_at", null: false
     t.datetime "status_updated_at", null: false
     t.index ["planner_id"], name: "index_appointments_on_planner_id"
     t.index ["schedule_id"], name: "index_appointments_on_schedule_id"
@@ -33,11 +30,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "name", default: "planner"
     t.text "icon_path"
     t.text "introduction"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_planners_on_email", unique: true
     t.index ["reset_password_token"], name: "index_planners_on_reset_password_token", unique: true
   end
@@ -46,13 +43,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
     t.bigint "planner_id", null: false
     t.datetime "started_at"
     t.boolean "is_available", default: false
-    t.bigint "planner_id", null: false
-    t.datetime "started_at"
-    t.boolean "is_available", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["planner_id"], name: "index_schedules_on_planner_id"
-    t.index ["planner_id"], name: "index_schedules_on_planner_id"
+    t.index ["started_at"], name: "index_schedules_on_started_at"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -61,10 +55,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "name", default: "user"
-    t.text "icon_path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", default: "user"
+    t.text "icon_path"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -72,6 +66,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_010612) do
   add_foreign_key "appointments", "planners"
   add_foreign_key "appointments", "schedules"
   add_foreign_key "appointments", "users"
-  add_foreign_key "schedules", "planners"
   add_foreign_key "schedules", "planners"
 end
