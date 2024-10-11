@@ -17,10 +17,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_091457) do
     t.bigint "schedule_id", null: false
     t.datetime "reserved_at"
     t.column "status", "enum('reserved','canceled','done')"
-    t.datetime "reserved_at"
-    t.column "status", "enum('reserved','canceled','done')"
     t.datetime "created_at", null: false
-    t.datetime "status_updated_at", null: false
     t.datetime "status_updated_at", null: false
     t.index ["planner_id"], name: "index_appointments_on_planner_id"
     t.index ["schedule_id"], name: "index_appointments_on_schedule_id"
@@ -43,9 +40,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_091457) do
   end
 
   create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "planner_id", null: false
-    t.datetime "started_at"
-    t.boolean "is_available", default: false
     t.bigint "planner_id", null: false
     t.datetime "started_at"
     t.boolean "is_available", default: false
