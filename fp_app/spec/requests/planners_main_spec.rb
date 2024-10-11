@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe "Planners::MainController", type: :request do
   let(:planner) { create(:planner) }
-  let(:other_planner) { create(:other_planner) }
+  let(:other_planner) { create(:planner, email: "other@example.com") }
 
   before do
     sign_in planner
