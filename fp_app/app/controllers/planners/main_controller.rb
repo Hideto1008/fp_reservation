@@ -29,6 +29,7 @@ class Planners::MainController < ApplicationController
     @planner = Planner.find(params[:id])
     if @planner != current_planner
       redirect_to root_path
+      flash[:alert] = "You are not authorized to access this page."
     end
   end
 
