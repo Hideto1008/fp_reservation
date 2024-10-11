@@ -6,8 +6,8 @@
     ul[style="list-style: none; display: flex; gap: 20px; padding: 0; font-size: 18px;"]
 
       li
-        = link_to 'Schedule', planners_schedule_path
+        = link_to 'Schedule', planner_schedule_path(@planner.id)
       li
-        = link_to 'My page', planners_mypage_path(@planner.id)
+        = link_to 'My page', planner_path(@planner.id)
       li
         = link_to 'Log out', destroy_planner_session_path, data: { turbo_method: :delete }

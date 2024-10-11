@@ -12,14 +12,14 @@ RSpec.describe "Planners::Schedules", type: :request do
   describe "GET /planners/:id/schedule" do
     context "when accessing own schedule" do
       it "returns a successful response" do
-        get planners_schedule_path(planner)
+        get planner_schedule_path(planner)
         expect(response).to have_http_status(:success)
       end
     end
 
     context "when accessing another planner's schedule" do
       it "redirects to root_path" do
-        get planners_schedule_path(other_planner)
+        get planner_schedule_path(other_planner)
         expect(response).to redirect_to(root_path)
       end
     end
