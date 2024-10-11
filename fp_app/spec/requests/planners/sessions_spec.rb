@@ -9,7 +9,7 @@ RSpec.describe Planners::RegistrationsController, type: :controller do
   end
 
   describe 'POST #create' do
-    it 'redirects to /planners/:id/mypage after planner sign up' do
+    it 'redirects to /planners/:id/ after planner sign up' do
       planner_params = {
         planner: {
           email: EMAIL,
@@ -26,7 +26,7 @@ RSpec.describe Planners::RegistrationsController, type: :controller do
       expect(planner).to be_present
 
       # リダイレクト先が正しいか確認
-      expect(response).to redirect_to(planners_mypage_path(planner))
+      expect(response).to redirect_to(planner_path(planner))
     end
   end
 end

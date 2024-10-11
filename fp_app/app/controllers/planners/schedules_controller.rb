@@ -2,13 +2,13 @@ class Planners::SchedulesController < ApplicationController
   before_action :authenticate_planner!
   before_action :correct_planner
 
-  def schedule
-    @planner = Planner.find(params[:id])
-    @schedules = Schedule.where(planner_id: @planner.id)
+  def index
+    @planner = Planner.find(params[:planner_id])
+    @schedules = @planner.schedules
   end
 
-  def update_schedule
-    @schedule = Schedule.find(params[:schedule_id])
+  def update
+    @schedule = Schedule.find(params[:id])
     @schedule.is_available = !@schedule.is_available
     if @schedule.save
       respond_to do |format|
@@ -21,13 +21,13 @@ class Planners::SchedulesController < ApplicationController
     end
   end
 
-  def create_schedule
+  def create
     @schedule = Schedule.new(
       planner_id: @planner.id,
       started_at: DateTime.parse("#{params[:date]} #{params[:time]}"),
       is_available: true
     )
-		if @schedule.save
+    if @schedule.save
       respond_to do |format|
         format.js { render "planners/schedules/create_schedule" }
       end
@@ -38,16 +38,16 @@ class Planners::SchedulesController < ApplicationController
     end
   end
 
-	private
+  private
 
   def correct_planner
-    @planner = Planner.find_by(id: params[:id])
+    @planner = Planner.find_by(id: params[:planner_id])
     if @planner.nil? || @planner != current_planner
       redirect_to root_path
     end
   end
 
-	def planner_params
-		params.require(:planner).permit(:name, :icon_path, :introduction)
-	end
+  def planner_params
+    params.require(:planner).permit(:name, :icon_path, :introduction)
+  end
 end

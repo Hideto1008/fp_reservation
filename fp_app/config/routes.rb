@@ -13,8 +13,8 @@ Rails.application.routes.draw do
     registrations: "planners/registrations"
   }
 
-  resources :planners, only: [:show, :edit, :update] do
-    resources :schedules, only: [:index, :create, :update, :edit], controller: "planners/schedules"
+  resources :planners, only: [ :show, :edit, :update ] do
+    resources :schedules, only: [ :index, :create, :update ], controller: "planners/schedules"
   end
 
 
@@ -22,5 +22,4 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
     registrations: "users/registrations"
   }
-
 end
