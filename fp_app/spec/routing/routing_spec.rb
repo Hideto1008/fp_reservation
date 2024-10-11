@@ -49,7 +49,7 @@ RSpec.describe 'Routing', type: :routing do
   end
 
   it 'routes /planners/:id/edit_planner_info to planners/main#edit_planner_info' do
-    expect(get: '/planners/1/edit_planner_info').to route_to(
+    expect(get: '/planners/1/edit_info').to route_to(
       controller: 'planners/main',
       action: 'edit_planner_info',
       id: '1'

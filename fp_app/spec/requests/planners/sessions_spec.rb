@@ -26,7 +26,7 @@ RSpec.describe Planners::RegistrationsController, type: :controller do
       expect(planner).to be_present
 
       # リダイレクト先が正しいか確認
-      expect(response).to redirect_to(planners_mypage_path(planner))
+      expect(response).to redirect_to(mypage_planner_path(planner))
     end
   end
 end

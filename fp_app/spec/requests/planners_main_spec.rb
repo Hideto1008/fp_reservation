@@ -12,7 +12,7 @@ RSpec.describe "Planners::MainController", type: :request do
   describe "GET /planners/:id/mypage" do
     context "when the logged-in planner is the correct planner" do
       it "displays the mypage" do
-        get planners_mypage_path(planner)
+        get mypage_planner_path(planner)
         expect(response).to have_http_status(:success)
         expect(response.body).to include(planner.name)
         expect(response.body).to include(planner.introduction)
@@ -22,7 +22,7 @@ RSpec.describe "Planners::MainController", type: :request do
 
     context "when accessing another planner's mypage" do
       it "redirects to the root page" do
-        get planners_mypage_path(other_planner)
+        get mypage_planner_path(other_planner)
         expect(response).to redirect_to(root_path)
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe "Planners::MainController", type: :request do
   describe "GET /planners/:id/edit_planner_info" do
     context "when the logged-in user is the correct planner" do
       it "displays the edit page" do
-        get edit_planner_info_path(planner)
+        get edit_info_planner_path(planner)
         expect(response).to have_http_status(:success)
         expect(response.body).to include("Edit Planner Information")
       end
@@ -39,7 +39,7 @@ RSpec.describe "Planners::MainController", type: :request do
 
     context "when accessing another planner's edit page" do
       it "redirects to the root page" do
-        get edit_planner_info_path(other_planner)
+        get edit_info_planner_path(other_planner)
         expect(response).to redirect_to(root_path)
       end
     end
@@ -48,8 +48,8 @@ RSpec.describe "Planners::MainController", type: :request do
   describe "PATCH /planners/:id/update_planner_info" do
     context "with valid parameters" do
       it "updates the planner info and redirects to mypage" do
-        patch update_planner_info_path(planner), params: { planner: { name: "New Name", icon_path: "/new/icon/path.png", introduction: "New Introduction" } }
-        expect(response).to redirect_to(planners_mypage_path(planner))
+        patch update_info_planner_path(planner), params: { planner: { name: "New Name", icon_path: "/new/icon/path.png", introduction: "New Introduction" } }
+        expect(response).to redirect_to(mypage_planner_path(planner))
         follow_redirect!
         expect(response.body).to include("New Name")
         expect(response.body).to include("New Introduction")
@@ -60,7 +60,7 @@ RSpec.describe "Planners::MainController", type: :request do
 
     context "when attempting to update another planner's info" do
       it "redirects to the root page" do
-        patch update_planner_info_path(other_planner), params: { planner: { name: "Unauthorized Update" } }
+        patch update_info_planner_path(other_planner), params: { planner: { name: "Unauthorized Update" } }
         expect(response).to redirect_to(root_path)
       end
     end

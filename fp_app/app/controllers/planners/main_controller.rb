@@ -17,7 +17,7 @@ class Planners::MainController < ApplicationController
   def update_planner_info
     @planner = Planner.find(params[:id])
     if @planner.update(planner_params)
-      redirect_to planners_mypage_path(@planner), notice: "Information updated successfully."
+      redirect_to mypage_planner_path(@planner), notice: "Information updated successfully."
     else
       render :edit_planner_info
     end
