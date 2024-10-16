@@ -21,11 +21,6 @@ class PlannersController < ApplicationController
   private
 
   def correct_planner
-    unless params[:id].to_i > 0
-      redirect_to root_path, alert: "Invalid planner ID"
-      return
-    end
-
     @planner = Planner.find_by(id: params[:id])
     if @planner.nil? || @planner != current_planner
       redirect_to root_path, alert: "You are not authorized to access this page"
