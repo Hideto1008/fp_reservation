@@ -11,7 +11,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
   end
 
   describe 'POST #create' do
-    it 'redirects to /users/:id/mypage after user sign up' do
+    it 'redirects to /users/:id after user sign up' do
       user_params = {
         user: {
           email: EMAIL,

@@ -1,7 +1,7 @@
 # spec/requests/planners_main_spec.rb
 require 'rails_helper'
 
-RSpec.describe "Planners::MypagesController", type: :request do
+RSpec.describe "PlannersController", type: :request do
   let(:planner) { create(:planner) }
   let(:other_planner) { create(:other_planner) }
 
@@ -9,7 +9,7 @@ RSpec.describe "Planners::MypagesController", type: :request do
     sign_in planner
   end
 
-  describe "GET /planners/:id/mypage" do
+  describe "GET /planners/:id" do
     context "when the logged-in planner is the correct planner" do
       it "displays the mypage" do
         get planner_path(planner)
@@ -28,7 +28,7 @@ RSpec.describe "Planners::MypagesController", type: :request do
     end
   end
 
-  describe "GET /planners/:id/edit_planner_info" do
+  describe "GET /planners/:id/edit" do
     context "when the logged-in user is the correct planner" do
       it "displays the edit page" do
         get edit_planner_path(planner)
@@ -45,7 +45,7 @@ RSpec.describe "Planners::MypagesController", type: :request do
     end
   end
 
-  describe "PATCH /planners/:id/update_planner_info" do
+  describe "PATCH /planners/:id" do
     context "with valid parameters" do
       it "updates the planner info and redirects to mypage" do
         patch planner_path(planner), params: { planner: { name: "New Name", icon_path: "/new/icon/path.png", introduction: "New Introduction" } }

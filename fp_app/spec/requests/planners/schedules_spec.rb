@@ -58,7 +58,6 @@ RSpec.describe "Planners::Schedules", type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.content_type).to eq("text/javascript; charset=utf-8")
-
       end
     end
 

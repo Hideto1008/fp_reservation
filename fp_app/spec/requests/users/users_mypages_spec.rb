@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Users::MypagesController", type: :request do
+RSpec.describe "UsersController", type: :request do
   let(:user) { create(:user) }
   let(:other_user) { create(:other_user) }
 
@@ -21,7 +21,7 @@ RSpec.describe "Users::MypagesController", type: :request do
     end
   end
 
-  describe "GET edit_user_info" do
+  describe "GET users/:id/edit" do
     it "returns http success for the correct user" do
       get edit_user_path(user.id)
       expect(response).to have_http_status(200)
@@ -35,7 +35,7 @@ RSpec.describe "Users::MypagesController", type: :request do
     end
   end
 
-  describe "PATCH update_user_info" do
+  describe "PATCH users/:id" do
     it "updates the user information successfully" do
       patch user_path(user.id), params: { user: { name: "Updated Name", icon_path: "new_path.png" } }
       expect(response).to redirect_to(user_path(user))
