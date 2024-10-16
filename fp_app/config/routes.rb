@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   root "homepages#index"
-  get "hello", to: "hello_world#index"
 
   devise_for :planners, path: "planners", controllers: {
     sessions: "planners/sessions",
