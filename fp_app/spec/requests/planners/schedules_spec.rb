@@ -40,8 +40,9 @@ RSpec.describe "Planners::Schedules", type: :request do
 
     context "when creating a schedule for another planner" do
       it "redirects to root_path" do
-        post planner_schedules_path(other_planner), params: valid_params, xhr: true
-        not_to change(Schedule, :count)
+        expect {
+          post planner_schedules_path(other_planner), params: valid_params, xhr: true
+        }.not_to change { Schedule.count }
         expect(response).to redirect_to(root_path)
       end
     end
