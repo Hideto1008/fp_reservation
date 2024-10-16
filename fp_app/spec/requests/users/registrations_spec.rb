@@ -11,7 +11,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
   end
 
   describe 'POST #create' do
-    it 'redirects to /users/:id/mypage after user sign up' do
+    it 'redirects to /users/:id after user sign up' do
       user_params = {
         user: {
           email: EMAIL,
@@ -25,7 +25,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       user = User.find_by(email: EMAIL)
       expect(user).to be_present
 
-      expect(response).to redirect_to(users_mypage_path(user))
+      expect(response).to redirect_to(user_path(user))
     end
   end
 end

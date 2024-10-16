@@ -9,7 +9,7 @@
       .profile-info
         img src=@user.icon_path alt="User Icon" style="width: 100px; height: 100px; border-radius: 50%;"
         h3 style="margin-bottom: 10px;" = @user.name
-        = link_to 'Update', edit_user_info_path(@user), class: "btn btn-primary", style: "background-color: #FFCC00; color: white; padding: 10px 20px; border: none; border-radius: 5px;"
+        = link_to 'Update', edit_user_path(@user), class: "btn btn-primary", style: "background-color: #FFCC00; color: white; padding: 10px 20px; border: none; border-radius: 5px;"
 
     .history style="flex-basis: 70%; min-width: 450px;"
       h2 History

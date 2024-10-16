@@ -62,4 +62,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_091457) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "appointments", "planners"
+  add_foreign_key "appointments", "schedules"
+  add_foreign_key "appointments", "users"
+  add_foreign_key "schedules", "planners"
 end
