@@ -17,6 +17,5 @@ Rails.application.routes.draw do
   }
 
   resources :users, only: [ :show, :edit, :update ] do
-    resources :appointments, only: [ :index, :create, :update ], controller: "users/appointments"
   end
 end
