@@ -1,28 +1,19 @@
 Rails.application.routes.draw do
   root "homepages#index"
-
-  get "planners/:id/mypage", to: "planners/mypages#mypage", as: "planners_mypage"
-  get "planners/:id/edit_planner_info", to: "planners/mypages#edit_planner_info", as: "edit_planner_info"
-  patch "planners/:id/update_info", to: "planners/mypages#update_planner_info", as: "update_planner_info"
-
-  get "planners/:id/schedule", to: "planners/schedules#schedule", as: "planners_schedule"
-  post "planners/:id/schedules", to: "planners/schedules#create_schedule", as: "create_schedule"
-  patch "planners/:id/schedules/:schedule_id/update_schedule", to: "planners/schedules#update_schedule", as: "update_schedule"
-
-  get "users/:id/mypage", to: "users/mypages#mypage", as: "users_mypage"
-  get "users/:id/edit_user_info", to: "users/mypages#edit_user_info", as: "edit_user_info"
-  patch "users/:id/update_info", to: "users/mypages#update_user_info", as: "update_user_info"
-
-  get "users/:id/reservation", to: "users/reservation#index", as: "reservation"
-  get "users/:id/planner_list", to: "users/planners#index", as: "planners_list"
-
-  devise_for :users, controllers: {
-    sessions: "users/sessions",
-    registrations: "users/registrations"
-  }
+  get "hello", to: "hello_world#index"
 
   devise_for :planners, path: "planners", controllers: {
     sessions: "planners/sessions",
     registrations: "planners/registrations"
+  }
+
+  resources :planners, only: [ :show, :edit, :update ] do
+    resources :schedules, only: [ :index, :create, :update ], controller: "planners/schedules"
+  end
+
+
+  devise_for :users, controllers: {
+    sessions: "users/sessions",
+    registrations: "users/registrations"
   }
 end

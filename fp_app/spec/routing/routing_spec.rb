@@ -41,52 +41,52 @@ RSpec.describe 'Routing', type: :routing do
 
   # Planners routes
   it 'routes /planners/:id/mypage to planners/mypages#mypage' do
-    expect(get: '/planners/1/mypage').to route_to(
-      controller: 'planners/mypages',
-      action: 'mypage',
+    expect(get: '/planners/1').to route_to(
+      controller: 'planners',
+      action: 'show',
       id: '1'
     )
   end
 
-  it 'routes /planners/:id/edit_planner_info to planners/mypages#edit_planner_info' do
-    expect(get: '/planners/1/edit_planner_info').to route_to(
-      controller: 'planners/mypages',
-      action: 'edit_planner_info',
+  it 'routes /planners/:id/edit to planners#edit' do
+    expect(get: '/planners/1/edit').to route_to(
+      controller: 'planners',
+      action: 'edit',
       id: '1'
     )
   end
 
-  it 'routes /planners/:id/update_info to planners/mypages#update_planner_info' do
-    expect(patch: '/planners/1/update_info').to route_to(
-      controller: 'planners/mypages',
-      action: 'update_planner_info',
+  it 'routes /planners/:id to planners#update' do
+    expect(patch: '/planners/1').to route_to(
+      controller: 'planners',
+      action: 'update',
       id: '1'
     )
   end
 
   # Planners schedule routes
-  it 'routes GET /planners/:id/schedule to planners/schedules#schedule' do
-    expect(get: '/planners/1/schedule').to route_to(
+  it 'routes GET /planners/:id/schedule to planners/schedules#index' do
+    expect(get: '/planners/1/schedules').to route_to(
       controller: 'planners/schedules',
-      action: 'schedule',
-      id: '1'
+      action: 'index',
+      planner_id: '1'
     )
   end
 
-  it 'routes POST /planners/:id/schedules to planners/schedules#create_schedule' do
+  it 'routes POST /planners/:id/schedules to planners/schedules#create' do
     expect(post: '/planners/1/schedules').to route_to(
       controller: 'planners/schedules',
-      action: 'create_schedule',
-      id: '1'
+      action: 'create',
+      planner_id: '1'
     )
   end
 
-  it 'routes PATCH /planners/:id/schedules/:schedule_id/update_schedule to planners/schedules#update_schedule' do
-    expect(patch: '/planners/1/schedules/2/update_schedule').to route_to(
+  it 'routes PATCH /planners/:id/schedules/:schedule_id/ to planners/schedules#update' do
+    expect(patch: '/planners/1/schedules/2').to route_to(
       controller: 'planners/schedules',
-      action: 'update_schedule',
-      id: '1',
-      schedule_id: '2'
+      action: 'update',
+      planner_id: '1',
+      id: '2'
     )
   end
 
