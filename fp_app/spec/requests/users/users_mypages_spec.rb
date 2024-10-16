@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "UsersController", type: :request do
   let(:user) { create(:user) }
-  let(:other_user) { create(:other_user) }
+  let(:other_user) { create(:user, email: "other@example.com") }
 
   before do
     sign_in user
   end
 
-  describe "GET #mypage" do
+  describe "GET users/:id" do
     it "returns http success for the correct user" do
       get user_path(user.id)
       expect(response).to have_http_status(200)
