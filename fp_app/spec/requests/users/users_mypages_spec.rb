@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "UsersController", type: :request do
   let(:user) { create(:user) }
-  let(:other_user) { create(:other_user) }
+  let(:other_user) { create(:user, email: "other@example.com") }
 
   before do
     sign_in user

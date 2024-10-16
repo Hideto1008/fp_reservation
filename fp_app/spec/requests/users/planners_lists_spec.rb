@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "PlannersInfo", type: :request do
   let!(:user) { create(:user) }
-  let!(:other_user) { create(:other_user) }
+  let!(:other_user) { create(:user, email: "othe_user@example.com") }
   let!(:planner) { create(:planner) }
-  let!(:other_planner) { create(:other_planner) }
+  let!(:other_planner) { create(:planner, email: "other_planner@example.com") }
 
   before do
     sign_in user
