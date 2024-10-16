@@ -1,3 +1,4 @@
 var button = $("[data-schedule-id='<%= @schedule.id %>']");
 button.text("<%= @schedule.is_available ? '◯' : '✖️' %>");
 button.css("color", "<%= @schedule.is_available ? '#4CAF50' : '#FF0000' %>");
+button.attr("href", "<%= planner_schedule_path(planner_id: @schedule.planner_id, id: @schedule.id, is_available: !@schedule.is_available) %>");
