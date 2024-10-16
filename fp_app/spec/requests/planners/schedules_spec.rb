@@ -25,7 +25,7 @@ RSpec.describe "Planners::Schedules", type: :request do
     end
   end
 
-  describe "POST /planners/:id/schedules" do
+  describe "POST /planners/:planner_id/schedules" do
     let(:valid_params) { { date: Date.today.beginning_of_week + 1.week, time: "13:00" } }
 
     context "when creating a schedule with valid params" do
@@ -48,15 +48,17 @@ RSpec.describe "Planners::Schedules", type: :request do
     end
   end
 
-  describe "PATCH /planners/:id/schedules/:schedule_id/update_schedule" do
+  describe "PATCH /planners/:planner_id/schedules/:id/" do
     context "when updating own schedule" do
       it "toggles the availability of the schedule" do
-        original_value = schedule.is_available
-        patch planner_schedule_path(planner, schedule), xhr: true
+        expect {
+          patch planner_schedule_path(planner, schedule), xhr: true
+          schedule.reload
+        }.to change { schedule.is_available }.from(schedule.is_available).to(!schedule.is_available)
+
         expect(response).to have_http_status(:success)
         expect(response.content_type).to eq("text/javascript; charset=utf-8")
-        schedule.reload
-        expect(schedule.is_available).to eq(!original_value)
+
       end
     end
 
