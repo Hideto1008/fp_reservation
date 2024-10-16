@@ -14,7 +14,7 @@ class PlannersController < ApplicationController
     if @planner.update(planner_params)
       redirect_to planner_path(@planner), notice: "Information updated successfully."
     else
-      render :edit
+      render :edit, alert: "Failed to update information."
     end
   end
 
