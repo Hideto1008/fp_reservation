@@ -34,7 +34,7 @@ RSpec.describe "Planners::Schedules", type: :request do
           post planner_schedules_path(planner), params: valid_params, xhr: true
         }.to change(Schedule, :count).by(1)
         expect(response).to have_http_status(:success)
-        expect(response).to render_template("planners/schedules/create_schedule")
+        expect(response).to render_template("planners/schedules/update_schedule")
       end
     end
 
