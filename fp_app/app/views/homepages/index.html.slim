@@ -5,15 +5,10 @@
 
   .row.mt-5
     .col-md-12
-      a.btn.btn-primary.btn-lg[style="display: block; margin: 20px auto; width: 250px;" href="/users/sign_up"]
-        | Sign up as a User
-      a.btn.btn-primary.btn-lg[style="display: block; margin: 20px auto; width: 250px;" href="/planners/sign_up"]
-        | Sign up as a Planner
+      = link_to 'Sign up as a User', new_user_registration_path, class: 'btn btn-primary btn-lg', style: "display: block; margin: 20px auto; width: 250px;"
+      = link_to 'Sign up as a Planner', new_planner_registration_path, class: 'btn btn-primary btn-lg', style: "display: block; margin: 20px auto; width: 250px;"
 
   .row.mt-5
     .col-md-12.text-end
-      a[style="color: #DDA0DD; display: block; padding: 5px; font-size: 16px;" href="/users/sign_in"]
-        | Log in as a User
-      a[style="color: #DDA0DD; display: block; padding: 5px; font-size: 16px;" href="/planners/sign_in"]
-        | Log in as a Planner
-
+      = link_to 'Log in as a User', new_user_session_path, style: "color: #DDA0DD; display: block; padding: 5px; font-size: 16px;"
+      = link_to 'Log in as a Planner', new_planner_session_path, style: "color: #DDA0DD; display: block; padding: 5px; font-size: 16px;"
