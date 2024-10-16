@@ -1,19 +1,32 @@
 require 'rails_helper'
 
-RSpec.describe Planners::SessionsController, type: :controller do
+RSpec.describe Planners::RegistrationsController, type: :controller do
   include Devise::Test::ControllerHelpers
-
-  let(:planner) { create(:planner) }
+  EMAIL = "test_planner@example.com"
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:planner]
-    sign_in planner
   end
 
   describe 'POST #create' do
-    it 'redirects to /hello after login as planner' do
-      post :create, params: { planner: { email: planner.email, password: planner.password } }
-      expect(response).to redirect_to('/hello')
+    it 'redirects to /planners/:id/mypage after planner sign up' do
+      planner_params = {
+        planner: {
+          email: EMAIL,
+          password: 'password',
+          password_confirmation: 'password'
+        }
+      }
+
+      # サインアップのリクエストを送信
+      post :create, params: planner_params
+
+      # Plannerが作成されていることを確認
+      planner = Planner.find_by(email: EMAIL)
+      expect(planner).to be_present
+
+      # リダイレクト先が正しいか確認
+      expect(response).to redirect_to(mypage_planner_path(planner))
     end
   end
 end
