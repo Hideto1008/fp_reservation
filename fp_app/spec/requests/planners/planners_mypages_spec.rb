@@ -11,7 +11,7 @@ RSpec.describe "Planners::MypagesController", type: :request do
 
   describe "GET /planners/:id" do
     context "when the logged-in planner is the correct planner" do
-      it "displays the mypage" do
+      it "displays the planner's page" do
         get planner_path(planner)
         expect(response).to have_http_status(:success)
         expect(response.body).to include(planner.name)
@@ -47,7 +47,7 @@ RSpec.describe "Planners::MypagesController", type: :request do
 
   describe "PATCH /planners/:id" do
     context "with valid parameters" do
-      it "updates the planner info and redirects to mypage" do
+      it "updates the planner info and redirects to planner's page" do
         patch planner_path(planner), params: { planner: { name: "New Name", icon_path: "/new/icon/path.png", introduction: "New Introduction" } }
         expect(response).to redirect_to(planner_path(planner))
         follow_redirect!
