@@ -25,7 +25,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       user = User.find_by(email: EMAIL)
       expect(user).to be_present
 
-      expect(response).to redirect_to(users_mypage_path(user))
+      expect(response).to redirect_to(user_path(user))
     end
   end
 end

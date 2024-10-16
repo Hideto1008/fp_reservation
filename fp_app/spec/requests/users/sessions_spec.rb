@@ -14,7 +14,7 @@ RSpec.describe Users::SessionsController, type: :controller do
     it 'redirects to /users/:id/mypage after login' do
       post :create, params: { user: { email: user.email, password: user.password } }
 
-      expect(response).to redirect_to(users_mypage_path(user))
+      expect(response).to redirect_to(user_path(user))
     end
   end
 end

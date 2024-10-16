@@ -4,7 +4,7 @@
 .container style="max-width: 800px; margin: 0 auto;"
   h2 Edit User Information
 
-  = form_with model: @user, url: update_user_info_path(@user), method: :patch, local: true do |f|
+  = form_with model: @user, url: user_path(@user), method: :patch, local: true do |f|
     div style="margin-bottom: 10px;"
       = f.label :name, "Name"
       = f.text_field :name, style: "width: 100%;"
@@ -17,4 +17,4 @@
       = f.submit "Save", class: "btn btn-primary", style: "background-color: #4EA1D3; color: white; padding: 10px 20px; border: none; border-radius: 5px;"
 
     div
-      = link_to 'Back to My Page', users_mypage_path(@user), class: "btn btn-secondary", style: "margin-top: 15px; padding: 0px;"
+      = link_to 'Back to My Page', user_path(@user), class: "btn btn-secondary", style: "margin-top: 15px; padding: 0px;"

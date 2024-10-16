@@ -7,13 +7,16 @@ Rails.application.routes.draw do
     registrations: "planners/registrations"
   }
 
-  resources :planners, only: [ :show, :edit, :update ] do
+  resources :planners, only: [ :index, :show, :edit, :update ] do
     resources :schedules, only: [ :index, :create, :update ], controller: "planners/schedules"
   end
-
 
   devise_for :users, controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations"
   }
+
+  resources :users, only: [ :show, :edit, :update ] do
+    resources :appointments, only: [ :index, :create, :update ], controller: "users/appointments"
+  end
 end

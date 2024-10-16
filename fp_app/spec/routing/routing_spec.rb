@@ -90,26 +90,26 @@ RSpec.describe 'Routing', type: :routing do
     )
   end
 
-  it 'routes GET /users/:id/mypage to users/mypages#mypage' do
-    expect(get: '/users/1/mypage').to route_to(
-      controller: 'users/mypages',
-      action: 'mypage',
+  it 'routes GET /users/:id to users#show' do
+    expect(get: '/users/1/').to route_to(
+      controller: 'users',
+      action: 'show',
       id: '1'
     )
   end
 
-  it 'routes GET /users/:id/edit_user_info to users/mypages#edit_user_info' do
-    expect(get: '/users/1/edit_user_info').to route_to(
-      controller: 'users/mypages',
-      action: 'edit_user_info',
+  it 'routes GET /users/:id/edit to users/#edit' do
+    expect(get: '/users/1/edit').to route_to(
+      controller: 'users',
+      action: 'edit',
       id: '1'
     )
   end
 
-  it 'routes PATCH /users/:id/update_info to users/mypages#update_user_info' do
-    expect(patch: '/users/1/update_info').to route_to(
-      controller: 'users/mypages',
-      action: 'update_user_info',
+  it 'routes PATCH /users/:id to users/#update' do
+    expect(patch: '/users/1/').to route_to(
+      controller: 'users',
+      action: 'update',
       id: '1'
     )
   end

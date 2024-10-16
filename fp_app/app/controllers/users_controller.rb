@@ -1,22 +1,22 @@
-class Users::MypagesController < ApplicationController
+class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_user
 
-  def mypage
+  def show
     @user = User.find(params[:id])
     @appointments = Appointment.where(user_id: @user.id)
   end
 
-  def edit_user_info
+  def edit
     @user = User.find(params[:id])
   end
 
-  def update_user_info
+  def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to users_mypage_path(@user), notice: "Information updated successfully."
+      redirect_to user_path(@user), notice: "Information updated successfully."
     else
-      render :edit_user_info
+      render :edit
     end
   end
 
