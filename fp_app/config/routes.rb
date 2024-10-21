@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     resources :schedules, only: [ :index, :create, :update ], controller: "planners/schedules"
   end
 
-
   devise_for :users, controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations"
