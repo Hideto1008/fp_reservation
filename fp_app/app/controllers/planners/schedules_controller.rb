@@ -1,10 +1,19 @@
 class Planners::SchedulesController < ApplicationController
-  before_action :authenticate_planner!
-  before_action :correct_planner
+  before_action :authenticate_planner!, only: [ :update, :create ]
+  before_action :correct_planner, only: [ :update, :create ]
 
   def index
     @planner = Planner.find(params[:planner_id])
     @schedules = @planner.schedules
+
+    if planner_signed_in? && current_planner == @planner
+      render :index_for_planner
+    elsif user_signed_in?
+      @planners = Planner.all
+      render :index_for_user
+    else
+      redirect_to root_path, alert: "You are not authorized to access this page"
+    end
   end
 
   def update

@@ -11,4 +11,4 @@
         p= @planner.introduction
 
     .reserve-button style="display: flex; justify-content: flex-end; margin-top: 10px; width: 100%;"
-      = link_to 'Reserve', user_appointments_path(current_user.id), class: 'btn btn-primary', style: "background-color: #4EA1D3; color: white; padding: 10px 30px; border-radius: 5px;"
+      = link_to 'Reserve', planner_schedules_path(planner_id: @planner.id), class: 'btn btn-primary', style: "background-color: #4EA1D3; color: white; padding: 10px 30px; border-radius: 5px;"

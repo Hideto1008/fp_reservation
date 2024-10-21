@@ -1,0 +1,10 @@
+.container style="max-width: 800px; margin: 0 auto;"
+  = render 'users/shared/header', user: @user
+
+div.container
+  div.row
+    div.col-12.text-center
+      h1 スケジュール
+    div.col-12.mt-3
+      = week_calendar(events: @schedules, attribute: :started_at, partial: 'simple_calendar/appointment_week_calendar') do |date, reservations|
+        = date.day
