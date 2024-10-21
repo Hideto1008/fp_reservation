@@ -1,7 +1,7 @@
 # spec/requests/planners_main_spec.rb
 require 'rails_helper'
 
-RSpec.describe "Planners::MypagesController", type: :request do
+RSpec.describe "PlannersController", type: :request do
   let(:planner) { create(:planner) }
   let(:other_planner) { create(:planner, email: "other@example.com") }
 
@@ -11,7 +11,7 @@ RSpec.describe "Planners::MypagesController", type: :request do
 
   describe "GET /planners/:id" do
     context "when the logged-in planner is the correct planner" do
-      it "displays the planner's page" do
+      it "displays the mypage" do
         get planner_path(planner)
         expect(response).to have_http_status(:success)
         expect(response.body).to include(planner.name)
@@ -20,7 +20,7 @@ RSpec.describe "Planners::MypagesController", type: :request do
       end
     end
 
-    context "when accessing another planner's page" do
+    context "when accessing another planner's mypage" do
       it "redirects to the root page" do
         get planner_path(other_planner)
         expect(response).to redirect_to(root_path)
@@ -47,7 +47,7 @@ RSpec.describe "Planners::MypagesController", type: :request do
 
   describe "PATCH /planners/:id" do
     context "with valid parameters" do
-      it "updates the planner info and redirects to planner's page" do
+      it "updates the planner info and redirects to mypage" do
         patch planner_path(planner), params: { planner: { name: "New Name", icon_path: "/new/icon/path.png", introduction: "New Introduction" } }
         expect(response).to redirect_to(planner_path(planner))
         follow_redirect!

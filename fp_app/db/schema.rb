@@ -32,6 +32,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_091457) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", default: "planner"
+    t.text "icon_path"
+    t.text "introduction"
     t.index ["email"], name: "index_planners_on_email", unique: true
     t.index ["reset_password_token"], name: "index_planners_on_reset_password_token", unique: true
   end
