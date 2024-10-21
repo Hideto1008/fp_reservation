@@ -16,6 +16,11 @@ class Planners::SchedulesController < ApplicationController
     end
   end
 
+  def show
+    @schedule = Schedule.find(params[:id])
+    @planner = @schedule.planner
+  end
+
   def update
     @schedule = Schedule.find(params[:id])
     @schedule.is_available = params[:is_available]
