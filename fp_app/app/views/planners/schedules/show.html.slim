@@ -17,4 +17,4 @@
         | 予約日時:
         span 時間が設定されていません
 
-  = link_to "予約を確定する", "#", style: "display: inline-block; padding: 10px 20px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; text-decoration: none;"
+  = link_to "予約を確定する", user_appointments_path(user_id: current_user.id, planner_id: @planner.id, schedule_id: @schedule.id, reserved_at: @schedule.started_at), method: :post, style: "display: inline-block; padding: 10px 20px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; text-decoration: none;"
