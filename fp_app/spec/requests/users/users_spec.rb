@@ -8,7 +8,7 @@ RSpec.describe "UsersController", type: :request do
     sign_in user
   end
 
-  describe "GET #mypage" do
+  describe "GET users/:id" do
     it "returns http success for the correct user" do
       get user_path(user.id)
       expect(response).to have_http_status(200)
