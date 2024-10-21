@@ -1,2 +1,0 @@
-module Planner::ScheduleHelper
-end
