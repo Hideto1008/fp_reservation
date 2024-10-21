@@ -1,5 +1,5 @@
 module SchedulesHelper
-  TIMES = (10..17).flat_map { |h| ["00", "30"].map { |m| "#{h}:#{m}" } }.freeze
+  TIMES = (10..17).flat_map { |h| [ "00", "30" ].map { |m| "#{h}:#{m}" } }.freeze
   SATURDAY = 6
 
   def times

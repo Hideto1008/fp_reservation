@@ -6,7 +6,7 @@ RSpec.describe SchedulesHelper, type: :helper do
   let(:schedule_on_weekday_unavailable) { create(:schedule, planner: planner) }
   let(:schedule_on_saturday) { create(:schedule, planner: planner, started_at: (Time.now.next_occurring(:saturday).beginning_of_day + 1.week) + 12.hours, is_available: true) }
   let(:schedule_on_saturday_blackout) { create(:schedule, planner: planner, started_at: (Time.now.next_occurring(:saturday).beginning_of_day) + 10.hours + 30.minutes, is_available: false) }
-  let(:schedules) { [schedule_on_weekday, schedule_on_weekday_unavailable, schedule_on_saturday, schedule_on_saturday_blackout] }
+  let(:schedules) { [ schedule_on_weekday, schedule_on_weekday_unavailable, schedule_on_saturday, schedule_on_saturday_blackout ] }
 
   before do
     assign(:planner, planner)
