@@ -1,0 +1,24 @@
+div.simple-calendar
+  div.calendar-heading[style="display: flex; justify-content: space-between; align-items: center;"]
+    = link_to t('simple_calendar.previous', default: 'Last week'), calendar.url_for_previous_view, style: 'color: #4472C4; padding: 5px 10px; text-decoration: none;'
+    span.calendar-title[style="flex-grow: 1; text-align: center; font-weight: bold; font-size: 20px;"]
+      = date_range.first.strftime('%Y/%m')
+    = link_to t('simple_calendar.next', default: 'Next week'), calendar.url_for_next_view, style: 'color: #4472C4; padding: 5px 10px; text-decoration: none;'
+
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th [style="text-align: center; vertical-align: middle;"]時間
+        - date_range.slice(0, 7).each do |day|
+          - unless day.wday == 0
+            th[style="text-align: center; font-weight: bold;"]
+              = day.strftime('%d(%a)')
+
+    tbody
+      - times.each do |time|
+        tr
+          td[style="text-align: center; font-weight: bold;"] = time
+          - date_range.slice(0, 7).each do |day|
+            - unless day.wday == 0
+              td[style="text-align: center;"]
+                = matching_schedule_or_blackout(day, time, @schedules)

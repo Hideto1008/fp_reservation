@@ -1,7 +1,7 @@
 # spec/requests/planners_main_spec.rb
 require 'rails_helper'
 
-RSpec.describe "Planners::MainController", type: :request do
+RSpec.describe "Planners::MypagesController", type: :request do
   let(:planner) { create(:planner) }
   let(:other_planner) { create(:planner, email: "other@example.com") }
 
@@ -9,10 +9,10 @@ RSpec.describe "Planners::MainController", type: :request do
     sign_in planner
   end
 
-  describe "GET /planners/:id/mypage" do
+  describe "GET /planners/:id" do
     context "when the logged-in planner is the correct planner" do
-      it "displays the mypage" do
-        get mypage_planner_path(planner)
+      it "displays the planner's page" do
+        get planner_path(planner)
         expect(response).to have_http_status(:success)
         expect(response.body).to include(planner.name)
         expect(response.body).to include(planner.introduction)
@@ -20,18 +20,18 @@ RSpec.describe "Planners::MainController", type: :request do
       end
     end
 
-    context "when accessing another planner's mypage" do
+    context "when accessing another planner's page" do
       it "redirects to the root page" do
-        get mypage_planner_path(other_planner)
+        get planner_path(other_planner)
         expect(response).to redirect_to(root_path)
       end
     end
   end
 
-  describe "GET /planners/:id/edit_planner_info" do
+  describe "GET /planners/:id/edit" do
     context "when the logged-in user is the correct planner" do
       it "displays the edit page" do
-        get edit_info_planner_path(planner)
+        get edit_planner_path(planner)
         expect(response).to have_http_status(:success)
         expect(response.body).to include("Edit Planner Information")
       end
@@ -39,17 +39,17 @@ RSpec.describe "Planners::MainController", type: :request do
 
     context "when accessing another planner's edit page" do
       it "redirects to the root page" do
-        get edit_info_planner_path(other_planner)
+        get edit_planner_path(other_planner)
         expect(response).to redirect_to(root_path)
       end
     end
   end
 
-  describe "PATCH /planners/:id/update_planner_info" do
+  describe "PATCH /planners/:id" do
     context "with valid parameters" do
-      it "updates the planner info and redirects to mypage" do
-        patch update_info_planner_path(planner), params: { planner: { name: "New Name", icon_path: "/new/icon/path.png", introduction: "New Introduction" } }
-        expect(response).to redirect_to(mypage_planner_path(planner))
+      it "updates the planner info and redirects to planner's page" do
+        patch planner_path(planner), params: { planner: { name: "New Name", icon_path: "/new/icon/path.png", introduction: "New Introduction" } }
+        expect(response).to redirect_to(planner_path(planner))
         follow_redirect!
         expect(response.body).to include("New Name")
         expect(response.body).to include("New Introduction")
@@ -60,7 +60,7 @@ RSpec.describe "Planners::MainController", type: :request do
 
     context "when attempting to update another planner's info" do
       it "redirects to the root page" do
-        patch update_info_planner_path(other_planner), params: { planner: { name: "Unauthorized Update" } }
+        patch planner_path(other_planner), params: { planner: { name: "Unauthorized Update" } }
         expect(response).to redirect_to(root_path)
       end
     end
