@@ -1,3 +1,14 @@
 var button = $("[data-schedule-id='<%= @schedule.id %>']");
-button.text("<%= @schedule.is_available ? '◯' : '✖️' %>");
-button.css("color", "<%= @schedule.is_available ? '#4CAF50' : '#FF0000' %>");
+if (button.length > 0) {
+  button.text("<%= @schedule.is_available ? '◯' : '✖️' %>");
+  button.css("color", "<%= @schedule.is_available ? '#4CAF50' : '#FF0000' %>");
+  button.attr("href", "<%= planner_schedule_path(planner_id: @schedule.planner_id, id: @schedule.id, is_available: !@schedule.is_available) %>");
+} else {
+  var newButton = $("[data-date='<%= @schedule.started_at.strftime('%Y-%m-%d') %>'][data-time='<%= @schedule.started_at.strftime('%H:%M') %>']");
+  newButton.text("<%= @schedule.is_available ? '◯' : '✖️' %>");
+  newButton.css("color", "<%= @schedule.is_available ? '#4CAF50' : '#FF0000' %>");
+  newButton.attr("data-schedule-id", "<%= @schedule.id %>");
+  newButton.attr("href", "<%= planner_schedule_path(planner_id: @planner.id, id: @schedule.id, is_available: !@schedule.is_available) %>");
+  newButton.attr("data-method", "patch");
+}
+s

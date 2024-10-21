@@ -34,7 +34,7 @@ RSpec.describe "Planners::Schedules", type: :request do
           post planner_schedules_path(planner), params: valid_params, xhr: true
         }.to change(Schedule, :count).by(1)
         expect(response).to have_http_status(:success)
-        expect(response).to render_template("planners/schedules/create_schedule")
+        expect(response).to render_template("planners/schedules/update_schedule")
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe "Planners::Schedules", type: :request do
     context "when updating own schedule" do
       it "toggles the availability of the schedule" do
         expect {
-          patch planner_schedule_path(planner, schedule), xhr: true
+          patch planner_schedule_path(planner, schedule), params: { is_available: !schedule.is_available }, xhr: true
           schedule.reload
         }.to change { schedule.is_available }.from(schedule.is_available).to(!schedule.is_available)
 
