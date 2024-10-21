@@ -9,7 +9,7 @@ class Planners::SchedulesController < ApplicationController
 
   def update
     @schedule = Schedule.find(params[:id])
-    @schedule.is_available = !@schedule.is_available
+    @schedule.is_available = params[:is_available]
     if @schedule.save
       respond_to do |format|
         format.js { render "planners/schedules/update_schedule" }
@@ -27,9 +27,10 @@ class Planners::SchedulesController < ApplicationController
       started_at: DateTime.parse("#{params[:date]} #{params[:time]}"),
       is_available: true
     )
+    @schedule.save
     if @schedule.save
       respond_to do |format|
-        format.js { render "planners/schedules/create_schedule" }
+        format.js { render "planners/schedules/update_schedule" }
       end
     else
       respond_to do |format|
