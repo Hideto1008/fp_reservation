@@ -20,11 +20,12 @@
       - if @appointments.present?
         ul style="list-style: none; padding: 0;"
           - @appointments.each do |appointment|
-            li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
-              .icon-and-date style="display: flex; gap: 10px; align-items: center;"
-                img src=appointment.user.icon_path alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
-                span= appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
-              .user-info
-                span= appointment.user.name
+            - if appointment.status == "reserved"
+              li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
+                .icon-and-date style="display: flex; gap: 10px; align-items: center;"
+                  img src=appointment.user.icon_path alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
+                  span= appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
+                .user-info
+                  span= appointment.user.name
       - else
         h4 No history.
