@@ -38,10 +38,12 @@ class AppointmentsController < ApplicationController
         raise "Failed to update appointment"
       end
 
-      @schedule = Schedule.find(@appointment.schedule_id)
-      unless @schedule.update(is_available: !@schedule.is_available)
-        logger.error "Schedule update failed: #{@schedule.errors.full_messages.join(', ')}"
-        raise "Failed to update schedule"
+      if params[:status] == "cancelled"
+        @schedule = Schedule.find(@appointment.schedule_id)
+        unless @schedule.update(is_available: !@schedule.is_available)
+          logger.error "Schedule update failed: #{@schedule.errors.full_messages.join(', ')}"
+          raise "Failed to update schedule"
+        end
       end
     end
 
