@@ -3,19 +3,26 @@ class AppointmentsController < ApplicationController
   before_action :correct_user, only: %i[create]
 
   def create
-    schedule = Schedule.find(params[:schedule_id])
-    @appointment = Appointment.new(
-      user_id: current_user.id,
-      planner_id: params[:planner_id],
-      schedule_id: params[:schedule_id],
-      reserved_at: schedule.started_at,
-      status: "reserved"
-    )
-    if @appointment.save
-      redirect_to user_path(current_user), notice: "Appointment created successfully."
-    else
-      redirect_to planner_path(params[:planner_id]), alert: "Unable to create appointment."
+    ActiveRecord::Base.transaction do
+      @appointment = Appointment.new(
+        user_id: params[:user_id],
+        planner_id: params[:planner_id],
+        schedule_id: params[:schedule_id],
+        reserved_at: params[:reserved_at],
+        status: "reserved"
+      )
+
+      unless @appointment.save
+        raise ActiveRecord::Rollback, "Failed to create appointment"
+      end
+
+      @schedule = Schedule.find(params[:schedule_id])
+      @schedule.update!(is_available: !@schedule.is_available)
     end
+
+    redirect_to user_path(current_user), notice: "Appointment created successfully."
+  rescue => e
+    redirect_to planner_path(params[:planner_id]), alert: "Unable to create appointment: #{e.message}"
   end
 
   private
