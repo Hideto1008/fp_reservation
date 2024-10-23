@@ -7,6 +7,7 @@ class Appointment < ApplicationRecord
   validates :schedule, presence: true
   validate :check_reserved_at_is_future_or_present
   validate :check_appointment_availability, on: :create
+  validate :check_duplicate_appointment, on: :create
 
   private
 
@@ -21,6 +22,12 @@ class Appointment < ApplicationRecord
     schedule = Schedule.find_by(planner_id: planner_id, started_at: reserved_at)
     if schedule.nil? || !schedule.is_available
       errors.add(:schedule_id, "is not available at the selected time")
+    end
+  end
+
+  def check_duplicate_appointment
+    if Appointment.exists?(user_id: user_id, reserved_at: reserved_at) || Appointment.exists?(planner_id: planner_id, reserved_at: reserved_at)
+      errors.add(:base, "Already booked for the same date and time")
     end
   end
 end
