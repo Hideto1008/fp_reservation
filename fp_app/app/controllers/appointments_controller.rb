@@ -1,6 +1,6 @@
-class Users::AppointmentsController < ApplicationController
-  before_action :authenticate_user!, only: [ :create ]
-  before_action :correct_user, only: [ :create ]
+class AppointmentsController < ApplicationController
+  before_action :authenticate_user!, only: %i[create]
+  before_action :correct_user, only: %i[create]
 
   def create
     schedule = Schedule.find(params[:schedule_id])

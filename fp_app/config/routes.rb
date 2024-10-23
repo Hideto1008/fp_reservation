@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     registrations: "users/registrations"
   }
 
-  resources :users, only: [ :show, :edit, :update ] do
-    resources :appointments, only: [ :create ], module: "users"
-  end
+  resources :users, only: [ :show, :edit, :update ]
+  resources :appointments, only: [ :create ]
 end
