@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   }
 
   resources :users, only: [ :show, :edit, :update ] do
-    resources :appointments, only: [:create], module: "users"
+    resources :appointments, only: [ :create ], module: "users"
   end
 end
