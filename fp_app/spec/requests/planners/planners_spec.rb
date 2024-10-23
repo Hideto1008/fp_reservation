@@ -4,9 +4,32 @@ require 'rails_helper'
 RSpec.describe "PlannersController", type: :request do
   let(:planner) { create(:planner) }
   let(:other_planner) { create(:planner, email: "other@example.com") }
+  let(:user) { create(:user) }
 
   before do
     sign_in planner
+  end
+
+  describe "planners_index" do
+    it "returns a successful response and displays all planners" do
+      sign_in user
+      planners = [ planner, other_planner ]
+      get planners_path
+      planners.each do |planner|
+        expect(response.body).to include(planner.name)
+        expect(response.body).to include(planner.icon_path)
+        expect(response.body).to include(other_planner.name)
+        expect(response.body).to include(other_planner.icon_path)
+        expect(response.body).to include("Reserve")
+      end
+    end
+
+    it "redirects if user is not logged in" do
+      sign_out user
+      get planners_path(user.id)
+      expect(response).to have_http_status(:unauthorized)
+      expect(response.body).to include("You need to sign in or sign up before continuing.")
+    end
   end
 
   describe "GET /planners/:id" do

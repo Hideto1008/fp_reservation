@@ -40,7 +40,7 @@ RSpec.describe 'Routing', type: :routing do
   end
 
   # Planners routes
-  it 'routes /planners/:id/mypage to planners/mypages#mypage' do
+  it 'routes /planners/:id to planners#show' do
     expect(get: '/planners/1').to route_to(
       controller: 'planners',
       action: 'show',
@@ -73,7 +73,7 @@ RSpec.describe 'Routing', type: :routing do
     )
   end
 
-  it 'routes POST /planners/:id/schedules to planners/schedules#create' do
+  it 'routes POST /planners/:planner_id/schedules to planners/schedules#create' do
     expect(post: '/planners/1/schedules').to route_to(
       controller: 'planners/schedules',
       action: 'create',
@@ -81,12 +81,12 @@ RSpec.describe 'Routing', type: :routing do
     )
   end
 
-  it 'routes PATCH /planners/:id/schedules/:schedule_id/ to planners/schedules#update' do
-    expect(patch: '/planners/1/schedules/2').to route_to(
+  it 'routes PATCH /planners/:planner_id/schedules/:id/ to planners/schedules#update' do
+    expect(patch: '/planners/1/schedules/1').to route_to(
       controller: 'planners/schedules',
       action: 'update',
       planner_id: '1',
-      id: '2'
+      id: '1'
     )
   end
 
@@ -98,10 +98,11 @@ RSpec.describe 'Routing', type: :routing do
     )
   end
 
-  it 'routes GET /users/:id/edit to users/#edit' do
-    expect(get: '/users/1/edit').to route_to(
-      controller: 'users',
-      action: 'edit',
+  it 'routes PATCH /planners/:id/schedules/:schedule_id/update_schedule to planners/schedules#update_schedule' do
+    expect(patch: '/planners/1/schedules/1').to route_to(
+      controller: 'planners/schedules',
+      action: 'update',
+      planner_id: '1',
       id: '1'
     )
   end
@@ -111,6 +112,14 @@ RSpec.describe 'Routing', type: :routing do
       controller: 'users',
       action: 'update',
       id: '1'
+    )
+  end
+
+  # Users planner_info routes
+  it 'routes GET planners to planners#index' do
+    expect(get: 'planners').to route_to(
+      controller: 'planners',
+      action: 'index',
     )
   end
 end

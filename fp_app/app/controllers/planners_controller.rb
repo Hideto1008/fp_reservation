@@ -1,6 +1,12 @@
 class PlannersController < ApplicationController
-  before_action :authenticate_planner!
-  before_action :correct_planner
+  before_action :authenticate_planner!, only: %i[show edit update]
+  before_action :authenticate_user!, only: %i[index]
+  before_action :correct_planner, only: %i[show edit update]
+
+
+  def index
+    @planners = Planner.all
+  end
 
   def show
     @planner = Planner.find(params[:id])
