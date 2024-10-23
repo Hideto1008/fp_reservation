@@ -1,7 +1,7 @@
 class PlannersController < ApplicationController
-  before_action :authenticate_planner!, only: [ :edit, :update ]
-  before_action :authenticate_user!, only: [ :index  ]
-  before_action :correct_planner, only: [ :edit, :update ]
+  before_action :authenticate_planner!, only: %i[ edit update ]
+  before_action :authenticate_user!, only: %i[ index  ]
+  before_action :correct_planner, only: %i[ edit update ]
 
   def index
     @planners = Planner.all
