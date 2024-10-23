@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
-  before_action :authenticate_user!, only: %i[create]
-  before_action :correct_user, only: %i[create]
+  before_action :authenticate_user!, only: %i[create update]
+  before_action :correct_user, only: %i[create update]
 
   def create
     ActiveRecord::Base.transaction do
@@ -25,7 +25,31 @@ class AppointmentsController < ApplicationController
     redirect_to planner_path(params[:planner_id]), alert: "Unable to create appointment: #{e.message}"
   end
 
+  def update
+    ActiveRecord::Base.transaction do
+      @appointment = Appointment.find(params[:id])
+      @appointment.status = params[:status]
+
+      unless @appointment.save
+        logger.error "Appointment save failed: #{@appointment.errors.full_messages.join(', ')}"
+        raise ActiveRecord::Rollback, "Failed to update appointment"
+      end
+
+      @schedule = Schedule.find(@appointment.schedule_id)
+      unless @schedule.update(is_available: !@schedule.is_available)
+        logger.error "Schedule update failed: #{@schedule.errors.full_messages.join(', ')}"
+        raise ActiveRecord::Rollback, "Failed to update schedule"
+      end
+    end
+
+    redirect_to user_path(current_user), notice: "Appointment updated successfully."
+  rescue => e
+    logger.error "Transaction failed: #{e.message}"
+    redirect_to user_path(current_user), alert: "Unable to update appointment: #{e.message}"
+  end
+
   private
+
   def correct_user
     @user = User.find_by(id: params[:user_id])
     if @user.nil? || @user != current_user

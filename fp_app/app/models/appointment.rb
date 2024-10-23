@@ -6,7 +6,7 @@ class Appointment < ApplicationRecord
   validates :planner_id, presence: true
   validates :schedule, presence: true
   validate :check_reserved_at_is_future_or_present
-  validate :check_appointment_availability
+  validate :check_appointment_availability, on: :create
 
   private
 
