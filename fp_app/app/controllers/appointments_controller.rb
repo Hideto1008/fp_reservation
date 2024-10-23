@@ -13,7 +13,8 @@ class AppointmentsController < ApplicationController
       )
 
       unless @appointment.save
-        raise ActiveRecord::Rollback, "Failed to create appointment"
+        logger.error "Appointment save failed: #{@appointment.errors.full_messages.join(', ')}"
+        raise "Failed to create appointment"
       end
 
       @schedule = Schedule.find(params[:schedule_id])
@@ -22,8 +23,10 @@ class AppointmentsController < ApplicationController
 
     redirect_to user_path(current_user), notice: "Appointment created successfully."
   rescue => e
-    redirect_to planner_path(params[:planner_id]), alert: "Unable to create appointment: #{e.message}"
+    logger.error "Transaction failed: #{e.message}"
+    redirect_to user_path(params[:user_id]), alert: "Unable to create appointment: #{e.message}"
   end
+
 
   def update
     ActiveRecord::Base.transaction do
@@ -32,13 +35,13 @@ class AppointmentsController < ApplicationController
 
       unless @appointment.save
         logger.error "Appointment save failed: #{@appointment.errors.full_messages.join(', ')}"
-        raise ActiveRecord::Rollback, "Failed to update appointment"
+        raise "Failed to update appointment"
       end
 
       @schedule = Schedule.find(@appointment.schedule_id)
       unless @schedule.update(is_available: !@schedule.is_available)
         logger.error "Schedule update failed: #{@schedule.errors.full_messages.join(', ')}"
-        raise ActiveRecord::Rollback, "Failed to update schedule"
+        raise "Failed to update schedule"
       end
     end
 
@@ -47,6 +50,7 @@ class AppointmentsController < ApplicationController
     logger.error "Transaction failed: #{e.message}"
     redirect_to user_path(current_user), alert: "Unable to update appointment: #{e.message}"
   end
+
 
   private
 

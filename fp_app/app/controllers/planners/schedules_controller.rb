@@ -1,7 +1,7 @@
 class Planners::SchedulesController < ApplicationController
   before_action :authenticate_planner!, only: [ :update, :create ]
   before_action :correct_planner, only: [ :update, :create ]
-  before_action :correct_planner_for_index, only: [:index], if: :planner_signed_in?
+  before_action :correct_planner_for_index, only: [ :index ], if: :planner_signed_in?
 
   def index
     @planner = Planner.find(params[:planner_id])

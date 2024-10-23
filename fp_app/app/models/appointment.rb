@@ -11,10 +11,11 @@ class Appointment < ApplicationRecord
   private
 
   def check_reserved_at_is_future_or_present
-    if reserved_at < Time.now && will_save_change_to_reserved_at?
-        errors.add(:reserved_at, "can't be in the past")
+    if reserved_at < Time.now && (will_save_change_to_status? || new_record?)
+      errors.add(:reserved_at, "can't be in the past")
     end
   end
+
 
   def check_appointment_availability
     schedule = Schedule.find_by(planner_id: planner_id, started_at: reserved_at)
