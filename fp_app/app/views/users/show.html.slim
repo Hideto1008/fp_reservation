@@ -18,7 +18,7 @@
           - @appointments.each do |appointment|
             li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
               .icon-and-date style="display: flex; gap: 10px; align-items: center;"
-                img src="https://free-icon.org/material/02-illustration/0139-download-image-m.png" alt="FP Icon" style="width: 40px; height: 40px; border-radius: 50%;"
+                img src=appointment.planner.icon_path alt="FP Icon" style="width: 40px; height: 40px; border-radius: 50%;"
                 span= appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
               .user-info
                 span= appointment.planner.name
