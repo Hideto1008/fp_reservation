@@ -26,7 +26,7 @@ class Appointment < ApplicationRecord
   end
 
   def check_duplicate_appointment
-    if Appointment.exists?(user_id: user_id, reserved_at: reserved_at) || Appointment.exists?(planner_id: planner_id, reserved_at: reserved_at)
+    if Appointment.exists?(user_id: user_id, reserved_at: reserved_at, status: "reserved") || Appointment.exists?(planner_id: planner_id, reserved_at: reserved_at, status: "reserved")
       errors.add(:base, "Already booked for the same date and time")
     end
   end
