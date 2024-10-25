@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Users::PlannersDetail", type: :request do
+RSpec.describe "Users::Planners", type: :request do
   describe "GET planners/:id" do
     let(:user) { create(:user) }
     let(:other_user) { create(:user, email: "other@example.com") }
