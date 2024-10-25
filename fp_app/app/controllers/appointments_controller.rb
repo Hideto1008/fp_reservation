@@ -4,7 +4,7 @@ class AppointmentsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @appointment = Appointment.new(
+      appointment = Appointment.new(
         user_id: params[:user_id],
         planner_id: params[:planner_id],
         schedule_id: params[:schedule_id],
@@ -12,7 +12,7 @@ class AppointmentsController < ApplicationController
         status: "reserved"
       )
 
-      @appointment.save!
+      appointment.save!
 
       @schedule = Schedule.find(params[:schedule_id])
       @schedule.update!(is_available: !@schedule.is_available)
