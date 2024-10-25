@@ -12,7 +12,7 @@ class PlannersController < ApplicationController
     @planner = Planner.find(params[:id])
 
     if planner_signed_in? && current_planner == @planner
-      @appointments = Appointment.where(planner_id: @planner.id)
+      @appointments = @planner.appointments
       render :show_for_planner
     elsif user_signed_in?
       render :show_for_user
