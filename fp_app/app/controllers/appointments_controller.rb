@@ -28,12 +28,7 @@ class AppointmentsController < ApplicationController
   def update
     ActiveRecord::Base.transaction do
       @appointment = Appointment.find(params[:id])
-      @appointment.status = params[:status]
-
-      unless @appointment.save
-        logger.error "Appointment save failed: #{@appointment.errors.full_messages.join(', ')}"
-        raise "Failed to update appointment"
-      end
+      @appointment.update!(status: params[:status])
 
       @schedule = Schedule.find(@appointment.schedule_id)
       unless @schedule.update(is_available: !@schedule.is_available)
