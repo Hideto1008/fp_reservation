@@ -66,7 +66,7 @@ RSpec.describe "Appointments", type: :request do
             }
           }.not_to change(Appointment, :count)
           expect(response).to redirect_to(user_path(user.id))
-          expect(flash[:alert]).to eq("Unable to create appointment: Failed to create appointment")
+          expect(flash[:alert]).to eq("Unable to create appointment: Validation failed: Schedule is not available at the selected time")
         end
 
         it "does not create an appointment and shows an error message when make appointment in past" do
@@ -79,7 +79,7 @@ RSpec.describe "Appointments", type: :request do
             }
           }.not_to change(Appointment, :count)
           expect(response).to redirect_to(user_path(user.id))
-          expect(flash[:alert]).to eq("Unable to create appointment: Failed to create appointment")
+          expect(flash[:alert]).to include("Unable to create appointment: Validation failed: Reserved at can't be in the past")
         end
 
         it "does not create an appointment and shows an error message when the schedule duplicate" do
@@ -93,7 +93,7 @@ RSpec.describe "Appointments", type: :request do
             }
           }.not_to change(Appointment, :count)
           expect(response).to redirect_to(user_path(user.id))
-          expect(flash[:alert]).to eq("Unable to create appointment: Failed to create appointment")
+          expect(flash[:alert]).to eq("Unable to create appointment: Validation failed: Already booked for the same date and time")
         end
       end
     end

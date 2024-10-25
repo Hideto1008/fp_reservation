@@ -12,10 +12,7 @@ class AppointmentsController < ApplicationController
         status: "reserved"
       )
 
-      unless @appointment.save
-        logger.error "Appointment save failed: #{@appointment.errors.full_messages.join(', ')}"
-        raise "Failed to create appointment"
-      end
+      @appointment.save!
 
       @schedule = Schedule.find(params[:schedule_id])
       @schedule.update!(is_available: !@schedule.is_available)
