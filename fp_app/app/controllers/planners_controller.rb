@@ -2,15 +2,14 @@ class PlannersController < ApplicationController
   before_action :authenticate_planner!, only: %i[ edit update ]
   before_action :authenticate_user!, only: %i[ index  ]
   before_action :correct_planner, only: %i[ edit update ]
+  before_action :find_planner, only: %i[ show edit update ]
 
   def index
     @planners = Planner.all
   end
 
   def show
-    @planner = Planner.find(params[:id])
-
-    if planner_signed_in? && current_planner == @planner
+    if current_planner == @planner
       @appointments = Appointment.where(planner_id: @planner.id)
       render :show_for_planner
     elsif user_signed_in?
@@ -21,11 +20,9 @@ class PlannersController < ApplicationController
   end
 
   def edit
-    @planner = Planner.find(params[:id])
   end
 
   def update
-    @planner = Planner.find(params[:id])
     if @planner.update(planner_params)
       redirect_to planner_path(@planner), notice: "Information updated successfully."
     else
@@ -49,5 +46,9 @@ class PlannersController < ApplicationController
 
   def planner_params
     params.require(:planner).permit(:name, :icon_path, :introduction)
+  end
+
+  def find_planner
+    @planner = Planner.find(params[:id])
   end
 end
