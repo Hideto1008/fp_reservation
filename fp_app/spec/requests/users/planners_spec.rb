@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Users::PlannersDetail", type: :request do
+RSpec.describe "Users::Planners", type: :request do
   describe "GET planners/:id" do
     let(:user) { create(:user) }
     let(:other_user) { create(:user, email: "other@example.com") }
@@ -14,7 +14,7 @@ RSpec.describe "Users::PlannersDetail", type: :request do
       it "renders the detail page successfully" do
         get planner_path(id: planner.id)
         expect(response).to have_http_status(:success)
-        expect(response).to render_template(:show_for_user)
+        expect(response).to render_template(:show)
         expect(assigns(:planner)).to eq(planner)
         expect(response.body).to include(planner.name)
         expect(response.body).to include(planner.icon_path)
