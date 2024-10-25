@@ -10,7 +10,6 @@ class PlannersController < ApplicationController
 
   def show
     if current_planner == @planner
-      @appointments = Appointment.where(planner_id: @planner.id)
       render :show_for_planner
     elsif user_signed_in?
       render :show_for_user
