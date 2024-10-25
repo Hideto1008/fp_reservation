@@ -9,11 +9,7 @@ class PlannersController < ApplicationController
   end
 
   def show
-    if current_planner == @planner
-      render :show_for_planner
-    elsif user_signed_in?
-      render :show_for_user
-    else
+    if current_planner != @planner && !user_signed_in?
       redirect_to root_path, alert: "You are not authorized to access this page"
     end
   end
