@@ -113,7 +113,6 @@ RSpec.describe "Appointments", type: :request do
   end
 
   describe "PATCH /appointments/:id" do
-
     before do
       sign_in user
     end
@@ -130,7 +129,7 @@ RSpec.describe "Appointments", type: :request do
 
     context "when updating appointment status to canceled" do
       it "updates the status to 'canceled', makes schedule available and shows a notice" do
-        patch appointment_path(appointment), params: { status: "canceled" , user_id: user.id }
+        patch appointment_path(appointment), params: { status: "canceled", user_id: user.id }
         expect(response).to redirect_to(user_path(user))
         follow_redirect!
         expect(response.body).to include("Appointment updated successfully.")
@@ -141,7 +140,7 @@ RSpec.describe "Appointments", type: :request do
 
     context "with invalid status parameter" do
       it "does not update the appointment and shows an error" do
-        patch appointment_path(appointment), params: { status: "invalid_status" , user_id: user.id }
+        patch appointment_path(appointment), params: { status: "invalid_status", user_id: user.id }
         expect(response).to redirect_to(user_path(user))
         follow_redirect!
         expect(response.body).to include("Unable to update appointment")
