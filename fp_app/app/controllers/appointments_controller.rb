@@ -24,8 +24,6 @@ class AppointmentsController < ApplicationController
       if params[:status] == "canceled"
         schedule = Schedule.find(appointment.schedule_id)
         schedule.update!(is_available: true)
-      elsif params[:status] == "reserved"
-        ExpireAppointmentJob.perform_now(appointment.id)
       end
     end
 

@@ -10,6 +10,7 @@ gem "sassc-rails"
 gem "simple_calendar"
 gem "redis-rails"
 gem "sidekiq"
+gem 'whenever', require: false
 
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
