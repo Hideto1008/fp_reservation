@@ -4,10 +4,10 @@ class AppointmentsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      appointment = Appointment.create!(appointment_params)
+      Appointment.create!(appointment_params)
 
-      @schedule = Schedule.find_by!(id: appointment_params[:schedule_id])
-      @schedule.update!(is_available: false)
+      schedule = Schedule.find(appointment_params[:schedule_id])
+      schedule.update!(is_available: false)
     end
 
     redirect_to user_path(current_user), notice: "Appointment created successfully."
@@ -18,12 +18,12 @@ class AppointmentsController < ApplicationController
 
   def update
     ActiveRecord::Base.transaction do
-      @appointment = Appointment.find(params[:id])
-      @appointment.update!(status: params[:status])
+      appointment = Appointment.find(params[:id])
+      appointment.update!(status: params[:status])
 
       if params[:status] == "cancelled"
-        @schedule = Schedule.find(@appointment.schedule_id)
-        @schedule.update!(is_available: true)
+        schedule = Schedule.find(@appointment.schedule_id)
+        schedule.update!(is_available: true)
       end
     end
 
