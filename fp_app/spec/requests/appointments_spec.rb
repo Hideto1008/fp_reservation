@@ -13,6 +13,7 @@ RSpec.describe "Appointments", type: :request do
   let(:available_schedule) { create(:schedule, :reserved_schedule, planner: planner) }
   let(:other_schedule) { create(:schedule, :reserved_schedule, planner: other_planner) }
   let(:past_schedule) { create(:schedule, planner: planner, started_at: Time.current - 1.day) }
+  let(:appointment) { create(:appointment, user: user, planner: planner, schedule: available_schedule, reserved_at: available_schedule.started_at, status: "reserved") }
 
   describe "POST /appointments" do
     context "when the user is not authenticated" do
@@ -107,6 +108,44 @@ RSpec.describe "Appointments", type: :request do
           expect(response).to redirect_to(user_path(user.id))
           expect(flash[:alert]).to eq("Unable to create appointment: Validation failed: Already booked for the same date and time")
         end
+      end
+    end
+  end
+
+  describe "PATCH /appointments/:id" do
+
+    before do
+      sign_in user
+    end
+
+    context "when updating appointment status to done" do
+      it "updates the status to 'done' and shows a notice" do
+        patch appointment_path(appointment), params: { status: "done", user_id: user.id }
+        expect(response).to redirect_to(user_path(user))
+        follow_redirect!
+        expect(response.body).to include("Appointment updated successfully.")
+        expect(appointment.reload.status).to eq("done")
+      end
+    end
+
+    context "when updating appointment status to canceled" do
+      it "updates the status to 'canceled', makes schedule available and shows a notice" do
+        patch appointment_path(appointment), params: { status: "canceled" , user_id: user.id }
+        expect(response).to redirect_to(user_path(user))
+        follow_redirect!
+        expect(response.body).to include("Appointment updated successfully.")
+        expect(appointment.reload.status).to eq("canceled")
+        expect(available_schedule.reload.is_available).to be_truthy
+      end
+    end
+
+    context "with invalid status parameter" do
+      it "does not update the appointment and shows an error" do
+        patch appointment_path(appointment), params: { status: "invalid_status" , user_id: user.id }
+        expect(response).to redirect_to(user_path(user))
+        follow_redirect!
+        expect(response.body).to include("Unable to update appointment")
+        expect(appointment.reload.status).to eq("reserved")
       end
     end
   end
