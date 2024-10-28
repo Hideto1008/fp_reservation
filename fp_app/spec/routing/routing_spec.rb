@@ -122,4 +122,12 @@ RSpec.describe 'Routing', type: :routing do
       action: 'index',
     )
   end
+
+  it 'routes GET planners/:id to planners#show' do
+    expect(get: 'planners/1').to route_to(
+      controller: 'planners',
+      action: 'show',
+      id: '1',
+    )
+  end
 end
