@@ -9,24 +9,15 @@ class PlannersController < ApplicationController
   end
 
   def show
-    @planner = Planner.find(params[:id])
-
-    if planner_signed_in? && current_planner == @planner
-      @appointments = Appointment.where(planner_id: @planner.id)
-      render :show_for_planner
-    elsif user_signed_in?
-      render :show_for_user
-    else
+    if current_planner != @planner && !user_signed_in?
       redirect_to root_path, alert: "You are not authorized to access this page"
     end
   end
 
   def edit
-    @planner = Planner.find(params[:id])
   end
 
   def update
-    @planner = Planner.find(params[:id])
     if @planner.update(planner_params)
       redirect_to planner_path(@planner), notice: "Information updated successfully."
     else
@@ -50,5 +41,9 @@ class PlannersController < ApplicationController
 
   def planner_params
     params.require(:planner).permit(:name, :icon_path, :introduction)
+  end
+
+  def find_planner
+    @planner = Planner.find(params[:id])
   end
 end
