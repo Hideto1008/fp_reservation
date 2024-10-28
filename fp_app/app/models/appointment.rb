@@ -17,7 +17,6 @@ class Appointment < ApplicationRecord
     end
   end
 
-
   def check_appointment_availability
     schedule = Schedule.find_by(planner_id: planner_id, started_at: reserved_at)
     if schedule.nil? || !schedule.is_available

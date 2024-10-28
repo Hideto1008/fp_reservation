@@ -20,14 +20,16 @@
         h2 History
         - if @appointments.present?
           ul style="list-style: none; padding: 0;"
-            - @appointments.each do |appointment|
-              li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
-                .icon-and-date style="display: flex; gap: 10px; align-items: center;"
-                  img src="default_user_icon_path" alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
-                  span= appointment.date.strftime("%Y/%m/%d")
-                .user-info
-                  span= appointment.user.name
-                  span= appointment.fp_name
+            - @appointments.sort_by { |appointment| -appointment.reserved_at.to_i }.each do |appointment|
+              - if appointment.status == "reserved" || appointment.status == "done"
+                li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
+                  .icon-and-date style="display: flex; gap: 10px; align-items: center;"
+                    img src=appointment.user.icon_path alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
+                    span= appointment.user.name
+                  .user-info
+                    span= appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
+                    - if appointment.status == "done"
+                      span style="margin-left: 10px; color: green;" Done
         - else
           h4 No history.
 
@@ -44,7 +46,6 @@
           p= @planner.introduction
 
       .reserve-button style="display: flex; justify-content: flex-end; margin-top: 10px; width: 100%;"
-        span class="btn btn-primary" style="background-color: #4EA1D3; color: white; padding: 10px 30px; border-radius: 5px;"
-          | Reserve
+        = link_to 'Reserve', planner_schedules_path(planner_id: @planner.id), class: 'btn btn-primary', style: "background-color: #4EA1D3; color: white; padding: 10px 30px; border-radius: 5px;"
   - else
     = redirect_to root_path, alert: "You are not authorized to access this page"
