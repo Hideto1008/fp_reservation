@@ -17,7 +17,7 @@ RSpec.describe "Appointments", type: :request do
   describe "POST /appointments" do
     context "when the user is not authenticated" do
       it "redirects to the sign-in page" do
-        post appointments_path, params: { user_id: user.id }
+        post appointments_path, params: { appointment: { user_id: user.id } }
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -28,7 +28,7 @@ RSpec.describe "Appointments", type: :request do
       end
 
       it "redirects to the root page with an alert" do
-        post appointments_path, params: { user_id: user.id }
+        post appointments_path, params: { appointment: { user_id: user.id } }
         expect(response).to redirect_to(root_path)
         expect(flash[:alert]).to eq("You are not authorized")
       end
@@ -43,15 +43,18 @@ RSpec.describe "Appointments", type: :request do
         it "creates an appointment and shows a notice" do
           expect {
             post appointments_path, params: {
-              user_id: user.id,
-              planner_id: planner.id,
-              schedule_id: available_schedule.id,
-              reserved_at: available_schedule.started_at
+              appointment: {
+                user_id: user.id,
+                planner_id: planner.id,
+                schedule_id: available_schedule.id,
+                reserved_at: available_schedule.started_at,
+                status: "reserved"
+              }
             }
           }.to change(Appointment, :count).by(1)
           expect(response).to redirect_to(user_path(user))
           expect(flash[:notice]).to eq("Appointment created successfully.")
-          expect(available_schedule.reload.is_available).to be_falsey  # Verify that the schedule has been updated
+          expect(available_schedule.reload.is_available).to be_falsey
         end
       end
 
@@ -59,10 +62,13 @@ RSpec.describe "Appointments", type: :request do
         it "does not create an appointment and shows an error message when the schedule is not available" do
           expect {
             post appointments_path, params: {
-              user_id: user.id,
-              planner_id: planner.id,
-              schedule_id: schedule.id,
-              reserved_at: schedule.started_at
+              appointment: {
+                user_id: user.id,
+                planner_id: planner.id,
+                schedule_id: schedule.id,
+                reserved_at: schedule.started_at,
+                status: "reserved"
+              }
             }
           }.not_to change(Appointment, :count)
           expect(response).to redirect_to(user_path(user.id))
@@ -72,10 +78,13 @@ RSpec.describe "Appointments", type: :request do
         it "does not create an appointment and shows an error message when make appointment in past" do
           expect {
             post appointments_path, params: {
-              user_id: user.id,
-              planner_id: planner.id,
-              schedule_id: past_schedule.id,
-              reserved_at: past_schedule.started_at # Past date
+              appointment: {
+                user_id: user.id,
+                planner_id: planner.id,
+                schedule_id: past_schedule.id,
+                reserved_at: past_schedule.started_at,
+                status: "reserved"
+              }
             }
           }.not_to change(Appointment, :count)
           expect(response).to redirect_to(user_path(user.id))
@@ -86,10 +95,13 @@ RSpec.describe "Appointments", type: :request do
           create(:appointment, user: user, planner: planner, schedule: available_schedule, reserved_at: available_schedule.started_at)
           expect {
             post appointments_path, params: {
-              user_id: user.id,
-              planner_id: other_planner.id,
-              schedule_id: other_schedule.id,
-              reserved_at: other_schedule.started_at
+              appointment: {
+                user_id: user.id,
+                planner_id: other_planner.id,
+                schedule_id: other_schedule.id,
+                reserved_at: other_schedule.started_at,
+                status: "reserved"
+              }
             }
           }.not_to change(Appointment, :count)
           expect(response).to redirect_to(user_path(user.id))
