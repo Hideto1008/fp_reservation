@@ -4,39 +4,22 @@ class AppointmentsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @appointment = Appointment.new(
-        user_id: params[:user_id],
-        planner_id: params[:planner_id],
-        schedule_id: params[:schedule_id],
-        reserved_at: params[:reserved_at],
-        status: "reserved"
-      )
+      appointment = Appointment.create!(appointment_params)
 
-      unless @appointment.save
-        logger.error "Appointment save failed: #{@appointment.errors.full_messages.join(', ')}"
-        raise "Failed to create appointment"
-      end
-
-      @schedule = Schedule.find(params[:schedule_id])
-      @schedule.update!(is_available: !@schedule.is_available)
+      @schedule = Schedule.find_by!(id: appointment_params[:schedule_id])
+      @schedule.update!(is_available: false)
     end
 
     redirect_to user_path(current_user), notice: "Appointment created successfully."
   rescue => e
     logger.error "Transaction failed: #{e.message}"
-    redirect_to user_path(params[:user_id]), alert: "Unable to create appointment: #{e.message}"
+    redirect_to user_path(current_user), alert: "Unable to create appointment: #{e.message}"
   end
-
 
   def update
     ActiveRecord::Base.transaction do
       @appointment = Appointment.find(params[:id])
-      @appointment.status = params[:status]
-
-      unless @appointment.save
-        logger.error "Appointment save failed: #{@appointment.errors.full_messages.join(', ')}"
-        raise "Failed to update appointment"
-      end
+      @appointment.update!(status: params[:status])
 
       if params[:status] == "cancelled"
         @schedule = Schedule.find(@appointment.schedule_id)
@@ -53,13 +36,17 @@ class AppointmentsController < ApplicationController
     redirect_to user_path(current_user), alert: "Unable to update appointment: #{e.message}"
   end
 
-
   private
 
   def correct_user
-    @user = User.find_by(id: params[:user_id])
+    user_id = params.dig(:appointment, :user_id) || params[:user_id]
+    @user = User.find_by(id: user_id)
     if @user.nil? || @user != current_user
       redirect_to root_path, alert: "You are not authorized"
     end
+  end
+
+  def appointment_params
+    params.require(:appointment).permit(:user_id, :planner_id, :schedule_id, :reserved_at, :status)
   end
 end

@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :find_user
 
   def show
+    @appointments = @user.appointments
   end
 
   def edit
