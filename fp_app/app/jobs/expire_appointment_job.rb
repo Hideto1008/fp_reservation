@@ -1,10 +1,9 @@
 # app/jobs/expire_appointment_job.rb
-class ExpireAppointmentJob
-  include Sidekiq::Job
+class ExpireAppointmentJob < ApplicationJob
+  queue_as :default
 
   def perform(appointment_id)
-    appointment = Appointment.find_by(id: appointment_id)
-    return unless appointment && appointment.status == "reserved"
+    appointment = Appointment.find(appointment_id)
 
     appointment.update!(status: "expired")
   end

@@ -117,6 +117,26 @@ RSpec.describe "Appointments", type: :request do
       sign_in user
     end
 
+    context "when updating appointment status to reserved" do
+      it "schedules a job to update status to 'expired' 12 hours after reserved_at time" do
+        expect {
+          patch appointment_path(appointment), params: { status: "reserved", user_id: user.id }
+        }.to change { Sidekiq::ScheduledSet.new.size }.by(1)
+
+        job_execution_time = appointment.reserved_at + 12.hours
+        enqueued_job = Sidekiq::ScheduledSet.new.find do |job|
+          job.klass == 'ExpireAppointmentJob' && job.args == [appointment.id]
+        end
+
+        expect(enqueued_job.at).to be_within(1.minute).of(job_execution_time)
+
+        expect(response).to redirect_to(user_path(user))
+        follow_redirect!
+        expect(response.body).to include("Appointment updated successfully.")
+        expect(appointment.reload.status).to eq("reserved")
+      end
+    end
+
     context "when updating appointment status to done" do
       it "updates the status to 'done' and shows a notice" do
         patch appointment_path(appointment), params: { status: "done", user_id: user.id }

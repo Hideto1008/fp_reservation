@@ -7,6 +7,9 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+require 'sidekiq/testing'
+Sidekiq::Testing.fake!
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -34,6 +37,11 @@ RSpec.configure do |config|
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]
+
+  config.before(:each) do
+    Sidekiq::Testing.fake!
+    Sidekiq::Worker.clear_all
+  end
 
   # FactoryBotのメソッドを省略して使用できるようにする
   config.include FactoryBot::Syntax::Methods
