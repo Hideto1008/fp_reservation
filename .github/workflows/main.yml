@@ -59,7 +59,6 @@ jobs:
       - name: Database create and migrate
         working-directory: fp_app
         run: |
-          cp config/database.yml config/database.yml
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
