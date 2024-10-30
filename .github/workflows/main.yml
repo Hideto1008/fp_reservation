@@ -1,7 +1,7 @@
 name: Run rspec, rubocop
 
-on:                               
-  push:                           
+on:
+  push:
     branches:
       - main
       - "**"
@@ -31,12 +31,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2     
+        uses: actions/checkout@v2
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - name: Install MySQL Client
+        run: sudo apt-get update && sudo apt-get install -y mysql-client
 
       - name: Wait for MySQL
         run: |
@@ -70,6 +73,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
 
       - name: Run Rubocop
         run: bundle exec rubocop
