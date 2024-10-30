@@ -60,6 +60,7 @@ jobs:
           bundle exec rails db:migrate RAILS_ENV=test
 
       - name: Run make
+        working-directory: fp_app
         run: make
 
       - name: Run RSpec
