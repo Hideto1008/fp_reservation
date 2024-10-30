@@ -1,3 +1,3 @@
-every 30.minutes do
+every 10.minutes do
   runner "ExpireAppointmentJob"
 end
