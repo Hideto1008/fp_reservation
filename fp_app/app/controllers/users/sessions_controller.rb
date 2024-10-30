@@ -10,6 +10,9 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
+    if planner_signed_in?
+      sign_out(:planner)
+    end
     super
   end
 

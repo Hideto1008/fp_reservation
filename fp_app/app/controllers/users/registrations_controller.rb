@@ -11,6 +11,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+    if planner_signed_in?
+      sign_out(:planner)
+    end
     super
   end
 
