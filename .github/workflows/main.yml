@@ -9,7 +9,7 @@ on:
 env:
   MYSQL_ROOT_PASSWORD: password
   MYSQL_DB: fp_app_test
-  MYSQL_HOST: db
+  MYSQL_HOST: localhost
 
 jobs:
   rspec:
