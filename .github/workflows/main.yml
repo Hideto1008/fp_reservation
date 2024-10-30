@@ -59,13 +59,10 @@ jobs:
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
-      - name: Run make
-        working-directory: fp_app
-        run: make apply_test
 
       - name: Run RSpec
         working-directory: fp_app
-        run: bundle exec rspec
+        run: make apply_test && bundle exec rspec
 
   rubocop:
     runs-on: ubuntu-latest
