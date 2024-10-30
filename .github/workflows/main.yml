@@ -60,9 +60,12 @@ jobs:
           bundle exec rails db:migrate RAILS_ENV=test
 
 
-      - name: Run RSpec
-        working-directory: fp_app
-        run: make apply_test && bundle exec rspec
+      - name: Apply schema and run tests
+        run: |
+          make apply_test
+          make migrate_test
+          bundle exec rspec
+
 
   rubocop:
     runs-on: ubuntu-latest
