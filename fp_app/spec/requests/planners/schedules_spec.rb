@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "Planners::Schedules", type: :request do
+  let(:user) { create(:user) }
   let(:planner) { create(:planner) }
   let(:other_planner) { create(:planner, email: "other@example.com") }
   let(:schedule) { create(:schedule, planner: planner) }
+  let(:available_schedule) { create(:schedule, :reserved_schedule, planner: planner) }
 
   before do
     sign_in planner
@@ -67,6 +69,35 @@ RSpec.describe "Planners::Schedules", type: :request do
       it "redirects to root_path" do
         patch planner_schedule_path(other_planner, other_schedule), xhr: true
         expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  before do
+    sign_in user
+  end
+
+  describe "PATCH /schedules/:id" do
+    context "when schedule is associated with a reserved appointment" do
+      it "does not update the schedule and shows an alert" do
+        post appointments_path, params: {
+              appointment: {
+                user_id: user.id,
+                planner_id: planner.id,
+                schedule_id: available_schedule.id,
+                reserved_at: available_schedule.started_at,
+                status: "reserved"
+              }
+        }
+        expect(available_schedule.reload.is_available).to be_falsey
+
+        expect {
+          patch planner_schedule_path(planner, available_schedule), params: { is_available: !available_schedule.is_available }, xhr: true
+          schedule.reload
+        }.not_to change { available_schedule.is_available }
+
+        expect(available_schedule.reload.is_available).to be_falsey
+
       end
     end
   end
