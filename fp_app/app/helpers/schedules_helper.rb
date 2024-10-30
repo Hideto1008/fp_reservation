@@ -30,5 +30,4 @@ module SchedulesHelper
       end
     end
   end
-
 end

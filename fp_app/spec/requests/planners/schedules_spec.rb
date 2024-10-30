@@ -97,7 +97,6 @@ RSpec.describe "Planners::Schedules", type: :request do
         }.not_to change { available_schedule.is_available }
 
         expect(available_schedule.reload.is_available).to be_falsey
-
       end
     end
   end
