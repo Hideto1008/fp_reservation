@@ -9,6 +9,7 @@ class PlannersController < ApplicationController
   end
 
   def show
+    @appointments = @planner.appointments
     if current_planner != @planner && !user_signed_in?
       redirect_to root_path, alert: "You are not authorized to access this page"
     end

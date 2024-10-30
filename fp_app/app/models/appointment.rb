@@ -6,13 +6,14 @@ class Appointment < ApplicationRecord
   validates :planner_id, presence: true
   validates :schedule, presence: true
   validate :check_reserved_at_is_future_or_present
-  validate :check_appointment_availability
+  validate :check_appointment_availability, on: :create
+  validate :check_duplicate_appointment, on: :create
 
   private
 
   def check_reserved_at_is_future_or_present
-    if reserved_at < Time.now && will_save_change_to_reserved_at?
-        errors.add(:reserved_at, "can't be in the past")
+    if reserved_at < Time.now && (will_save_change_to_status? || new_record?)
+      errors.add(:reserved_at, "can't be in the past")
     end
   end
 
@@ -20,6 +21,12 @@ class Appointment < ApplicationRecord
     schedule = Schedule.find_by(planner_id: planner_id, started_at: reserved_at)
     if schedule.nil? || !schedule.is_available
       errors.add(:schedule_id, "is not available at the selected time")
+    end
+  end
+
+  def check_duplicate_appointment
+    if Appointment.exists?(user_id: user_id, reserved_at: reserved_at, status: "reserved") || Appointment.exists?(planner_id: planner_id, reserved_at: reserved_at, status: "reserved")
+      errors.add(:base, "Already booked for the same date and time")
     end
   end
 end

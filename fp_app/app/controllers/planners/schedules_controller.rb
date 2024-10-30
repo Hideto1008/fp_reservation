@@ -1,10 +1,17 @@
 class Planners::SchedulesController < ApplicationController
-  before_action :authenticate_planner!
-  before_action :correct_planner
+  before_action :authenticate_planner!, only: [ :update, :create ]
+  before_action :correct_planner, only: [ :update, :create ]
+  before_action :correct_planner_for_index, only: [ :index ], if: :planner_signed_in?
 
   def index
     @planner = Planner.find(params[:planner_id])
     @schedules = @planner.schedules
+    @planners = Planner.all if user_signed_in?
+  end
+
+  def show
+    @schedule = Schedule.find(params[:id])
+    @planner = @schedule.planner
   end
 
   def update
@@ -27,7 +34,6 @@ class Planners::SchedulesController < ApplicationController
       started_at: DateTime.parse("#{params[:date]} #{params[:time]}"),
       is_available: true
     )
-    @schedule.save
     if @schedule.save
       respond_to do |format|
         format.js { render "planners/schedules/update_schedule" }
@@ -43,8 +49,13 @@ class Planners::SchedulesController < ApplicationController
 
   def correct_planner
     @planner = Planner.find_by(id: params[:planner_id])
+    redirect_to root_path, alert: "You are not authorized" unless @planner == current_planner
+  end
+
+  def correct_planner_for_index
+    @planner = Planner.find_by(id: params[:planner_id])
     if @planner.nil? || @planner != current_planner
-      redirect_to root_path
+      redirect_to root_path, alert: "You are not authorized to view this schedule"
     end
   end
 

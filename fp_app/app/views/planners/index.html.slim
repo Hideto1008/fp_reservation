@@ -11,7 +11,8 @@
           div style="display: flex; align-items: center;"
             img src=planner.icon_path alt="Planner Icon" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 15px;"
             = link_to planner.name, planner_path(planner.id), class: 'planner-name-link'
-            = content_tag :span, 'Reserve', class: 'btn btn-primary', style: "background-color: #4EA1D3; color: white; padding: 10px 50px; border-radius: 5px; margin-left: auto; margin-right: 30px;"
+            = link_to 'Reserve', planner_schedules_path(planner.id), class: 'btn btn-primary', style: "background-color: #4EA1D3; color: white; padding: 10px 50px; border-radius: 5px; margin-left: auto; margin-right: 30px;"
+
 
 
 style

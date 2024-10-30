@@ -1,0 +1,20 @@
+.container style="max-width: 800px; margin: 0 auto; padding: 20px;"
+  .planner-info style="display: flex; align-items: center; margin-bottom: 20px;"
+    - if @planner.icon_path.present?
+      img.planner-icon src=@planner.icon_path alt="#{@planner.name}のアイコン" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 20px;"
+    - else
+      img.planner-icon src="/default_icon.png" alt="デフォルトのアイコン" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 20px;"
+
+    h2 = @planner.name
+
+  .schedule-info style="margin-bottom: 20px;"
+    h3 予約日時
+    p
+      - if @schedule.present? && @schedule.started_at.present?
+        | 予約日時:
+        span = @schedule.started_at.strftime("%Y-%m-%d %H:%M")
+      - else
+        | 予約日時:
+        span 時間が設定されていません
+
+  = link_to "予約を確定する", appointments_path(appointment: { user_id: current_user.id, planner_id: @planner.id, schedule_id: @schedule.id, reserved_at: @schedule.started_at, status: "reserved" }), method: :post, style: "display: inline-block; padding: 10px 20px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; text-decoration: none;"
