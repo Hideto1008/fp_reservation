@@ -6,11 +6,6 @@ on:
       - main
       - "**"
 
-env:
-  MYSQL_ROOT_PASSWORD: password
-  MYSQL_DB: fp_app_test
-  MYSQL_HOST: localhost
-
 jobs:
   rspec:
     runs-on: ubuntu-latest
