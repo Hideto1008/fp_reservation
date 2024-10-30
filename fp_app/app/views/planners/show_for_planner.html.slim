@@ -20,7 +20,7 @@
       - if @appointments.present?
         ul style="list-style: none; padding: 0;"
           - @appointments.sort_by { |appointment| -appointment.reserved_at.to_i }.each do |appointment|
-            - if appointment.status == "reserved" || appointment.status == "done"
+            - if appointment.status == "reserved" || appointment.status == "done" || appointment.status == "expired"
               li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
                 .icon-and-date style="display: flex; gap: 10px; align-items: center;"
                   img src=appointment.user.icon_path alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
@@ -29,5 +29,7 @@
                   span= appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
                   - if appointment.status == "done"
                     span style="margin-left: 10px; color: green;" Done
+                  - elsif appointment.status == "expired"
+                    span style="margin-left: 10px; color: red;" Expired
       - else
         h4 No history.
