@@ -36,6 +36,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: '2.7.0'  # あなたのRubyのバージョンに合わせてください
           bundler-cache: true
 
       - name: Install MySQL Client
@@ -49,17 +50,20 @@ jobs:
           done
 
       - name: Install dependencies
+        working-directory: fp_app
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3 --path vendor/bundle
 
       - name: Database create and migrate
+        working-directory: fp_app
         run: |
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
       - name: Run RSpec
+        working-directory: fp_app
         run: bundle exec rspec
 
   rubocop:
@@ -72,12 +76,15 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: '3.2.3'
           bundler-cache: true
 
       - name: Install dependencies
+        working-directory: fp_app
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3 --path vendor/bundle
 
       - name: Run Rubocop
+        working-directory: fp_app
         run: bundle exec rubocop
