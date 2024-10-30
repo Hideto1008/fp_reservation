@@ -16,17 +16,24 @@ class Planners::SchedulesController < ApplicationController
 
   def update
     @schedule = Schedule.find(params[:id])
-    @schedule.is_available = params[:is_available]
-    if @schedule.save
+    if Appointment.exists?(schedule_id: @schedule.id)
       respond_to do |format|
-        format.js { render "planners/schedules/update_schedule" }
+        format.js { render js: "alert('This schedule is associated with an existing appointment and cannot be updated.');" }
       end
     else
-      respond_to do |format|
-        format.js { render js: "alert('Unable to update availability.');" }
+      @schedule.is_available = params[:is_available]
+      if @schedule.save
+        respond_to do |format|
+          format.js { render "planners/schedules/update_schedule" }
+        end
+      else
+        respond_to do |format|
+          format.js { render js: "alert('Unable to update availability.');" }
+        end
       end
     end
   end
+
 
   def create
     @schedule = Schedule.new(
