@@ -13,7 +13,7 @@ env:
 jobs:
   rspec:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     services:
       db:
@@ -24,10 +24,10 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping --silent"
+          --health-cmd="mysqladmin ping -h localhost --silent"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=3
+          --health-retries=5
 
     steps:
       - name: Checkout code
@@ -36,7 +36,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.0'  # あなたのRubyのバージョンに合わせてください
+          ruby-version: '2.7.0'  # Rubyのバージョンをあなたのプロジェクトに合わせる
           bundler-cache: true
 
       - name: Install MySQL Client
@@ -44,9 +44,10 @@ jobs:
 
       - name: Wait for MySQL
         run: |
-          until mysqladmin ping -h db --silent; do
+          for i in {1..10}; do
+            mysqladmin ping -h 127.0.0.1 -u root -ppassword --silent && break
             echo "Waiting for MySQL..."
-            sleep 2
+            sleep 5
           done
 
       - name: Install dependencies
