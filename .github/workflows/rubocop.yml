@@ -10,6 +10,10 @@ jobs:
   rspec:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./fp_app
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -17,7 +21,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2.3'
+          ruby-version: '3.2'
           bundler-cache: true
 
       - name: Install dependencies
