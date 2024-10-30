@@ -4,7 +4,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: <%= ENV.fetch("MYSQL_USER") { 'root' } %> # デフォルト値 'root' を設定
   password: <%= ENV.fetch("MYSQL_ROOT_PASSWORD") { 'password' } %> # デフォルト値 'password' を設定
-  host: <%= ENV.fetch("MYSQL_HOST") { 'db' } %> # デフォルト値 'db' を設定
+  host: <%= ENV.fetch("MYSQL_HOST") { '127.0.0.1' } %> # デフォルト値 'db' を設定
 
 development:
   <<: *default
