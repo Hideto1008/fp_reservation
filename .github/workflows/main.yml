@@ -17,7 +17,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: fp_app_test
-
         ports:
           - 3306:3306
         options: >-
@@ -34,7 +33,14 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2.3'
-          bundler-cache: true
+
+      - name: Cache gems
+        uses: actions/cache@v3
+        with:
+          path: fp_app/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('fp_app/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
 
       - name: Install MySQL Client
         run: sudo apt-get update && sudo apt-get install -y mysql-client
@@ -64,14 +70,12 @@ jobs:
           make apply_test
           make migrate_test
 
-
       - name: Apply schema and run tests
         working-directory: fp_app
         env:
           MYSQL_HOST: '127.0.0.1'
         run: |
           bundle exec rspec
-
 
   rubocop:
     runs-on: ubuntu-latest
@@ -84,7 +88,14 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2.3'
-          bundler-cache: true
+
+      - name: Cache gems
+        uses: actions/cache@v3
+        with:
+          path: fp_app/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('fp_app/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
 
       - name: Install dependencies
         working-directory: fp_app
