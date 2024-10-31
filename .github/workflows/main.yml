@@ -61,13 +61,15 @@ jobs:
           echo $MYSQL_HOST
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
+          make apply_test
+          make migrate_test
 
 
       - name: Apply schema and run tests
         working-directory: fp_app
+        env:
+          MYSQL_HOST: '127.0.0.1'
         run: |
-          make apply_test
-          make migrate_test
           bundle exec rspec
 
 
