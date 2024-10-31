@@ -16,7 +16,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: fp_app_test
+          MYSQL_DATABASE: fp_app_github
 
         ports:
           - 3306:3306
@@ -55,18 +55,16 @@ jobs:
 
       - name: Database create and migrate
         working-directory: fp_app
-        env:
-          MYSQL_HOST: '127.0.0.1'
         run: |
-          bundle exec rails db:create RAILS_ENV=test
-          bundle exec rails db:migrate RAILS_ENV=test
+          bundle exec rails db:create RAILS_ENV=github
+          bundle exec rails db:migrate RAILS_ENV=github
 
 
       - name: Apply schema and run tests
         working-directory: fp_app
         run: |
-          make apply_test
-          make migrate_test
+          make apply_github
+          make migrate_github
           bundle exec rspec
 
 
