@@ -58,6 +58,7 @@ jobs:
         env:
           MYSQL_HOST: '127.0.0.1'
         run: |
+          echo $MYSQL_HOST
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
