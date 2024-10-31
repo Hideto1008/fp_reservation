@@ -14,11 +14,6 @@ test:
   <<: *default
   database: <%= ENV.fetch("MYSQL_DB") { 'fp_app_test' } %> # デフォルト値 'app_test' を設定
 
-github:
-  <<: *default
-  database: <%= ENV.fetch("MYSQL_DB") { 'fp_app_github' } %> # デフォルト値 'app_github' を設定
-  host: '127.0.0.1'
-
 # production 環境はプロジェクトに合わせて修正
 production:
   <<: *default

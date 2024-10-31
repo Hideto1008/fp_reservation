@@ -12,15 +12,6 @@ apply_dev:
 apply_test:
 	bundle exec ridgepole -c config/database.yml -E test --apply -f db/schemas/Schemafile
 
-.PHONY: apply_github
-apply_github:
-	bundle exec ridgepole -c config/database.yml -E github --apply -f db/schemas/Schemafile
-
-# GitHub環境のデータベースをマイグレート
-.PHONY: migrate_github
-migrate_github:
-	bundle exec rails db:migrate RAILS_ENV=github
-
 # テスト環境のデータベースをマイグレート
 .PHONY: migrate_test
 migrate_test:
