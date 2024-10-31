@@ -15,10 +15,10 @@ jobs:
       db:
         image: mysql:8.0
 
-        # env:
-        #   MYSQL_ROOT_PASSWORD: password
-        #   MYSQL_DATABASE: fp_app_test
-        #   MYSQL_HOST: '127.0.0.1'
+      env:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: fp_app_test
+
         ports:
           - 3306:3306
         options: >-
