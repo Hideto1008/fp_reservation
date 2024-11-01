@@ -154,10 +154,15 @@ RSpec.describe "Appointments", type: :request do
     end
 
     context "when the appointment is in the past" do
-      it "does not cancel past appointment and shows an error" do
-        patch appointment_path(past_appointment), params: { status: "canceled", user_id: user.id }
-        expect(appointment.reload.status).to eq("reserved")
-        expect raise_error("Unable to cancel appointment: Can't cancel past appointment")
+      it "does not cancel past appointment" do
+        expect {
+          patch appointment_path(past_appointment), params: { status: "canceled", user_id: user.id }
+        }.not_to change { past_appointment.reload.status }
+      end
+
+      it "can updates the status to 'done'" do
+        patch appointment_path(past_appointment), params: { status: "done", user_id: user.id }
+        expect(past_appointment.reload.status).to eq("done")
       end
     end
   end

@@ -12,7 +12,7 @@ class Appointment < ApplicationRecord
   private
 
   def check_reserved_at_is_future_or_present
-    if reserved_at < Time.now && (will_save_change_to_status? || new_record?)
+    if reserved_at < Time.current && new_record?
       errors.add(:reserved_at, "can't be in the past")
     end
   end

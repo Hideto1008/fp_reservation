@@ -23,7 +23,7 @@ class AppointmentsController < ApplicationController
 
       if params[:status] == "canceled"
         if appointment.reserved_at < Time.now
-          raise "Unable to cancel appointment: Can't cancel past appointment"
+          raise "Unable to cancel past appointment"
         else
           schedule = Schedule.find(appointment.schedule_id)
           schedule.update!(is_available: true)
