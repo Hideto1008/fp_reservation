@@ -4,7 +4,6 @@ class PlannersController < ApplicationController
   before_action :correct_planner, only: %i[edit update]
   before_action :find_planner, only: %i[show edit update]
 
-
   def index
     @planners = Planner.all
   end
