@@ -22,7 +22,7 @@ class AppointmentsController < ApplicationController
       appointment.update!(status: params[:status])
 
       if params[:status] == "cancelled"
-        schedule = Schedule.find(@appointment.schedule_id)
+        schedule = Schedule.find(appointment.schedule_id)
         schedule.update!(is_available: true)
       end
     end
