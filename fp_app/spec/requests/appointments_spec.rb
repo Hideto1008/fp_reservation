@@ -1,5 +1,3 @@
-# spec/requests/appointments_spec.rb
-
 require 'rails_helper'
 
 RSpec.describe "Appointments", type: :request do
@@ -14,6 +12,13 @@ RSpec.describe "Appointments", type: :request do
   let(:other_schedule) { create(:schedule, :reserved_schedule, planner: other_planner) }
   let(:past_schedule) { create(:schedule, planner: planner, started_at: Time.current - 1.day) }
   let(:appointment) { create(:appointment, user: user, planner: planner, schedule: available_schedule, reserved_at: available_schedule.started_at, status: "reserved") }
+  last_monday = Time.current.beginning_of_week - 7.days
+  let(:past_appointment) do
+    travel_to(last_monday) do
+      past_schedule = create(:schedule, planner: planner, started_at: last_monday + 12.hours, is_available: true)
+      create(:appointment, user: user, planner: planner, schedule: past_schedule, reserved_at: past_schedule.started_at, status: "reserved")
+    end
+  end
 
   describe "POST /appointments" do
     context "when the user is not authenticated" do
@@ -145,6 +150,14 @@ RSpec.describe "Appointments", type: :request do
         follow_redirect!
         expect(response.body).to include("Unable to update appointment")
         expect(appointment.reload.status).to eq("reserved")
+      end
+    end
+
+    context "when the appointment is in the past" do
+      it "does not cancel past appointment and shows an error" do
+        patch appointment_path(past_appointment), params: { status: "canceled", user_id: user.id }
+        expect(appointment.reload.status).to eq("reserved")
+        expect raise_error("Unable to cancel appointment: Can't cancel past appointment")
       end
     end
   end
