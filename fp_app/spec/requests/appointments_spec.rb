@@ -161,8 +161,9 @@ RSpec.describe "Appointments", type: :request do
       end
 
       it "can updates the status to 'done'" do
-        patch appointment_path(past_appointment), params: { status: "done", user_id: user.id }
-        expect(past_appointment.reload.status).to eq("done")
+        expect {
+          patch appointment_path(past_appointment), params: { status: "done", user_id: user.id }
+        }.to change { past_appointment.reload.status }.from("reserved").to("done")
       end
     end
   end

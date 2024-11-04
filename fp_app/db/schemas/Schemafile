@@ -5,7 +5,7 @@ create_table "appointments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci"
   t.bigint "planner_id", null: false
   t.bigint "schedule_id", null: false
   t.datetime "reserved_at"
-  t.column "status", "enum('reserved', 'canceled', 'done')"
+  t.integer "status"
   t.datetime "created_at", null: false
   t.datetime "updated_at", null: false
   t.index [ "planner_id" ], name: "index_appointments_on_planner_id"

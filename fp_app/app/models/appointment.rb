@@ -8,6 +8,9 @@ class Appointment < ApplicationRecord
   validate :check_reserved_at_is_future_or_present
   validate :check_appointment_availability, on: :create
   validate :check_duplicate_appointment, on: :create
+  before_update :check_past_appintment_when_canceled
+
+  enum status: { reserved: 0, canceled: 1, done: 2 }, _prefix: true
 
   private
 
@@ -27,6 +30,15 @@ class Appointment < ApplicationRecord
   def check_duplicate_appointment
     if Appointment.exists?(user_id: user_id, reserved_at: reserved_at, status: "reserved") || Appointment.exists?(planner_id: planner_id, reserved_at: reserved_at, status: "reserved")
       errors.add(:base, "Already booked for the same date and time")
+    end
+  end
+
+  def check_past_appintment_when_canceled
+    if status_canceled?
+      if reserved_at < Time.current
+        errors.add(:base, "Unable to cancel past appointment")
+        throw(:abort)
+      end
     end
   end
 end
