@@ -6,7 +6,6 @@
       .profile style="flex-basis: 30%; text-align: center; min-width: 250px;"
         h2 style="margin-bottom: 40px; text-align: left;" My page
 
-        // プロフィール情報を表示
         .profile-info
           img src=@planner.icon_path alt="Planner Icon" style="width: 100px; height: 100px; border-radius: 50%;"
           h3 style="margin-bottom: 50px;" = @planner.name
@@ -20,8 +19,8 @@
         h2 History
         - if @appointments.present?
           ul style="list-style: none; padding: 0;"
-            - @appointments.sort_by { |appointment| -appointment.reserved_at.to_i }.each do |appointment|
-              - if appointment.status == "reserved" || appointment.status == "done" || appointment.status == "expired"
+            - @appointments.each do |appointment|
+              - if appointment.status == "reserved" || appointment.status == "done"
                 li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
                   .icon-and-date style="display: flex; gap: 10px; align-items: center;"
                     img src=appointment.user.icon_path alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
