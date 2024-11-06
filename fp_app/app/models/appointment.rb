@@ -35,13 +35,13 @@ class Appointment < ApplicationRecord
   end
 
   def check_past_appintment_when_canceled
-    if status_canceled? && reserved_at < Time.current
+    if status_canceled? && reserved_at < Time.current && will_save_change_to_status?
       errors.add(:base, "Unable to cancel past appointment")
     end
   end
 
   def chaeck_future_appointment_when_done
-    if status_done? && reserved_at > Time.current
+    if status_done? && reserved_at > Time.current && will_save_change_to_status?
       errors.add(:base, "Unable to mark future appointment as done")
     end
   end
