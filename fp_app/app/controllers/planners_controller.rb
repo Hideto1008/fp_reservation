@@ -4,13 +4,12 @@ class PlannersController < ApplicationController
   before_action :correct_planner, only: %i[edit update]
   before_action :find_planner, only: %i[show edit update]
 
-
   def index
     @planners = Planner.all
   end
 
   def show
-    @appointments = @planner.appointments
+    @appointments = @planner.appointments.order(reserved_at: :desc)
     if current_planner != @planner && !user_signed_in?
       redirect_to root_path, alert: "You are not authorized to access this page"
     end
