@@ -11,7 +11,7 @@ class Planners::SchedulesController < ApplicationController
       planner_position = Planner.order(:id).pluck(:id).index(@planner.id)
       page_number = (planner_position / 5) + 1
       if page_number != params[:page].to_i
-          redirect_to planner_schedules_path(planner_id: @planner.id, page: page_number)
+        redirect_to planner_schedules_path(planner_id: @planner.id, page: page_number)
       end
     end
   end
