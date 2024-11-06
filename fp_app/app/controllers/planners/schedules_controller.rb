@@ -6,8 +6,16 @@ class Planners::SchedulesController < ApplicationController
   def index
     @planner = Planner.find(params[:planner_id])
     @schedules = @planner.schedules
-    @planners = Planner.page(params[:page]).per(5) if user_signed_in?
+    if user_signed_in?
+      @planners = Planner.page(params[:page]).per(5) if user_signed_in?
+      planner_position = Planner.order(:id).pluck(:id).index(@planner.id)
+      page_number = (planner_position / 5) + 1
+      if page_number != params[:page].to_i
+          return redirect_to planner_schedules_path(planner_id: @planner.id, page: page_number)
+      end
+    end
   end
+
 
   def show
     @schedule = Schedule.find(params[:id])
