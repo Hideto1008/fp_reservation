@@ -73,13 +73,10 @@ RSpec.describe "Planners::Schedules", type: :request do
     end
   end
 
-  before do
-    sign_in user
-  end
-
   describe "PATCH /schedules/:id" do
     context "when schedule is associated with a reserved appointment" do
       it "does not update the schedule and shows an alert" do
+        sign_in user
         post appointments_path, params: {
               appointment: {
                 user_id: user.id,
