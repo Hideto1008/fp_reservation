@@ -6,7 +6,7 @@ class Planners::SchedulesController < ApplicationController
   def index
     @planner = Planner.find(params[:planner_id])
     @schedules = @planner.schedules
-    @planners = Planner.all if user_signed_in?
+    @planners = Planner.page(params[:page]).per(5) if user_signed_in?
   end
 
   def show

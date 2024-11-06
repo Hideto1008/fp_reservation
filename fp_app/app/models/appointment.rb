@@ -11,7 +11,7 @@ class Appointment < ApplicationRecord
   validate :check_past_appintment_when_canceled, on: :update
   validate :chaeck_future_appointment_when_done, on: :update
 
-  enum status: { reserved: 0, canceled: 1, done: 2, expired: 3}, _prefix: true
+  enum status: { reserved: 0, canceled: 1, done: 2, expired: 3 }, _prefix: true
 
   private
 

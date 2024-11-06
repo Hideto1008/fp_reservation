@@ -2,7 +2,7 @@ require 'faker'
 
 100.times do |i|
   Planner.create!(
-    email: Faker::Internet.unique.email,
+    email: "planner#{i}@example.com",
     password: "password",
     name: Faker::Name.name,
     icon_path: "https://free-icon.org/material/02-illustration/0139-download-image-m.png",
