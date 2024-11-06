@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_091457) do
     t.bigint "planner_id", null: false
     t.bigint "schedule_id", null: false
     t.datetime "reserved_at"
-    t.integer "status"
+    t.integer "status", limit: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["planner_id"], name: "index_appointments_on_planner_id"

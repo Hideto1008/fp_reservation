@@ -21,8 +21,10 @@ class AppointmentsController < ApplicationController
       appointment = Appointment.find(params[:id])
       appointment.update!(status: params[:status])
 
-      schedule = Schedule.find(appointment.schedule_id)
-      schedule.update!(is_available: true)
+      if appointment.status_canceled?
+        schedule = Schedule.find(appointment.schedule_id)
+        schedule.update!(is_available: true)
+      end
     end
 
     redirect_to user_path(current_user), notice: "Appointment updated successfully."

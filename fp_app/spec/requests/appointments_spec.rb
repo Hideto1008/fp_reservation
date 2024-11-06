@@ -124,11 +124,27 @@ RSpec.describe "Appointments", type: :request do
 
     context "when updating appointment status to done" do
       it "updates the status to 'done' and shows a notice" do
-        patch appointment_path(appointment), params: { status: "done", user_id: user.id }
-        expect(response).to redirect_to(user_path(user))
-        follow_redirect!
-        expect(response.body).to include("Appointment updated successfully.")
-        expect(appointment.reload.status).to eq("done")
+        travel_to(available_schedule.started_at) do
+          patch appointment_path(appointment), params: { status: "done", user_id: user.id }
+          expect(response).to redirect_to(user_path(user))
+          follow_redirect!
+          expect(response.body).to include("Appointment updated successfully.")
+          expect(appointment.reload.status).to eq("done")
+        end
+      end
+
+      it "does not update the status to 'done' when the appointment is in the future" do
+        expect {
+          patch appointment_path(appointment), params: { status: "done", user_id: user.id }
+        }.not_to change { appointment.reload.status }
+      end
+
+      it "does not update the schedule.is_available to 'true'" do
+        travel_to(available_schedule.started_at) do
+          expect {
+            patch appointment_path(appointment), params: { status: "done", user_id: user.id }
+          }.not_to change { available_schedule.reload.is_available }
+        end
       end
     end
 

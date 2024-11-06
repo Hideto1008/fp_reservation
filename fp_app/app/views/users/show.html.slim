@@ -15,7 +15,7 @@
       - if @appointments.present?
         ul style="list-style: none; padding: 0;"
           - @appointments.each do |appointment|
-            - if appointment.status == "reserved" || appointment.status == "done"
+            - if appointment.status_reserved? || appointment.status_done?
               li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
                 .icon-and-date style="display: flex; gap: 10px; align-items: center;"
                   img src=appointment.planner.icon_path alt="FP Icon" style="width: 40px; height: 40px; border-radius: 50%;"
@@ -25,7 +25,7 @@
                   - if appointment.status == "reserved"
                     = link_to 'Done', appointment_path(id: appointment.id, user_id: @user.id, status: 'done'), method: :patch, data: { confirm: "Are you sure you want to mark this as done?", turbo: false }, class: 'btn btn-primary', style: 'padding: 5px 10px; border-radius: 5px; color: white; margin-right: 10px;'
                     = link_to 'Cancel', appointment_path(id: appointment.id, user_id: @user.id, status: 'canceled'), method: :patch, data: { confirm: "Are you sure you want to cancel this appointment?", turbo: false }, class: 'btn btn-danger', style: 'padding: 5px 10px; border-radius: 5px; color: white;'
-                  - if appointment.status == "done"
+                  - if appointment.status_done?
                     span style="margin-left: 10px; color: green;" Done
                   - if appointment.status == "expired"
                     span style="margin-left: 10px; color: red;" Expired
