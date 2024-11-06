@@ -9,7 +9,7 @@ class PlannersController < ApplicationController
   end
 
   def show
-    @appointments = @planner.appointments.order(reserved_at: :desc)
+    @appointments = @planner.appointments.order(reserved_at: :desc).page(params[:page]).per(7)
     if current_planner != @planner && !user_signed_in?
       redirect_to root_path, alert: "You are not authorized to access this page"
     end
