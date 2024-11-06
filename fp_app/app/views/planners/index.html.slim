@@ -13,7 +13,8 @@
             = link_to planner.name, planner_path(planner.id), class: 'planner-name-link'
             = link_to 'Reserve', planner_schedules_path(planner.id), class: 'btn btn-primary', style: "background-color: #4EA1D3; color: white; padding: 10px 50px; border-radius: 5px; margin-left: auto; margin-right: 30px;"
 
-
+  .pagination-wrapper
+    = paginate @planners,window: 2
 
 style
   |
@@ -25,4 +26,26 @@ style
     }
     .planner-name-link:hover {
       color: blue;
+    }
+
+    .pagination-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .pagination {
+      display: flex;
+      gap: 15px;
+    }
+
+    .pagination a, .pagination .current {
+      font-size: 18px;
+      padding: 0 10px;
+      text-decoration: none;
+    }
+
+    .pagination .current {
+      color: #4EA1D3;
+      font-weight: bold;
     }

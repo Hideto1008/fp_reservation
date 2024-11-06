@@ -5,7 +5,7 @@ class PlannersController < ApplicationController
   before_action :find_planner, only: %i[show edit update]
 
   def index
-    @planners = Planner.all
+    @planners = Planner.page(params[:page]).per(10)
   end
 
   def show
