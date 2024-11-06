@@ -130,6 +130,12 @@ RSpec.describe "Appointments", type: :request do
         expect(response.body).to include("Appointment updated successfully.")
         expect(appointment.reload.status).to eq("done")
       end
+
+      it "does not update the schedule.is_available to 'true'" do
+        expect {
+          patch appointment_path(appointment), params: { status: "done", user_id: user.id }
+        }.not_to change { available_schedule.reload.is_available }
+      end
     end
 
     context "when updating appointment status to canceled" do
