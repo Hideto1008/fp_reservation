@@ -37,14 +37,12 @@ class Appointment < ApplicationRecord
   def check_past_appintment_when_canceled
     if status_canceled? && reserved_at < Time.current
       errors.add(:base, "Unable to cancel past appointment")
-      throw(:abort)
     end
   end
 
   def chaeck_future_appointment_when_done
     if status_done? && reserved_at > Time.current
       errors.add(:base, "Unable to mark future appointment as done")
-      throw(:abort)
     end
   end
 end
