@@ -9,6 +9,7 @@ class Appointment < ApplicationRecord
   validate :check_appointment_availability, on: :create
   validate :check_duplicate_appointment, on: :create
   before_update :check_past_appintment_when_canceled
+  before_update :chaeck_future_appointment_when_done
 
   enum status: { reserved: 0, canceled: 1, done: 2 }, _prefix: true
 
@@ -37,6 +38,15 @@ class Appointment < ApplicationRecord
     if status_canceled?
       if reserved_at < Time.current
         errors.add(:base, "Unable to cancel past appointment")
+        throw(:abort)
+      end
+    end
+  end
+
+  def chaeck_future_appointment_when_done
+    if status_done?
+      if reserved_at > Time.current
+        errors.add(:base, "Unable to mark future appointment as done")
         throw(:abort)
       end
     end
