@@ -8,8 +8,8 @@ class Appointment < ApplicationRecord
   validate :check_reserved_at_is_future_or_present
   validate :check_appointment_availability, on: :create
   validate :check_duplicate_appointment, on: :create
-  before_update :check_past_appintment_when_canceled
-  before_update :chaeck_future_appointment_when_done
+  validate :check_past_appintment_when_canceled, on: :update
+  validate :chaeck_future_appointment_when_done, on: :update
 
   enum status: { reserved: 0, canceled: 1, done: 2, expired: 3}, _prefix: true
 
