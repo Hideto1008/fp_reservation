@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :find_user
 
   def show
-    @appointments = @user.appointments
+    @appointments = @user.appointments.order(reserved_at: :desc)
   end
 
   def edit
