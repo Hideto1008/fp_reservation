@@ -6,16 +6,19 @@ class Planners::SchedulesController < ApplicationController
   def index
     @planner = Planner.find(params[:planner_id])
     @schedules = @planner.schedules
+
     if user_signed_in?
       @planners = Planner.page(params[:page]).per(5)
-      planner_position = Planner.order(:id).pluck(:id).index(@planner.id)
-      page_number = (planner_position / 5) + 1
-      if page_number != params[:page].to_i
-        redirect_to planner_schedules_path(planner_id: @planner.id, page: page_number)
+
+      if request.referer&.match(%r{.*/planners$}) || request.referer&.match(%r{.*/planners\?page=\d+$}) || request.referer&.match(%r{.*/planners/#{@planner.id}$})
+        planner_position = Planner.order(:id).pluck(:id).index(@planner.id)
+        page_number = (planner_position / 5) + 1
+        if page_number != params[:page].to_i
+          redirect_to planner_schedules_path(planner_id: @planner.id, page: page_number)
+        end
       end
     end
   end
-
 
   def show
     @schedule = Schedule.find(params[:id])
