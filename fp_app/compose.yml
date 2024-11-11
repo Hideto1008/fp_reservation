@@ -1,3 +1,4 @@
+version: '3'
 services:
   web:
     container_name: fp_app
@@ -10,11 +11,12 @@ services:
     env_file:
       - .env
     ports:
-      - ${RAILS_PORT:-3000}:3000 # デフォルト値 3000 を設定
+      - ${RAILS_PORT:-3000}:3000
     tty: true
     stdin_open: true
     depends_on:
       - db
+      - redis
 
   db:
     container_name: fp_db
@@ -22,10 +24,31 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: password # デフォルト値 'root' を設定
+      MYSQL_ROOT_PASSWORD: password
       TZ: "Asia/Tokyo"
     ports:
-      - "${MYSQL_POOT:-3306}:3306" # デフォルト値 3306 を設定
+      - "${MYSQL_PORT:-3306}:3306"
+
+  redis:
+    image: redis:latest
+    container_name: fp_redis
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    container_name: fp_sidekiq
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
 
 volumes:
   db-data:
