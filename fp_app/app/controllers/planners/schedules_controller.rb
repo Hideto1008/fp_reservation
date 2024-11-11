@@ -34,7 +34,6 @@ class Planners::SchedulesController < ApplicationController
     end
   end
 
-
   def create
     @schedule = Schedule.new(
       planner_id: @planner.id,
