@@ -7,9 +7,10 @@ class Schedule < ApplicationRecord
   WORKING_HOURS_SATURDAY = { start: 11, end: 15 }.freeze
   WORKING_HOURS_WEEKDAYS = { start: 10, end: 18 }.freeze
 
-  def check_last_appointment
+  def latest_appointment_reserved?
     last_appointment = appointments.last
-    last_appointment.check_reserved_appointment if last_appointment
+    return false if last_appointment.nil?
+    last_appointment.status_reserved?
   end
 
   private
