@@ -27,13 +27,13 @@ RSpec.describe SchedulesHelper, type: :helper do
       it 'returns the correct availability link for available schedule' do
         weekday = schedule_on_weekday.started_at.to_date
         time = schedule_on_weekday.started_at.strftime("%H:%M")
-        expect(helper.matching_schedule_or_blackout(weekday, time, schedules)).to include('◯')
+        expect(helper.matching_schedule_or_blackout(weekday, time, schedules)).to include('&#9711;')
       end
 
       it 'returns the correct availability link for unavailable schedule' do
         weekday = schedule_on_weekday_unavailable.started_at.to_date
         time = schedule_on_weekday_unavailable.started_at.strftime("%H:%M")
-        expect(helper.matching_schedule_or_blackout(weekday, time, schedules)).to include('✖️')
+        expect(helper.matching_schedule_or_blackout(weekday, time, schedules)).to include('&#10005;')
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe SchedulesHelper, type: :helper do
       it 'returns the correct availability link for an available time slot outside blackout hours' do
         saturday = schedule_on_saturday.started_at.to_date
         time = schedule_on_saturday.started_at.strftime("%H:%M")
-        expect(helper.matching_schedule_or_blackout(saturday, time, schedules)).to include('◯')
+        expect(helper.matching_schedule_or_blackout(saturday, time, schedules)).to include('&#9711;')
       end
     end
 
