@@ -13,10 +13,6 @@ class Appointment < ApplicationRecord
 
   enum status: { reserved: 0, canceled: 1, done: 2, expired: 3 }, _prefix: true
 
-  def check_reserved_appointment
-    status_reserved?
-  end
-
   private
 
   def check_reserved_at_is_future_or_present
