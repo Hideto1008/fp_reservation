@@ -1,11 +1,16 @@
 class Schedule < ApplicationRecord
   belongs_to :planner
-  has_one :appointment
+  has_many :appointments
   validates :planner_id, presence: true
   validate :check_started_at_future_or_present
   validate :check_schedule_within_working_hours
   WORKING_HOURS_SATURDAY = { start: 11, end: 15 }.freeze
   WORKING_HOURS_WEEKDAYS = { start: 10, end: 18 }.freeze
+
+  def check_last_appointment
+    last_appointment = appointments.last
+    last_appointment.check_reserved_appointment if last_appointment
+  end
 
   private
 

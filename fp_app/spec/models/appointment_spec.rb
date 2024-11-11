@@ -46,7 +46,7 @@ RSpec.describe Appointment, type: :model do
 
     it 'is invalid when the planner is not available' do
       appointment = build(:appointment, user: user, schedule: schedule, planner: planner)
-      schedule.update(is_available: false)
+      expect(appointment).not_to be_valid
       expect(appointment.errors[:schedule_id]).to include("is not available at the selected time")
     end
 
