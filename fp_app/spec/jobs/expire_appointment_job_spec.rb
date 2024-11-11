@@ -8,6 +8,8 @@ RSpec.describe ExpireAppointmentJob, type: :job do
   let(:future_appointment) { create(:appointment, user: user, planner: planner, schedule: available_schedule, reserved_at: available_schedule.started_at) }
   last_monday = Time.current.beginning_of_week - 7.days + 12.hours
 
+  subject { ExpireAppointmentJob.perform_now }
+
   let!(:expired_appointment) do
     Timecop.travel(last_monday) do
       expired_schedule = create(:schedule, planner: planner, started_at: last_monday + 1.hour, is_available: true)
@@ -31,10 +33,8 @@ RSpec.describe ExpireAppointmentJob, type: :job do
   end
 
   it "updates the status of expired appointments to 'expired'" do
-    ExpireAppointmentJob.perform_now
-
-    expect(expired_appointment.reload.status).to eq("expired")
-    expect(done_appointment.reload.status).to eq("done")
-    expect(future_appointment.reload.status).to eq("reserved")
+    expect { subject }.to change { expired_appointment.reload.status }.from("reserved").to("expired")
+    expect { subject }.not_to change { done_appointment.reload.status }
+    expect { subject }.not_to change { future_appointment.reload.status }
   end
 end
