@@ -33,10 +33,8 @@ RSpec.describe ExpireAppointmentJob, type: :job do
   end
 
   it "updates the status of expired appointments to 'expired'" do
-    subject
-
-    expect(expired_appointment.reload.status).to eq("expired")
-    expect(done_appointment.reload.status).to eq("done")
-    expect(future_appointment.reload.status).to eq("reserved")
+    expect { subject }.to change { expired_appointment.reload.status }.from("reserved").to("expired")
+    expect { subject }.not_to change { done_appointment.reload.status }
+    expect { subject }.not_to change { future_appointment.reload.status }
   end
 end
