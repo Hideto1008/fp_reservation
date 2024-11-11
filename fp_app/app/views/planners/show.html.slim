@@ -29,7 +29,7 @@
                     span= appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
                     - if appointment.status_done?
                       span style="margin-left: 10px; color: green;" Done
-                    - if appointment.status == "expired"
+                    - if appointment.status_expired?
                       span style="margin-left: 10px; color: red;" Expired
         - else
           h4 No history.
