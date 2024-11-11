@@ -9,11 +9,7 @@ class Schedule < ApplicationRecord
 
   def check_last_appointment
     last_appointment = appointments.last
-    check_reserved_appointment(last_appointment)
-  end
-
-  def check_reserved_appointment(appointment)
-    appointment && appointment.status_reserved?
+    last_appointment.check_reserved_appointment if last_appointment
   end
 
   private
