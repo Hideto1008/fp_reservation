@@ -5,8 +5,8 @@ RSpec.describe Schedule, type: :model do
   let(:planner) { create(:planner) }
   let(:schedule) { create(:schedule, planner: planner) }
   let(:reserved_schedule) { create(:schedule, :reserved_schedule, planner: planner) }
-  let(:canceled_appointment) {create(:appointment, user: user, planner: planner, schedule: reserved_schedule, reserved_at: reserved_schedule.started_at, status: "canceled")}
-  let(:appointment) {create(:appointment, user: user, planner: planner, schedule: reserved_schedule, reserved_at: reserved_schedule.started_at, status: "reserved")}
+  let(:canceled_appointment) { create(:appointment, user: user, planner: planner, schedule: reserved_schedule, reserved_at: reserved_schedule.started_at, status: "canceled") }
+  let(:appointment) { create(:appointment, user: user, planner: planner, schedule: reserved_schedule, reserved_at: reserved_schedule.started_at, status: "reserved") }
 
   describe 'validations' do
     it 'is valid with valid attributes' do
@@ -82,7 +82,9 @@ RSpec.describe Schedule, type: :model do
       schedule = build(:schedule, planner: planner, started_at: saturday_between, is_available: true)
       expect(schedule).to be_valid
     end
+  end
 
+  describe 'latest_appointment_reserved?' do
     it 'returns latest_appointment' do
       canceled_appointment
       appointment
