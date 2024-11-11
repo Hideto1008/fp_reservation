@@ -2,9 +2,10 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_user
   before_action :find_user
+  ITEMS_PER_PAGE = 7
 
   def show
-    @appointments = @user.appointments.order(reserved_at: :desc).page(params[:page]).per(7)
+    @appointments = @user.appointments.order(reserved_at: :desc).page(params[:page]).per(ITEMS_PER_PAGE)
   end
 
   def edit

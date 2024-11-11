@@ -82,7 +82,9 @@ RSpec.describe Schedule, type: :model do
       schedule = build(:schedule, planner: planner, started_at: saturday_between, is_available: true)
       expect(schedule).to be_valid
     end
+  end
 
+  describe 'latest_appointment_reserved?' do
     it 'returns latest_appointment' do
       canceled_appointment
       appointment

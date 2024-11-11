@@ -2,13 +2,14 @@ class Planners::SchedulesController < ApplicationController
   before_action :authenticate_planner!, only: [ :update, :create ]
   before_action :correct_planner, only: [ :update, :create ]
   before_action :correct_planner_for_index, only: [ :index ], if: :planner_signed_in?
+  ITEMS_PER_PAGE = 5
 
   def index
     @planner = Planner.find(params[:planner_id])
     @schedules = @planner.schedules
 
     if user_signed_in?
-      @planners = Planner.page(params[:page]).per(5)
+      @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE)
 
       if request.referer&.match(%r{.*/planners$}) || request.referer&.match(%r{.*/planners\?page=\d+$}) || request.referer&.match(%r{.*/planners/#{@planner.id}$})
         planner_position = Planner.order(:id).pluck(:id).index(@planner.id)
