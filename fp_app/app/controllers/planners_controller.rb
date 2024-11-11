@@ -3,9 +3,10 @@ class PlannersController < ApplicationController
   before_action :authenticate_user!, only: %i[index]
   before_action :correct_planner, only: %i[edit update]
   before_action :find_planner, only: %i[show edit update]
+  ITEMS_PER_PAGE = 10
 
   def index
-    @planners = Planner.all
+    @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE)
   end
 
   def show
