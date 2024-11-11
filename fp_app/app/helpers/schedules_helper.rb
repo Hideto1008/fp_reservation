@@ -21,12 +21,12 @@ module SchedulesHelper
         link_to(is_reserved ? "&#x2612;".html_safe: (matching_schedule.is_available ? "&#9711;".html_safe: "&#10005;".html_safe), planner_schedule_path(planner_id: @planner.id, id: matching_schedule.id, is_available: !matching_schedule.is_available),
           method: :patch, remote: true, class: "toggle-availability",
           data: { schedule_id: matching_schedule.id },
-          style: "font-size: #{is_reserved ? '30px' : '24px'}; color: #{matching_schedule.is_available ? '#4CAF50' : '#FF0000'};")
+          style: "font-size: #{is_reserved ? '30px' : '24px'}; color: #{is_reserved ? '#FF0000' : '#111111'};")
       else
         link_to("--", planner_schedules_path(planner_id: @planner.id, date: day, time: time),
                 method: :post, remote: true, class: "toggle-availability",
                 data: { schedule_id: nil, date: day.strftime("%Y-%m-%d"), time: time },
-                style: "font-size: 24px; color: #FF0000;")
+                style: "font-size: 24px; color: #111111;")
       end
     end
   end
