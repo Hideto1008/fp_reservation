@@ -78,13 +78,13 @@ RSpec.describe "Planners::Schedules", type: :request do
       it "does not update the schedule and shows an alert" do
         sign_in user
         post appointments_path, params: {
-              appointment: {
-                user_id: user.id,
-                planner_id: planner.id,
-                schedule_id: available_schedule.id,
-                reserved_at: available_schedule.started_at,
-                status: "reserved"
-              }
+          appointment: {
+            user_id: user.id,
+            planner_id: planner.id,
+            schedule_id: available_schedule.id,
+            reserved_at: available_schedule.started_at,
+            status: "reserved"
+          }
         }
         expect(available_schedule.reload.is_available).to be_falsey
 

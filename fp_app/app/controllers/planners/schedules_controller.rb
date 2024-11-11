@@ -24,7 +24,7 @@ class Planners::SchedulesController < ApplicationController
 
   def update
     @schedule = Schedule.find(params[:id])
-    if Appointment.exists?(schedule_id: @schedule.id, status: "reserved")
+    if @schedule.appointments.exists?(status: "reserved")
       respond_to do |format|
         format.js { render js: "alert('This schedule is associated with an existing appointment and cannot be updated.');" }
       end
@@ -41,7 +41,6 @@ class Planners::SchedulesController < ApplicationController
       end
     end
   end
-
 
   def create
     @schedule = Schedule.new(
