@@ -1,13 +1,15 @@
 module SchedulesHelper
   TIMES = (10..17).flat_map { |h| [ "00", "30" ].map { |m| "#{h}:#{m}" } }.freeze
   SATURDAY = 6
+  SATURDAY_START_TIME = "11:00"
+  SATURDAY_END_TIME = "14:30"
 
   def times
     TIMES
   end
 
   def is_saturday_available_time_slots(time)
-    (time < "11:00" || time > "14:30")
+    (time < SATURDAY_START_TIME || time > SATURDAY_END_TIME)
   end
 
   def matching_schedule_or_blackout(day, time, schedules)
