@@ -1,15 +1,20 @@
 .container style="max-width: 800px; margin: 0 auto;"
-
   .planners-list[style="display: flex; justify-content: space-between; margin-bottom: 20px;"]
     - @planners.each do |planner|
-      - truncated_name = planner.name.length > 15 ? planner.name[0, 15] + '...' : planner.name
-      - if planner == @planner
+      - truncated_name = planner.name.truncate(15)
+      - if planner == @selected_planner
         = link_to truncated_name, planner_schedules_path(planner_id: planner.id, **request.query_parameters), class: 'btn btn-primary', style: "color: white; background-color: #007bff; border: 2px solid #0056b3; padding: 5px 10px;"
       - else
         = link_to truncated_name, planner_schedules_path(planner_id: planner.id, **request.query_parameters), class: 'btn btn-light', style: "color: #333; border: 2px solid #ddd; padding: 5px 10px; background-color: #f8f9fa;"
 
   .pagination-wrapper
-    = paginate @planners, window: 2, params: { planner_id: @planner.id }
+    = paginate @planners, window: 2, params: { planner_id: @selected_planner.id }
+
+  hr[style="border: 1px solid #ddd; margin: 20px 0;"]
+
+  h3 style="margin-bottom: 20px; " Select appointment time
+  span class="btn btn-primary" style="color: white; background-color: #007bff; border: 2px solid #0056b3; padding: 5px 10px; margin-bottom: 20px;"
+    = @selected_planner.name.truncate(30)
 
   .simple-calendar
     .calendar-heading[style="display: flex; justify-content: space-between; align-items: center;"]
@@ -43,15 +48,15 @@
                     - matching_schedule = @schedules.find { |s| s.started_at.to_date == day && s.started_at.strftime("%H:%M") == time }
                     - if matching_schedule
                       - if matching_schedule.is_available
-                        = link_to '&#9711;'.html_safe, planner_schedule_path(planner_id: @planner.id, id: matching_schedule.id), class: "toggle-availability",
+                        = link_to '&#9711;'.html_safe, planner_schedule_path(planner_id: @selected_planner.id, id: matching_schedule.id), class: "toggle-availability",
                                   style: "font-size: 24px; color: #4CAF50; font-weight: bold"
                       - else
-                        = link_to '&#10005;'.html_safe, planner_schedule_path(planner_id: @planner.id, id: matching_schedule.id, is_available: !matching_schedule.is_available),
+                        = link_to '&#10005;'.html_safe, planner_schedule_path(planner_id: @selected_planner.id, id: matching_schedule.id, is_available: !matching_schedule.is_available),
                                   method: :patch, remote: true, class: "toggle-availability",
                                   data: { schedule_id: matching_schedule.id },
                                   style: "font-size: 18px; color: #FF0000;"
                     - else
-                      = link_to '&#10005;'.html_safe, planner_schedules_path(planner_id: @planner.id, date: day, time: time),
+                      = link_to '&#10005;'.html_safe, planner_schedules_path(planner_id: @selected_planner.id, date: day, time: time),
                                 method: :post, remote: true, class: "toggle-availability",
                                 data: { schedule_id: nil, date: day.strftime("%Y-%m-%d"), time: time },
                                 style: "font-size: 18px; color: #FF0000;"
