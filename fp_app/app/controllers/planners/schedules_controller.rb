@@ -2,11 +2,12 @@ class Planners::SchedulesController < ApplicationController
   before_action :authenticate_planner!, only: [ :update, :create ]
   before_action :correct_planner, only: [ :update, :create ]
   before_action :correct_planner_for_index, only: [ :index ], if: :planner_signed_in?
+  ITEMS_PER_PAGE = 5
 
   def index
-    @planner = Planner.find(params[:planner_id])
-    @schedules = @planner.schedules
-    @planners = Planner.all if user_signed_in?
+    @selected_planner = Planner.find(params[:planner_id])
+    @schedules = @selected_planner.schedules
+    @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE) if user_signed_in?
   end
 
   def show

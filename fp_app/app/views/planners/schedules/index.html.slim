@@ -7,13 +7,11 @@
 div.container
   div.row
     div.col-12.text-center
-      h1 スケジュール
+      h1 Schedule
     div.col-12.mt-3
       - if planner_signed_in? && current_planner == @planner
-        // プランナー用のカレンダー
         = week_calendar(events: @schedules, attribute: :started_at) do |date, reservations|
           = date.day
       - elsif user_signed_in?
-        // ユーザー用のカレンダー
         = week_calendar(events: @schedules, attribute: :started_at, partial: 'simple_calendar/appointment_week_calendar') do |date, reservations|
           = date.day
