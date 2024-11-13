@@ -26,7 +26,6 @@ schedule_times = [
   { started_at: (Time.now.beginning_of_week + 1.week) + 17.hours, is_available: true }
 ]
 
-# すべてのプランナーにスケジュールを追加
 Planner.all.each do |planner|
   schedule_times.each do |time|
     Schedule.create!(
@@ -37,4 +36,17 @@ Planner.all.each do |planner|
   end
 end
 
-puts "100 planners and their schedules created successfully."
+Planner.all.sample(20).each do |planner|
+  rand(1..5).times do
+    schedule = planner.schedules.sample
+    Appointment.create!(
+      user: user,
+      planner: planner,
+      schedule: schedule,
+      reserved_at: schedule.started_at,
+      status: "done"
+    )
+  end
+end
+
+puts "100 planners, their schedules, and random appointments for random planners created successfully."

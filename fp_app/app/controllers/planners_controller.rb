@@ -10,6 +10,8 @@ class PlannersController < ApplicationController
     @q = Planner.ransack(params[:q])
     if params[:q].present?
       @planners = @q.result(distinct: true).page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
+    elsif params[:with_done_appointments].present?
+      @planners = Planner.with_done_appointments.page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
     else
       @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
     end
