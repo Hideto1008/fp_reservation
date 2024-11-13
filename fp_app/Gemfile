@@ -12,6 +12,7 @@ gem "redis-rails"
 gem "sidekiq"
 gem "whenever", require: false
 gem "kaminari"
+gem "ransack"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"

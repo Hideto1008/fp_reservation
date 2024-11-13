@@ -4,17 +4,23 @@
 
   h2 FP List
 
+  = search_form_for @q, url: planners_path, method: :get do |f|
+    .form-group.d-flex.justify-content-between.align-items-center style="margin-bottom: 20px;"
+      = f.label :name_cont, "Search by name", style: "margin-right: 10px; font-weight: bold;"
+      = f.search_field :name_cont, class: "form-control", style: "width: 70%; margin-right: 10px;"
+      = f.submit "Search", class: "btn btn-primary", style: "background-color: #4EA1D3; color: white; padding: 10px 20px; border-radius: 5px;"
+
   .list-group
     - @planners.each do |planner|
       .list-group-item.d-flex.justify-content-between.align-items-center.mb-4 style="border: 1px solid #000; border-radius: 10px; padding: 15px; margin-bottom: 20px;"
         .d-flex.align-items-center
           div style="display: flex; align-items: center;"
             img src=planner.icon_path alt="Planner Icon" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 15px;"
-            = link_to planner.name, planner_path(planner.id), class: 'planner-name-link'
+            = link_to truncate(planner.name, length: 20), planner_path(planner.id), class: 'planner-name-link'
             = link_to 'Reserve', planner_schedules_path(planner.id), class: 'btn btn-primary', style: "background-color: #4EA1D3; color: white; padding: 10px 50px; border-radius: 5px; margin-left: auto; margin-right: 30px;"
 
   .pagination-wrapper
-    = paginate @planners,window: 2
+    = paginate @planners, window: 2
 
 style
   |
@@ -46,6 +52,6 @@ style
     }
 
     .pagination .current {
-      color: #4EA1D3;
+      color: ##111111;
       font-weight: bold;
     }
