@@ -7,9 +7,7 @@
   = search_form_for @q, url: planners_path, method: :get do |f|
     div style="display: flex; align-items: center; margin-bottom: 20px;"
       =f.search_field :name_cont, placeholder: "Search by planner name", class: "form-control", style: "margin-right: 10px; height: 38px;"
-      =f.submit "Search", class: "btn btn-primary", style: "background-color: #4EA1D3; color: white; border-radius: 5px; padding: 0 20px; height: auto; height: 38px;"
-
-
+      =f.submit "Search", class: "btn btn-primary", style: "background-color: #4EA1D3; color: white; border-radius: 5px; padding: 0 20px; height: auto; hei"
 
   .list-group
     - @planners.each do |planner|
