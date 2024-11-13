@@ -10,6 +10,13 @@
   .pagination-wrapper
     = paginate @planners, window: 2, params: { planner_id: @selected_planner.id }
 
+  hr[style="border: 1px solid #ddd; margin: 20px 0;"]
+
+  div.col-12.text-center
+    h2 Appointment
+    span class="btn btn-primary" style="color: white; background-color: #007bff; border: 2px solid #0056b3; padding: 5px 10px;"
+      = @selected_planner.name.truncate(30)
+
   .simple-calendar
     .calendar-heading[style="display: flex; justify-content: space-between; align-items: center;"]
       = link_to t('simple_calendar.previous', default: 'Last week'), calendar.url_for_previous_view, style: 'color: #4472C4; padding: 5px 10px; text-decoration: none;'
