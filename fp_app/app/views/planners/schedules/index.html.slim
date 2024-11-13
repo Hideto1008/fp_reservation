@@ -10,7 +10,7 @@ div.container
       - if planner_signed_in? && current_planner == @planner
         h1 Schedule
       - elsif user_signed_in?
-        h1 Planner List
+        h2 style="margin-bottom: 30px;" Select planner
     div.col-12.mt-3
       - if planner_signed_in? && current_planner == @planner
         = week_calendar(events: @schedules, attribute: :started_at) do |date, reservations|
