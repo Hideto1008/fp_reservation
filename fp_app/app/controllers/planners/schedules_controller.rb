@@ -11,11 +11,11 @@ class Planners::SchedulesController < ApplicationController
     if user_signed_in?
       @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE)
 
-      if request.referer&.match(%r{.*/planners$}) || request.referer&.match(%r{.*/planners\?page=\d+$}) || request.referer&.match(%r{.*/planners/#{@planner.id}$})
-        planner_position = Planner.order(:id).pluck(:id).index(@planner.id)
+      if request.referer&.match(%r{.*/planners$}) || request.referer&.match(%r{.*/planners\?page=\d+$}) || request.referer&.match(%r{.*/planners/#{@selected_planner.id}$})
+        planner_position = Planner.order(:id).pluck(:id).index(@selected_planner.id)
         page_number = (planner_position / 5) + 1
         if page_number != params[:page].to_i
-          redirect_to planner_schedules_path(planner_id: @planner.id, page: page_number)
+          redirect_to planner_schedules_path(planner_id: @selected_planner.id, page: page_number)
         end
       end
     end
