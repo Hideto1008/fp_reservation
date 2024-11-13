@@ -20,7 +20,7 @@
         - if @appointments.present?
           ul style="list-style: none; padding: 0;"
             - @appointments.each do |appointment|
-              - if appointment.status_reserved? || appointment.status_done?
+              - if appointment.status_reserved? || appointment.status_done? || appointment.status_expired?
                 li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
                   .icon-and-date style="display: flex; gap: 10px; align-items: center;"
                     img src=appointment.user.icon_path alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
