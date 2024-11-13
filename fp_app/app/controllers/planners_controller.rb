@@ -4,14 +4,14 @@ class PlannersController < ApplicationController
   before_action :correct_planner, only: %i[edit update]
   before_action :find_planner, only: %i[show edit update]
   ITEMS_PER_PAGE_FOR_INDEX = 10
-  SHOW_ITEMS_PER_PAGE = 7
+  ITEMS_PER_PAGE_FOR_SHOW = 7
 
   def index
     @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
   end
 
   def show
-    @appointments = @planner.appointments.order(reserved_at: :desc).page(params[:page]).per(SHOW_ITEMS_PER_PAGE)
+    @appointments = @planner.appointments.order(reserved_at: :desc).page(params[:page]).per(ITEMS_PER_PAGE_FOR_SHOW)
     if current_planner != @planner && !user_signed_in?
       redirect_to root_path, alert: "You are not authorized to access this page"
     end
