@@ -1,5 +1,4 @@
 .container style="max-width: 800px; margin: 0 auto;"
-
   .planners-list[style="display: flex; justify-content: space-between; margin-bottom: 20px;"]
     - @planners.each do |planner|
       - truncated_name = planner.name.length > 15 ? planner.name[0, 15] + '...' : planner.name
