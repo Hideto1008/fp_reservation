@@ -1,7 +1,7 @@
 .container style="max-width: 800px; margin: 0 auto;"
   .planners-list[style="display: flex; justify-content: space-between; margin-bottom: 20px;"]
     - @planners.each do |planner|
-      - truncated_name = planner.name.length > 15 ? planner.name[0, 15] + '...' : planner.name
+      - truncated_name = planner.name.truncate(15)
       - if planner == @planner
         = link_to truncated_name, planner_schedules_path(planner_id: planner.id, **request.query_parameters), class: 'btn btn-primary', style: "color: white; background-color: #007bff; border: 2px solid #0056b3; padding: 5px 10px;"
       - else
