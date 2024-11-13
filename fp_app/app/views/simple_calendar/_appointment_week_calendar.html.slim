@@ -34,7 +34,10 @@
             - date_range.slice(0, 7).each do |day|
               - unless day.sunday?
                 td[style="text-align: center;"]
-                  - if day.wday == 6 && (time < "11:00" || time > "14:30")
+                  - saturday = 6
+                  - saturday_start_time = "11:00"
+                  - saturday_end_time = "14:30"
+                  - if day.wday == saturday && (time < saturday_start_time || time > saturday_end_time )
                     = content_tag(:span, "--", style: "background-color: black; color: white; font-size: 24px; padding: 10px;")
                   - else
                     - matching_schedule = @schedules.find { |s| s.started_at.to_date == day && s.started_at.strftime("%H:%M") == time }
