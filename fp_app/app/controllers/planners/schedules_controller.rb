@@ -5,8 +5,8 @@ class Planners::SchedulesController < ApplicationController
   ITEMS_PER_PAGE = 5
 
   def index
-    @planner = Planner.find(params[:planner_id])
-    @schedules = @planner.schedules
+    @selected_planner = Planner.find(params[:planner_id])
+    @schedules = @selected_planner.schedules
     @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE) if user_signed_in?
   end
 
