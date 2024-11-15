@@ -8,10 +8,12 @@
     div style="display: flex; align-items: center; margin-bottom: 20px;"
       = f.search_field :name_cont, placeholder: "Search by planner name", class: "form-control", style: "margin-right: 10px; height: 38px;"
       = f.submit "Search", class: "btn btn-primary", style: "background-color: #4EA1D3; color: white; border-radius: 5px; padding: 0 20px; height: 38px; margin-right: 10px;"
-      = select_tag 'sort_order',options_for_select([['Order of registration', planners_path],['Total sort', planners_path(with_done_appointments: true)]]),
+      = select_tag 'sort_order', options_for_select([['Order of registration', planners_path],['Total of Consultations', planners_path(with_done_appointments: true)]],
+        selected: planners_path(with_done_appointments: params[:with_done_appointments])),
         onchange: 'location = this.value;',
         class: "form-control",
         style: "height: 38px; margin: auto 0; line-height: 34px;"
+
 
 
   .list-group
@@ -22,7 +24,7 @@
           div style="display: flex; align-items: center; flex-grow: 1;"
             img src=planner.icon_path alt="Planner Icon" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 15px;"
             = link_to "#{truncate(planner.name, length: 20)}", planner_path(planner.id), class: 'planner-name-link'
-            span style="margin-left: auto; color: gray; font-weight: bold; margin-right: 20px; font-size: 1.2em;" = "(Total of Reservations: #{done_count})"
+            span style="margin-left: auto; color: gray; font-weight: bold; margin-right: 20px; font-size: 1.2em;" = "(Total of Consultations: #{done_count})"
             = link_to 'Reserve', planner_schedules_path(planner.id), class: 'btn btn-primary', style: "background-color: #4EA1D3; color: white; padding: 10px 50px; border-radius: 5px;"
 
   .pagination-wrapper
