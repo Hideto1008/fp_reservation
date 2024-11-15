@@ -8,6 +8,7 @@ COPY Gemfile Gemfile.lock /app/
 
 # 依存関係をインストール
 RUN bundle install
+RUN apt-get update && apt-get install -y cron
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
