@@ -27,7 +27,6 @@
           div style="display: flex; align-items: center; flex-grow: 1;"
             img src=planner.icon_path alt="Planner Icon" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 15px;"
             = link_to "#{truncate(planner.name, length: 20)}", planner_path(planner.id), class: 'planner-name-link'
-            = planner.id
             span style="margin-left: auto; color: gray; font-weight: bold; margin-right: 20px; font-size: 1.2em;" = "(Total of Consultations: #{done_count})"
             = link_to 'Reserve', planner_schedules_path(planner.id), class: 'btn btn-primary', style: "background-color: #4EA1D3; color: white; padding: 10px 50px; border-radius: 5px;"
 
