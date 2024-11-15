@@ -7,7 +7,16 @@ class Planners::SchedulesController < ApplicationController
   def index
     @selected_planner = Planner.find(params[:planner_id])
     @schedules = @selected_planner.schedules
-    @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE) if user_signed_in?
+
+    if user_signed_in?
+      @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE)
+      unless came_from_planners_schedules_page?
+        page_number = calculate_page_number(@selected_planner)
+        if page_number != params[:page].to_i
+          redirect_to planner_schedules_path(planner_id: @selected_planner.id, page: page_number)
+        end
+      end
+    end
   end
 
   def show
@@ -68,5 +77,14 @@ class Planners::SchedulesController < ApplicationController
 
   def planner_params
     params.require(:planner).permit(:name, :icon_path, :introduction)
+  end
+
+  def came_from_planners_schedules_page?
+    request.referer&.match(%r{/planners/#{@selected_planner.id}/schedules(\?.*)?$})
+  end
+
+  def calculate_page_number(selected_planner)
+    planner_position = Planner.order(:id).pluck(:id).index(selected_planner.id)
+    (planner_position / ITEMS_PER_PAGE) + 1
   end
 end

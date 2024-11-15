@@ -7,11 +7,12 @@ RSpec.describe "Planners::Schedules", type: :request do
   let(:schedule) { create(:schedule, planner: planner) }
   let(:available_schedule) { create(:schedule, :reserved_schedule, planner: planner) }
 
-  before do
-    sign_in planner
-  end
-
   describe "GET /planners/:planner_id/schedule" do
+
+    before do
+      sign_in planner
+    end
+
     context "when accessing own schedule" do
       it "returns a successful response" do
         get planner_schedules_path(planner)
@@ -28,6 +29,11 @@ RSpec.describe "Planners::Schedules", type: :request do
   end
 
   describe "POST /planners/:planner_id/schedules" do
+
+    before do
+      sign_in planner
+    end
+
     let(:valid_params) { { date: Date.today.beginning_of_week + 1.week, time: "13:00" } }
 
     context "when creating a schedule with valid params" do
@@ -51,6 +57,11 @@ RSpec.describe "Planners::Schedules", type: :request do
   end
 
   describe "PATCH /planners/:planner_id/schedules/:id/" do
+
+    before do
+      sign_in planner
+    end
+
     context "when updating own schedule" do
       it "toggles the availability of the schedule" do
         expect {
@@ -73,12 +84,13 @@ RSpec.describe "Planners::Schedules", type: :request do
     end
   end
 
-  before do
-    sign_in user
-  end
-
   describe "PATCH /schedules/:id" do
     context "when schedule is associated with a reserved appointment" do
+
+      before do
+        sign_in user
+      end
+
       it "does not update the schedule and shows an alert" do
         post appointments_path, params: {
           appointment: {
