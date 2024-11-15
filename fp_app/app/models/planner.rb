@@ -4,12 +4,13 @@ class Planner < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
   has_many :schedules, dependent: :destroy
   has_many :appointments, dependent: :destroy
+  DONE = 2
 
   scope :with_done_appointments, -> {
-    joins(:appointments)
-      .where(appointments: { status: "done" })
+    left_joins(:appointments)
+      .select("planners.*, SUM(CASE WHEN appointments.status = #{DONE} THEN 1 ELSE 0 END) AS done_appointments_count")
       .group("planners.id")
-      .order("COUNT(appointments.id) DESC")
+      .order("done_appointments_count DESC, planners.id ASC")
   }
 
   def self.ransackable_attributes(auth_object = nil)
