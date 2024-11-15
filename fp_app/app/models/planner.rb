@@ -17,6 +17,10 @@ class Planner < ApplicationRecord
     %w[name]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    %w[appointments]
+  end
+
   def count_done_appointment
     appointments.where(status: "done").count
   end
