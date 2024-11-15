@@ -6,8 +6,11 @@
 
 div.container
   div.row
-    div.col-12.text-center
-      h1 Schedule
+    - if planner_signed_in? && current_planner == @planner
+      div.col-12.text-center
+        h1 Schedule
+    - elsif user_signed_in?
+      h2 style="margin-bottom: 30px; margin-left: 200px" Select planner
     div.col-12.mt-3
       - if planner_signed_in? && current_planner == @planner
         = week_calendar(events: @schedules, attribute: :started_at) do |date, reservations|
