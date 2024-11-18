@@ -7,7 +7,7 @@ class Planner < ApplicationRecord
 
   scope :with_done_appointments, -> {
     left_joins(:appointments)
-    .select("planners.*, SUM(CASE WHEN appointments.status = #{Appointment.statuses[:done]} THEN 1 ELSE 0 END) AS done_appointments_count")
+      .select("planners.*, SUM(CASE WHEN appointments.status = #{Appointment.statuses[:done]} THEN 1 ELSE 0 END) AS done_appointments_count")
       .group("planners.id")
       .order("done_appointments_count DESC, planners.id ASC")
   }
