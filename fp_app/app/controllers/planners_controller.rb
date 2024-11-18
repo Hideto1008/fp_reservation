@@ -7,15 +7,15 @@ class PlannersController < ApplicationController
   ITEMS_PER_PAGE_FOR_SHOW = 7
 
   def index
-    @search_word = Planner.ransack(params[:name_cont] ? { name_cont: params[:name_cont] } : nil)
-    @searched_planners = @search_word.result(distinct: true)
+    search_word = Planner.ransack(params[:name_cont] ? { name_cont: params[:name_cont] } : nil)
+    searched_planners = search_word.result(distinct: true)
     case params[:sort]
     when "total_of_consultations"
-      @planners = @searched_planners.with_done_appointments.page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
+      @planners = searched_planners.with_done_appointments.page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
     when "order_of_registration"
-      @planners = @searched_planners.order(:created_at).page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
+      @planners = searched_planners.order(:created_at).page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
     else
-      @planners = @searched_planners.order(:created_at).page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
+      @planners = searched_planners.order(:created_at).page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
     end
   end
 
