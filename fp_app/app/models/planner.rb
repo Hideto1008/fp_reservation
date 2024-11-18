@@ -20,7 +20,7 @@ class Planner < ApplicationRecord
     %w[appointments]
   end
 
-  def count_done_appointment
-    appointments.where(status: "done").count
+  def done_appointments_count
+    appointments.status_done.count
   end
 end
