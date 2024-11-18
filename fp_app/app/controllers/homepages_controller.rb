@@ -1,5 +1,5 @@
 class HomepagesController < ApplicationController
   def index
-    render "homepages/index"
+    render plain: "Welcome to the Homepage!"
   end
 end
