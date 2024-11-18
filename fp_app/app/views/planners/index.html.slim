@@ -10,11 +10,9 @@
       = text_field_tag :name_cont, params[:name_cont], placeholder: "Search by planner name", class: "form-control", style: "margin-right: 10px; height: 38px;"
       = f.submit "Search", class: "btn btn-primary", style: "background-color: #4EA1D3; color: white; border-radius: 5px; padding: 0 20px; height: 38px;"
 
-  - sort_options = [['Order of registration', planners_path(sort: 'order_of_registration', name_cont: params[:name_cont])],['Total of Consultations', planners_path(sort: 'total_of_consultations', name_cont: params[:name_cont])]]
-
   div style="display: flex; align-items: center; margin-bottom: 20px;"
     = select_tag 'sort_order',
-      options_for_select(sort_options, planners_path(sort: params[:sort], name_cont: params[:name_cont])),
+      options_for_select(sort_option(params), planners_path(sort: params[:sort], name_cont: params[:name_cont])),
       onchange: 'location = this.value;',
       class: "form-control",
       style: "height: 38px; margin: auto 0; line-height: 34px;"
