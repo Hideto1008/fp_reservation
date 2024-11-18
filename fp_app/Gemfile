@@ -52,7 +52,6 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Add slim
-  gem "slim-rails"
   gem "html2slim"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
