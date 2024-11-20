@@ -7,11 +7,14 @@ class PlannersController < ApplicationController
   ITEMS_PER_PAGE_FOR_SHOW = 7
 
   def index
-    @q = Planner.ransack(params[:q])
-    if params[:q].present?
-      @planners = @q.result(distinct: true).page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
+    search_word_params = params[:name_cont] ? { name_cont: params[:name_cont] } : nil
+    search_word = Planner.ransack(search_word_params)
+    searched_planners = search_word.result(distinct: true)
+    case params[:sort]
+    when "total_of_consultations"
+      @planners = searched_planners.with_done_appointments.page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
     else
-      @planners = Planner.page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
+      @planners = searched_planners.order(:created_at).page(params[:page]).per(ITEMS_PER_PAGE_FOR_INDEX)
     end
   end
 

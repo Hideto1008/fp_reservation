@@ -8,7 +8,6 @@ RSpec.describe "Planners::Schedules", type: :request do
   let(:available_schedule) { create(:schedule, :reserved_schedule, planner: planner) }
 
   describe "GET /planners/:planner_id/schedule" do
-
     before do
       sign_in planner
     end
@@ -29,7 +28,6 @@ RSpec.describe "Planners::Schedules", type: :request do
   end
 
   describe "POST /planners/:planner_id/schedules" do
-
     before do
       sign_in planner
     end
@@ -57,7 +55,6 @@ RSpec.describe "Planners::Schedules", type: :request do
   end
 
   describe "PATCH /planners/:planner_id/schedules/:id/" do
-
     before do
       sign_in planner
     end
@@ -86,7 +83,6 @@ RSpec.describe "Planners::Schedules", type: :request do
 
   describe "PATCH /schedules/:id" do
     context "when schedule is associated with a reserved appointment" do
-
       before do
         sign_in user
       end
