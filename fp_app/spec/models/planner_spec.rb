@@ -34,4 +34,36 @@ RSpec.describe Planner, type: :model do
       expect(planner.errors[:email]).to include("has already been taken")
     end
   end
+
+  describe 'test for scope' do
+    context 'with_done_appointments' do
+      let!(:planner_with_many_done_appointmnts) { create(:planner) }
+      let!(:planner_with_few_done_appointments) { create(:planner) }
+      let!(:planner_without_done_appointments) { create(:planner) }
+      let!(:user) { create(:user) }
+
+      before do
+        3.times do |i|
+          create(:schedule, :reserved_schedule, planner: planner_with_many_done_appointmnts, started_at: (Time.now.beginning_of_week + 1.week) + (12 + i).hours)
+        end
+        create(:schedule, :reserved_schedule, planner: planner_with_few_done_appointments, started_at: (Time.now.beginning_of_week + 1.week) + 15.hours)
+        create(:schedule, :reserved_schedule, planner: planner_without_done_appointments, started_at: (Time.now.beginning_of_week + 1.week) + 15.hours)
+
+        planner_with_many_done_appointmnts.schedules.each do |schedule|
+          create(:appointment, user: user, planner: planner_with_many_done_appointmnts, schedule: schedule, reserved_at: schedule.started_at, status: :done)
+        end
+
+        create(:appointment, user: user, planner: planner_with_few_done_appointments, schedule: planner_with_few_done_appointments.schedules.first, reserved_at: planner_with_few_done_appointments.schedules.first.started_at, status: :done)
+        create(:appointment, user: user, planner: planner_without_done_appointments, schedule: planner_without_done_appointments.schedules.first, reserved_at: planner_without_done_appointments.schedules.first.started_at, status: :reserved)
+      end
+
+      it 'returns planners sorted by done appointments count' do
+        planners = Planner.with_done_appointments
+
+        expect(planners.first).to eq planner_with_many_done_appointmnts
+        expect(planners.second).to eq planner_with_few_done_appointments
+        expect(planners.last).to eq planner_without_done_appointments
+      end
+    end
+  end
 end
