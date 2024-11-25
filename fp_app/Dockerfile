@@ -8,7 +8,7 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl default-mysql-client libjemalloc2 libvips make && \
+    apt-get install --no-install-recommends -y curl default-mysql-client libjemalloc2 libvips make cron && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
