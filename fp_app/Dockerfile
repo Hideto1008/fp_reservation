@@ -61,6 +61,8 @@ USER 1000:1000
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Start the server by default, this can be overwritten at runtime
+# Run `rails db:reset` before starting the server
+CMD ["bash", "-c", "./bin/rails db:migrate && ./bin/rails server -b 0.0.0.0 -p $PORT"]
+
+# Expose the Rails server port
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
