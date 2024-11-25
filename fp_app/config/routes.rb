@@ -17,7 +17,4 @@ Rails.application.routes.draw do
 
   resources :users, only: [ :show, :edit, :update ]
   resources :appointments, only: [ :create, :update ]
-
-  require "sidekiq/web"
-  mount Sidekiq::Web => "/sidekiq"
 end

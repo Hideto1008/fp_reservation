@@ -8,8 +8,6 @@ gem "bootstrap-sass"
 gem "jquery-rails"
 gem "sassc-rails"
 gem "simple_calendar"
-gem "redis-rails"
-gem "sidekiq"
 gem "whenever", require: false
 gem "kaminari"
 gem "ransack"

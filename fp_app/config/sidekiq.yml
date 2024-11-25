@@ -1,6 +1,0 @@
-:concurrency: 5
-:queues:
-  - default
-
-:redis:
-  :url: redis://redis:6379/0
