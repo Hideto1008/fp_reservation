@@ -1,10 +1,5 @@
 # syntax = docker/dockerfile:1
 
-# This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build -t my-app .
-# docker run -d -p 80:80 -p 443:443 --name my-app -e RAILS_MASTER_KEY=<value from config/master.key> my-app
-
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version
 ARG RUBY_VERSION=3.2.3
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
@@ -13,7 +8,7 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl default-mysql-client libjemalloc2 libvips && \
+    apt-get install --no-install-recommends -y curl default-mysql-client libjemalloc2 libvips make && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -61,8 +56,8 @@ USER 1000:1000
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Run `rails db:reset` before starting the server
-CMD ["bash", "-c", "./bin/rails db:migrate && ./bin/rails server -b 0.0.0.0 -p $PORT"]
+# Run Makefile command for production schema application and start the server
+CMD ["bash", "-c", "make apply_prod && ./bin/rails db:migrate && ./bin/rails server -b 0.0.0.0 -p $PORT"]
 
 # Expose the Rails server port
 EXPOSE 3000
