@@ -21,7 +21,10 @@
             - if appointment.status_reserved? || appointment.status_done? || appointment.status_expired?
               li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
                 .icon-and-date style="display: flex; gap: 10px; align-items: center;"
-                  img src=appointment.planner.icon_path alt="FP Icon" style="width: 40px; height: 40px; border-radius: 50%;"
+                  -if appointment.planner.icon_path.present?
+                    img src=appointment.planner.icon_path alt="FP Icon" style="width: 40px; height: 40px; border-radius: 50%;"
+                  -else
+                    img src=asset_path('user_default_icon.png') alt="FP Icon" style="width: 40px; height: 40px; border-radius: 50%;"
                   span style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" = appointment.planner.name
                 .user-info
                   span style="margin-right: 20px;" = appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
