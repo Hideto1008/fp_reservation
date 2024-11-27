@@ -10,4 +10,11 @@ if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
   ./bin/rails db:prepare
 fi
 
-exec "${@}"
+if [ "$RAILS_ENV" = "development" ]; then
+  echo "Running seeds for development"
+  bundle exec rails db:seed
+else
+  echo "Skipping seeds for production"
+fi
+
+exec bundle exec "${@}"

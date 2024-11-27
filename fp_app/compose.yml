@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p ${RAILS_PORT:-3000} -b '0.0.0.0'"
     volumes:
       - .:/app
     env_file:
@@ -48,7 +48,6 @@ services:
     depends_on:
       - db
       - redis
-
 
 volumes:
   db-data:

@@ -13,6 +13,7 @@ gem "sidekiq"
 gem "whenever", require: false
 gem "kaminari"
 gem "ransack"
+gem "slim-rails"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -51,7 +52,6 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Add slim
-  gem "slim-rails"
   gem "html2slim"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]

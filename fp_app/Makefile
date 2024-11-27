@@ -16,3 +16,7 @@ apply_test:
 .PHONY: migrate_test
 migrate_test:
 	bundle exec rails db:migrate RAILS_ENV=test
+
+.PHONY: apply_prod
+apply_prod:
+	bundle exec ridgepole -c config/database.yml -E production --apply -f db/schemas/Schemafile
