@@ -34,16 +34,12 @@ jobs:
         with:
           ruby-version: '3.2.3'
 
-      - name: Cache gems
-        uses: actions/cache@v3
-        with:
-          path: fp_app/vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('fp_app/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-
-      - name: Install MySQL Client
-        run: sudo apt-get update && sudo apt-get install -y mysql-client
+      - name: Install system dependencies including tzdata
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tzdata mysql-client
+          sudo ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+          sudo dpkg-reconfigure -f noninteractive tzdata
 
       - name: Wait for MySQL
         run: |
@@ -52,6 +48,14 @@ jobs:
             echo "Waiting for MySQL..."
             sleep 5
           done
+
+      - name: Cache gems
+        uses: actions/cache@v3
+        with:
+          path: fp_app/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('fp_app/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
 
       - name: Install dependencies
         working-directory: fp_app
@@ -88,6 +92,13 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2.3'
+
+      - name: Install system dependencies including tzdata
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tzdata
+          sudo ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+          sudo dpkg-reconfigure -f noninteractive tzdata
 
       - name: Cache gems
         uses: actions/cache@v3
