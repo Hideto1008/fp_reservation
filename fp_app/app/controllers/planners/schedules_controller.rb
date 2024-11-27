@@ -47,7 +47,7 @@ class Planners::SchedulesController < ApplicationController
   def create
     @schedule = Schedule.new(
       planner_id: @planner.id,
-      started_at: DateTime.parse("#{params[:date]} #{params[:time]}"),
+      started_at: Time.zone.parse("#{params[:date]} #{params[:time]}"),
       is_available: true
     )
     if @schedule.save
