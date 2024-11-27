@@ -57,7 +57,7 @@ USER 1000:1000
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Run Makefile command for production schema application and start the server
-CMD ["bash", "-c", "make apply_prod && ./bin/rails db:migrate && ./bin/rails server -b 0.0.0.0 -p $PORT"]
+CMD ["bash", "-c", "make apply_prod && ./bin/rails db:migrate RAILS_ENV=production && ./bin/rails server -b 0.0.0.0 -p $PORT"]
 
 # Expose the Rails server port
 EXPOSE 3000
