@@ -6,9 +6,11 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
-# Install base packages
+# Install base packages and configure timezone
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl default-mysql-client libjemalloc2 libvips make cron && \
+    apt-get install --no-install-recommends -y curl default-mysql-client libjemalloc2 libvips make cron tzdata && \
+    ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
