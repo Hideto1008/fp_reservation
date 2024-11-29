@@ -14,6 +14,8 @@ services:
       - ${RAILS_PORT:-3000}:3000
     tty: true
     stdin_open: true
+    environment:
+      - TZ=Asia/Tokyo
     depends_on:
       - db
 
