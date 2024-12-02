@@ -12,10 +12,10 @@
   .schedule-info style="margin-bottom: 20px;"
     p style="font-size: 20px; font-weight: bold; margin-bottom: 10px;"
       | Date:
-      span.date style="font-size: 22px; color: #111111; margin-left: 10px;" = @schedule.started_at.strftime("%Y-%m-%d (%a)")  if @schedule.present?
+      span.date style="font-size: 22px; color: #111111; margin-left: 10px;" = formatted_schedule_date(@schedule)  if @schedule.present?
     p style="font-size: 20px; font-weight: bold; margin-bottom: 10px;"
       | Time:
-      span.time style="font-size: 22px; color: #111111; margin-left: 10px;"  = "#{@schedule.started_at.strftime("%H:%M")} ~ #{(@schedule.started_at + 30.minutes).strftime("%H:%M")}" if @schedule.present?
+      span.time style="font-size: 22px; color: #111111; margin-left: 10px;"  = formatted_schedule_time(@schedule) if @schedule.present?
     - unless @schedule.present?
       p style="font-size: 18px; color: #FF0000;"
         | Schedule not set
