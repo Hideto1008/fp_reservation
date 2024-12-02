@@ -23,7 +23,7 @@
       .list-group-item.d-flex.justify-content-between.align-items-center.mb-4 style="border: 1px solid #000; border-radius: 10px; padding: 15px; margin-bottom: 20px;"
         .d-flex.align-items-center style="width: 100%;"
           div style="display: flex; align-items: center; flex-grow: 1;"
-            img src=set_planner_icon(planner) alt="Planner Icon" style="width: 50px; height: 50px; border-radius: 50%;"
+            img src=set_planner_icon(planner) alt="FP Icon" style="width: 50px; height: 50px; border-radius: 50%;"
             = link_to "#{truncate(planner.name, length: 20)}", planner_path(planner.id), class: 'planner-name-link'
             - if params[:sort] == 'total_of_consultations'
               span style="margin-left: auto; color: gray; font-weight: bold; margin-right: 20px; font-size: 1.2em;" = "(Total of Consultations: #{done_count})"

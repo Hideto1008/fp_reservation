@@ -7,7 +7,7 @@
         h2 style="margin-bottom: 40px; text-align: left;" My page
 
         .profile-info
-          img src=set_planner_icon(@planner) alt="Planner Icon" style="width: 100px; height: 100px; border-radius: 50%;"
+          img src=set_planner_icon(@planner) alt="FP Icon" style="width: 100px; height: 100px; border-radius: 50%;"
           h3 style="margin-bottom: 10px; word-wrap: break-word;" = truncate(@planner.name, length: 40)
           h4 style="text-align: left;"
             | Self introduction
@@ -42,7 +42,7 @@
     .main-content style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;"
       .upper-content style="display: flex; gap: 20px; align-items: flex-start; width: 100%;"
         .profile style="flex-basis: 100%; text-align: center; word-wrap: break-word;"
-          img src=set_planner_icon(@planner) alt="Planner Icon" style="width: 100px; height: 100px; border-radius: 50%;"
+          img src=set_planner_icon(@planner) alt="FP Icon" style="width: 100px; height: 100px; border-radius: 50%;"
           h3 style="word-wrap: break-word; white-space: normal; word-break: break-word;"= truncate(@planner.name, length: 40)
 
         .introduction style="flex-grow: 1; text-align: left; border: 1px solid #000; padding: 20px; border-radius: 5px; min-height: 200px; overflow-wrap: break-word; word-break: break-word; min-width: 550px; width: 100%;"
