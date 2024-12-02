@@ -7,10 +7,7 @@
         h2 style="margin-bottom: 40px; text-align: left;" My page
 
         .profile-info
-          - if @planner.icon_path.present?
-            img src=@planner.icon_path alt="Planner Icon" style="width: 100px; height: 100px; border-radius: 50%;"
-          - else
-            img src=asset_path('user_default_icon.png') alt="Planner Icon" style="width: 100px; height: 100px; border-radius: 50%;"
+          img src=set_planner_icon(@planner) alt="Planner Icon" style="width: 100px; height: 100px; border-radius: 50%;"
           h3 style="margin-bottom: 10px; word-wrap: break-word;" = truncate(@planner.name, length: 40)
           h4 style="text-align: left;"
             | Self introduction
@@ -26,10 +23,7 @@
               - if appointment.status_reserved? || appointment.status_done? || appointment.status_expired?
                 li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
                   .icon-and-date style="display: flex; gap: 10px; align-items: center;"
-                    -if appointment.user.icon_path.present?
-                      img src=appointment.user.icon_path alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
-                    -else
-                      img src=asset_path('user_default_icon.png') alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
+                    img src =set_user_icon(appointment.user) alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
                     span= appointment.user.name
                   .user-info
                     span= appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
