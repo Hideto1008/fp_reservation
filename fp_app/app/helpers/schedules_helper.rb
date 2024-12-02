@@ -32,4 +32,14 @@ module SchedulesHelper
       end
     end
   end
+
+  def formatted_schedule_date(schedule)
+    schedule.started_at.strftime("%Y-%m-%d (%a)")
+  end
+
+  def formatted_schedule_time(schedule)
+    start_time = schedule.started_at.strftime("%H:%M")
+    end_time = (schedule.started_at + 30.minutes).strftime("%H:%M")
+    "#{start_time} ~ #{end_time}"
+  end
 end
