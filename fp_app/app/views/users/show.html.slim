@@ -31,7 +31,7 @@
                     span style="margin-left: 10px; color: red;" Expired
 
         .pagination-wrapper
-          = paginate @appointments, window: 0
+          = paginate @appointments, window: 1
 
       - else
         h4 No history.
@@ -45,10 +45,10 @@ style
     }
     .pagination {
       display: flex;
-      gap: 15px;
+      gap: 10px;
     }
     .pagination a, .pagination .current {
-      font-size: 18px;
+      font-size: 15px;
       padding: 0 10px;
       text-decoration: none;
     }
