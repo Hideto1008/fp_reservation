@@ -32,7 +32,7 @@
                     - if appointment.status_expired?
                       span style="margin-left: 10px; color: red;" Expired
           .pagination-wrapper
-            = paginate @appointments, window: 0
+            = paginate @appointments, window: 1
         - else
           h4 No history.
 
