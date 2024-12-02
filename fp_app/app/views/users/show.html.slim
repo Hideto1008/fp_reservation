@@ -6,7 +6,7 @@
       h2 style="margin-bottom: 40px; text-align: left;" My page
 
       .profile-info
-        img src=@user.icon_path alt="User Icon" style="width: 100px; height: 100px; border-radius: 50%;"
+        img src=set_user_icon(@user) alt="User Icon" style="width: 100px; height: 100px; border-radius: 50%;"
         h3 style="margin-bottom: 10px; word-wrap: break-word;" = @user.name
         = link_to 'Update', edit_user_path(@user), class: "btn btn-primary", style: "background-color: #FFCC00; color: white; padding: 10px 20px; border: none; border-radius: 5px;"
 
@@ -18,7 +18,7 @@
             - if appointment.status_reserved? || appointment.status_done? || appointment.status_expired?
               li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
                 .icon-and-date style="display: flex; gap: 10px; align-items: center;"
-                  img src=appointment.planner.icon_path alt="FP Icon" style="width: 40px; height: 40px; border-radius: 50%;"
+                  img src=set_planner_icon(appointment.planner) alt="FP Icon" style="width: 40px; height: 40px; border-radius: 50%;"
                   span style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" = appointment.planner.name
                 .user-info
                   span style="margin-right: 20px;" = appointment.reserved_at.strftime("%Y/%m/%d %H:%M")

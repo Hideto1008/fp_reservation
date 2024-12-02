@@ -5,4 +5,8 @@ module PlannersHelper
       [ "Total of Consultations", planners_path(sort: "total_of_consultations", name_cont: name_cont) ]
     ]
   end
+
+  def set_planner_icon(planner)
+    planner.icon_path.presence || asset_path('default_icon.png')
+  end
 end

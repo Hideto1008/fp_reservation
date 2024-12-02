@@ -1,9 +1,6 @@
 .container style="max-width: 600px; margin: 100px auto 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
   .planner-info style="margin-bottom: 20px; display: flex; align-items: center;"
-    - if @planner.icon_path.present?
-      img.planner-icon src = @planner.icon_path alt="Icon of #{@planner.name}" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px;"
-    - else
-      img.planner-icon src="/default_icon.png" alt="Default Icon" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px;"
+    img src=set_planner_icon(@planner) alt="FP Icon" style="width: 80px; height: 80px; border-radius: 50%;"
 
     div style="flex-grow: 1;"
       p style="margin: 0; font-weight: bold; font-size: 24px; word-break: break-word; line-height: 1.5;"
