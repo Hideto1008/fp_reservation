@@ -24,9 +24,9 @@
                 li style="display: flex; justify-content: space-between; align-items: center; border: 1px solid #000; border-radius: 10px; padding: 10px; margin-bottom: 10px;"
                   .icon-and-date style="display: flex; gap: 10px; align-items: center;"
                     img src=set_user_icon(appointment.user) alt="User Icon" style="width: 40px; height: 40px; border-radius: 50%;"
-                    span= appointment.user.name
+                    span = truncate(appointment.user.name, length: 35)
                   .user-info
-                    span= appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
+                    span = appointment.reserved_at.strftime("%Y/%m/%d %H:%M")
                     - if appointment.status_done?
                       span style="margin-left: 10px; color: green;" Done
                     - if appointment.status_expired?
