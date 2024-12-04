@@ -37,8 +37,9 @@ class Planners::SchedulesController < ApplicationController
           format.js { render "planners/schedules/update_schedule" }
         end
       else
+        error_message = @schedule.errors.full_messages.join(", ")
         respond_to do |format|
-          format.js { render js: "alert('Unable to update availability.');" }
+          format.js { render js: "alert(`Unable to update schedule: #{error_message}`);" }
         end
       end
     end
@@ -55,8 +56,9 @@ class Planners::SchedulesController < ApplicationController
         format.js { render "planners/schedules/update_schedule" }
       end
     else
+      error_message = @schedule.errors.full_messages.join(", ")
       respond_to do |format|
-        format.js { render js: "alert('Unable to create schedule.');" }
+        format.js { render js: "alert(`Unable to create schedule: #{error_message}`);" }
       end
     end
   end
