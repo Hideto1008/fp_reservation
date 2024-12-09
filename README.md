@@ -39,7 +39,11 @@ https://github.com/user-attachments/assets/e9ba1ee9-60b7-4aa1-939d-aad9c521172f
 
 ### FP側
 
-（ここにデモ動画のリンクや説明を挿入）
+
+
+https://github.com/user-attachments/assets/08aa7d7e-1146-49b8-bfc9-709c281b01f9
+
+
 
 ---
 
