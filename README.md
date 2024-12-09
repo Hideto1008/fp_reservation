@@ -31,7 +31,11 @@ FPは予約枠を設定し、ユーザーはその空き枠を選択して予約
 
 ### ユーザー側
 
-（ここにデモ動画のリンクや説明を挿入）
+
+
+https://github.com/user-attachments/assets/e9ba1ee9-60b7-4aa1-939d-aad9c521172f
+
+
 
 ### FP側
 
@@ -116,7 +120,8 @@ rails s
 
 ブラウザで `http://localhost:3000/` にアクセスし、以下の画面が表示されればセットアップ完了です！
 
-（ここにアプリのホーム画面のスクリーンショットを挿入）
+<img width="742" alt="スクリーンショット 2024-12-09 9 43 10" src="https://github.com/user-attachments/assets/a10b32ff-c3ae-4b77-9d32-d2a816f8d047">
+
 
 ### 9. コンテナの終了
 
