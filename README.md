@@ -31,19 +31,11 @@ FPは予約枠を設定し、ユーザーはその空き枠を選択して予約
 
 ### ユーザー側
 
-
-
 https://github.com/user-attachments/assets/e9ba1ee9-60b7-4aa1-939d-aad9c521172f
-
-
 
 ### FP側
 
-
-
-https://github.com/user-attachments/assets/08aa7d7e-1146-49b8-bfc9-709c281b01f9
-
-
+https://github.com/user-attachments/assets/50fb1ea2-09e0-4991-b8ef-83bf57082718
 
 ---
 
