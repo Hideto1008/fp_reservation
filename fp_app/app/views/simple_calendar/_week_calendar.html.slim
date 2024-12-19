@@ -8,7 +8,7 @@ div.simple-calendar
   table.table.table-bordered.table-striped
     thead
       tr
-        th [style="text-align: center; vertical-align: middle;"]時間
+        th [style="text-align: center; vertical-align: middle;"]
         - date_range.slice(0, 7).each do |day|
           - unless day.wday == 0
             th[style="text-align: center; font-weight: bold;"]
